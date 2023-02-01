@@ -1,0 +1,14 @@
+.donut{
+    box-shadow: 2px 2px 2px 1px rgb(0 0 0 / 20%);
+    border-radius: 20px;
+    font-family: inherit !important;
+}
+.apexcharts-legend-text{
+    font-family: inherit !important;
+    font-weight: 700 !important;
+    font-size: larger !important;
+}
+.title{
+    font-size: x-large;
+    font-weight: 600;
+}

@@ -1,18 +1,20 @@
 import React,{ useState } from 'react';
 import Chart from 'react-apexcharts'
-
+import './donut.css'
 function Donut() {
 
-        const [series,setSeries]=useState([44,55])
+        const [series,setSeries]=useState([100,200])
         const [chartOptions,setChartOptions]=useState({
-            labels: ['Female','Male'] ,
+            labels: ['طالبات','طلاب'] ,
             fill: {colors: ['#FDBAB1','#63D0B4']},
-            legend: {markers: {  fillColors:['#FDBAB1','#63D0B4']}},
-            tooltip: { fillColors:['#FDBAB1','#63D0B4']}
+            legend: {markers: {  fillColors:['#FDBAB1','#63D0B4']}}
         })
         return (
-        <div className="donut">
-            <Chart options={chartOptions} series={series} type="donut" width="380" />
+        <div className='row'>
+            <div className="donut col-4">
+                <span className='title'>الطلاب</span>
+                <Chart options={chartOptions} series={series} type="donut" />
+            </div>
         </div>
         );
     }
