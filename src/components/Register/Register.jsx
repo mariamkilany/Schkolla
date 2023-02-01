@@ -3,8 +3,8 @@ import './rgister.css'
 
 export default function register() {
   return (
-  <div>
-        <div className='log-container'>
+  <div className='row'>
+        <div className='log-container col-3'>
             <h2>أهلا بعودتك</h2>
             <div className="input-cont">
                 <input type="text" placeholder='أسم المستخدم' />
