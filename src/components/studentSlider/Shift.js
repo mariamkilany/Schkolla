@@ -3,30 +3,25 @@ import Button from 'react-bootstrap/Button';
 import { RiArrowRightSLine , RiArrowLeftSLine} from 'react-icons/ri'
 import { SliderContext } from './Slider';
 function Shift(props) {
-    const {current,setCurrent,data,handleCurrent,curr,setCurr,prev,setPrev,next,setNext}=useContext(SliderContext)
-    setTimeout(() => {
-        setCurr(next)
-        setPrev(curr)
-        setNext(prev)
-        setCurrent(handleCurrent(current+1))
-    }, 10000);
+    const {current,currentDispatch,data,colorDispatch}=useContext(SliderContext)
     return (
-    <div className='shift' style={{display:props.props==='curr'?'block':'none'}}>
+    <div className='shift' style={{
+        //display arrows with current card only
+        display:props.props==='curr'?'block':'none'
+        }}>
         <Button className='btn-secondary'
         onClick={()=>{
-            setCurrent(handleCurrent(current+1))
-            setCurr(next)
-            setPrev(curr)
-            setNext(prev)
+        //switch current and color
+        colorDispatch({type: "INCREMENT"})
+        currentDispatch({type: "INCREMENT"})
         }}
         > <RiArrowLeftSLine/></Button>
         {current+1} / {data.length}
         <Button className='btn-secondary'
         onClick={()=>{
-            setCurrent(handleCurrent(current-1))
-            setCurr(prev)
-            setPrev(next)
-            setNext(curr)
+        //switch current and color
+        colorDispatch({type: "DECREMENT"})
+        currentDispatch({type: "DECREMENT"})
         }}
         > <RiArrowRightSLine/></Button>
     </div>
