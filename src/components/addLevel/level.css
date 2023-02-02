@@ -1,0 +1,31 @@
+.modal-header {
+    flex-direction: row-reverse !important;
+}
+
+.modal-header .btn-close {
+    margin: 0 !important;
+}
+
+.modal-content {
+    border-radius: 5px !important;
+    -webkit-border-radius: 5px !important;
+    -moz-border-radius: 5px !important;
+    -ms-border-radius: 5px !important;
+    -o-border-radius: 5px !important;
+    border-top: 5px solid #254C71 !important;
+}
+.modal-content .btn-primary ,.levelbtn{
+    background-color: #254C71 !important;
+    border: none !important;
+    box-shadow: 2px 2px 2px 1px rgb(0 0 0 / 20%);
+}
+.form-select {
+    text-align: right !important;
+    background-position: left 0.75rem center !important;
+}
+.addbtn{
+    margin-top: 10px;
+}
+input{
+    text-align: right !important;
+}
