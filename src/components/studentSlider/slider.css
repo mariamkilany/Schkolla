@@ -43,9 +43,37 @@
     margin-top: 10px;
     background-color: #ffffffa6;
     border-radius: 10px;
+    /* color: #63d0b4; */
+    font-weight: 700;
 }
 .shift .btn{
     background-color: transparent;
     box-shadow: none;
-    color: #63d0b4;
+    color: inherit;
+    border-radius: inherit;
+    -webkit-border-radius: inherit;
+    -moz-border-radius: inherit;
+    -ms-border-radius: inherit;
+    -o-border-radius: inherit;
+}
+.shift .btn:hover {
+    color: inherit;
+    background-color: inherit;
+}
+.back{
+    opacity: 0.5;
+    font-size: smaller;
+    height: 50% !important;
+}
+.pink-card{
+    background-color: #FDBAB1 !important;
+    color:#FDBAB1 !important;
+}
+.blue-card{
+    background-color: #254C71 !important;
+    color: #254C71 !important;;
+}
+.green-card{
+    background-color: #63D0B4 !important;
+    color: #63D0B4 !important;
 }
