@@ -1,14 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState ,useContext } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
 import Table from 'react-bootstrap/Table';
-import './level.css';
+import { PopupsContext } from './PopupContext';
+import './popup.css';
 
 function AddLevel() {
     const [show, setShow] = useState(false);
     const [validated, setValidated] = useState(false);
-    const[selectdSubjects,setSelectedSubjects]=useState([]);
+    // const[selectdSubjects,setSelectedSubjects]=useState([]);
+    const{selectdSubjects,selectdSubjectsDispatch}=useContext(PopupsContext)
     const[subject,setSubject]=useState('');
 
     const handleClose = () => setShow(false);
@@ -56,10 +58,11 @@ function AddLevel() {
                     <option value="التربية الدينية">التربية الدينية</option>
                     <option value="الدراسات الإجتماعية">الدراسات الإجتماعية</option>
                 </Form.Select>
-                <Button className='addbtn' variant="primary" onClick={()=>{
+                {/* <Button className='addbtn' variant="primary" onClick={()=>{
                     if(subject!==''&& !selectdSubjects.includes(subject))
                     setSelectedSubjects([...selectdSubjects,subject])
-                    }}>إضافة</Button>
+                    }}>إضافة</Button> */}
+                    <Button className='addbtn' variant="primary" onClick={()=>selectdSubjectsDispatch({type:'ADD SUBJECT',newSubject:subject})}>إضافة</Button>
                 </Form.Group>
             </Form>
             {(selectdSubjects && selectdSubjects.length)?
@@ -74,9 +77,7 @@ function AddLevel() {
             {selectdSubjects.map((sub)=>{
                 return (
             <tr key={sub}>
-                <td><Button variant="danger" onClick={()=>{
-                    setSelectedSubjects(selectdSubjects.filter((subj)=>subj!==sub))
-                }}>حذف</Button></td>
+                <td><Button variant="danger" onClick={()=>selectdSubjectsDispatch({type:'DELETE SUBJECT',deletedSubject:sub})}>حذف</Button></td>
                 <td>{sub}</td>
             </tr>
             )

@@ -5,6 +5,8 @@ import Donut from './components/donutChart/Donut';
 import Bar from './components/barChart/Bar';
 import AddLevel from './components/popupComponents/AddLevel';
 import DeleteLevel from './components/popupComponents/DeleteLevel';
+import AddClass from './components/popupComponents/AddClass';
+import PopupContext from './components/popupComponents/PopupContext';
 
 function App() {
   return (
@@ -12,9 +14,11 @@ function App() {
       {/* <Register/>
       <Slider/>
       <Donut/>
-      <Bar/>
-      <AddLevel/>
-      <DeleteLevel/> */}
+      <Bar/> */}
+      {/* <AddLevel/> */}
+      <PopupContext/>
+      {/* <DeleteLevel/> */}
+      {/* <AddClass/> */}
     </div>
   );
 }

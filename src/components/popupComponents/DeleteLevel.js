@@ -3,7 +3,7 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
 import Table from 'react-bootstrap/Table';
-import './level.css';
+import './popup.css';
 
 function DeleteLevel() {
     const [show, setShow] = useState(false);
