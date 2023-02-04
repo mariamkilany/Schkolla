@@ -65,15 +65,15 @@
     font-size: smaller;
     height: 50% !important;
 }
-.pink{
+.pink-card{
     background-color: #FDBAB1 !important;
     color:#FDBAB1 !important;
 }
-.blue{
+.blue-card{
     background-color: #254C71 !important;
     color: #254C71 !important;;
 }
-.green {
+.green-card{
     background-color: #63D0B4 !important;
     color: #63D0B4 !important;
 }
