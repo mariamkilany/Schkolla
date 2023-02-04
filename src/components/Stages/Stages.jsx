@@ -2,7 +2,7 @@ import React from 'react'
 import './stages.css'
 import student from '../../imge/students.png'
 import data from './data'
-import Link from 'react-router-dom'
+// import Link from 'react-router-dom'
 
 export default function stages() {
   return <>

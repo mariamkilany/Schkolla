@@ -11,7 +11,7 @@ function StuCard(stu) {
                 //add animation to current ,order cards and handle opacity of others
                 //handlecolors with num
                 {`col-4 ${student.display==='curr'?'order-2 w3-center w3-animate-top':student.display==='prev'?'order-1 back':'order-3 back'}
-                ${student.num===0?'green':student.num===1?'blue':'pink'}`}>
+                ${student.num===0?'green-card':student.num===1?'blue-card':'pink-card'}`}>
         <Card.Img variant="top" src="./images/student1.png" />
         <Card.Body>
         <Card.Text>
