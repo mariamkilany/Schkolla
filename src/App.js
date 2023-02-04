@@ -13,15 +13,15 @@ function App() {
   return (
     <div className="App">
       {/* <Slider/> */}
-      {/* <Register/> */}
-      <Stages/>
+      <Register/>
+      {/* <Stages/> */}
 
       {/* <Register/>
       <Slider/>
       <Donut/>
       <Bar/> */}
       {/* <AddLevel/> */}
-      <PopupContext/>
+      {/* <PopupContext/> */}
       {/* <DeleteLevel/> */}
       {/* <AddClass/> */}
 

@@ -5,7 +5,6 @@ import Modal from 'react-bootstrap/Modal';
 import Table from 'react-bootstrap/Table';
 import { PopupsContext } from './PopupContext';
 import './popup.css';
-
 function AddClass() {
     const [show, setShow] = useState(false);
     const [validated, setValidated] = useState(false);
