@@ -5,7 +5,7 @@ export default function register() {
   return (
   <div>
         <div className='log-container'>
-            <h2>أهلا بعودتك</h2>
+            <h2 className='my-5'>أهلا بعودتك</h2>
             <div className="input-cont">
                 <input type="text" placeholder='أسم المستخدم' />
                 <input type="password" placeholder='كلمة المرور' />
