@@ -1,88 +1,52 @@
 import React, { useState ,useEffect } from 'react'
 import './rgister.css'
-import axios from 'axios';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
-import Modal from 'react-bootstrap/Modal';
-import Joi from 'joi';
+import useAuth from '../../Hooks/useAuth';
+import axios from '../../Api/Api';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
+const LOGIN_URL = '/login';
 export default function Register() {
-  const[emailEror,setEmailError]=useState('الرجاء ادخال البريد الاكترونى');
-  const[passEror,setPassError]=useState(' الرجاء ادخال كلمة المرور ');
-  useEffect(()=>{
-    async function sendRegesterData(){
-      let data= await axios.post(`https://erin-hungry-bonobo.cyclic.app/v1/admin/login`,user).then((res,req)=>{
-        console.log(res.status)
-      }).catch((error)=>{
-        if(error.response){
-          console.log(error.response.data.msg);
-          if(error.response.data.msg===`this email dosen't exist!`){
-            setEmailError("هذا البريد الإلكتروني غير صالح") 
-          }
-        }
-      });
-  }
-  },[emailEror,passEror])
   const[user,SetUser]=useState({
-      email:'',
-      password:''
-  });
-  const [validated, setValidated] = useState(false);
-  function getUserData(e){
-    let myUser ={...user};
-    myUser[e.target.name]=e.target.value;
-    SetUser(myUser);
-  }
-  // async function sendRegesterData(){
-  //     let data= await axios.post(`https://erin-hungry-bonobo.cyclic.app/v1/admin/login`,user).then((res,req)=>{
-  //       console.log(res.status)
-  //     }).catch((error)=>{
-  //       if(error.response){
-  //         console.log(error.response.data.msg);
-  //         if(error.response.data.msg===`this email dosen't exist!`){
-  //           setEmailError("هذا البريد الإلكتروني غير صالح") 
-  //         }
-  //       }
-  //     });
-  // }
-  ////////////////////////////
-  // // function submitRegsterForm(e){
-  // //   e.preventDefault();
-  //   sendRegesterData();
-    // let validation = validateRegisterForm();
-    // console.log(validation.error.details[0]);
-    // if(validation.error){
-    //   setIsLoading(false);
-    //   setErrorList()
-    // }
-    // else{
-    //   sendRegesterData();
-    // }
-  // }
-  // function validateRegisterForm(){
-  //   let scheme=Joi.object({
-  //     email:Joi.string().email({tlds:{allow:['com','net']}}).required(),
-  //     password:Joi.string().pattern(/[A-Z][a-z]{3-5}[0-9]{5-8}/).required()
-  //   });
-  //   console.log(scheme.validate(user,{abortEarly:false}));
-  // }
-  const handleSubmit = (event) => {
-    sendRegesterData();
+    email:'',
+    password:''
+});
+const [validated, setValidated] = useState(false);
+function getUserData(e){
+  let myUser ={...user};
+  myUser[e.target.name]=e.target.value;
+  SetUser(myUser);
+}
+  const[emailEror,setEmailError]=useState('');
+  const[passEror,setPassError]=useState('');
+  // use hoooks
+  const { setAuth } = useAuth();
+  const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "/";
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    const form = event.currentTarget;
-    if (form.checkValidity() === false) {
-        event.preventDefault();
-        event.stopPropagation();
+    try{
+      let data= await axios.post(LOGIN_URL,user)
+       const accessToken = data?.data?.accessToken;
+            setAuth({ email:user.email, passwword:user.password,accessToken });
+            SetUser({  email:'',
+            password:''});
+            navigate(from, { replace: true });
+    }catch(err){
+      if (!err?.response) {
+        setEmailError('السرفر لا يستجيب اسفيين يسطا');
+    } else if (err.response?.data.msg.includes(`this email dosen't exist!`)) {
+        setEmailError('البريد الالكترونى غير صالح');
+    } else if (err.response?.data.msg.includes(`this is a wrong password`)) {
+        setPassError('كلمة المرور غير صحيحه');
+    } else {
+        setValidated(true);
     }
-    setValidated(true);
-    };
+}
+
+    }
   return <>
-  {/* {errorList.map((error,index)=>{
-    if(error.context.label==='password'){
-      <div key={index} className="alert alert-danger my-2">password invalid</div>
-    }else{
-      <div key={index} className="alert alert-danger my-2">{error.massage}</div>
-    }
-  })} */}
   <Form noValidate validated={validated} onSubmit={handleSubmit}>
             <div className="log-container col-3 py-3">
             <h2 className='mb-3'>أهلا بعودتك</h2>
@@ -97,8 +61,12 @@ export default function Register() {
                     onChange={getUserData}
                 />
                   <Form.Control.Feedback type="invalid">
-                      {emailEror}  
+                        الرجاء ادخال البريد الالكترونى
             </Form.Control.Feedback>
+            <div className="invalid-feedback" style={{display:emailEror!==''?'block':'none'}}>
+              {emailEror}
+            </div>
+                        
                 </Form.Group>
                 <Form.Group className="mb-1" controlId="validationCustom01" >
                 <Form.Control
@@ -110,8 +78,11 @@ export default function Register() {
                     onChange={getUserData}
                 />
                   <Form.Control.Feedback type="invalid">
-                        {passEror}
+                    الرجاء ادخال كلمة المرور
             </Form.Control.Feedback>
+            <div className="invalid-feedback" style={{display:passEror!==''?'block':'none'}}>
+              {passEror}
+            </div>
                 </Form.Group>
       </div>
       <Button variant="primary" type="submit" onClick={ (e)=>{handleSubmit(e)}}>
@@ -119,17 +90,5 @@ export default function Register() {
             </Button>
             </div>
             </Form>
-      {/* <form onSubmit={submitRegsterForm}>
-      <div className='log-container col-3 py-3'>
-            <h2 className='mb-3'>أهلا بعودتك</h2>
-            <div className="input-cont py-4">
-                <input type="text" placeholder='البريد الالكترونى' name='email' id='email'  onChange={getUserData}/>
-                <input type="password" placeholder='كلمة المرور'  name='password' id='password' onChange={getUserData}/>
-            </div>
-            <button type="submit" className="btn btn-primary"> 
-            {isLoading===true?<i class="fa-solid fa-spinner fa-spin"></i>:'تسجيل الدخول'}
-            </button>
-        </div>
-      </form> */}
       </>
-}
+    }

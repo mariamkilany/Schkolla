@@ -8,18 +8,21 @@ import AddLevel from './components/popupComponents/AddLevel';
 import DeleteLevel from './components/popupComponents/DeleteLevel';
 import AddClass from './components/popupComponents/AddClass';
 import PopupContext from './components/popupComponents/PopupContext';
-
+import { Routes, Route } from 'react-router-dom';
 function App() {
   return (
     <div className="App">
+          <Routes>
+      <Route path="/" element={<Donut/>}/>
+        <Route path="login" element={ <Register/>} />
+        </Routes>
       {/* <Slider/> */}
-      <Register/>
       {/* <Stages/> */}
 
-      {/* <Register/>
-      <Slider/>
+       {/* <Register/> */}
+      {/* <Slider/>
       <Donut/>
-      <Bar/> */}
+      <Bar/>  */}
       {/* <AddLevel/> */}
       {/* <PopupContext/> */}
       {/* <DeleteLevel/> */}
