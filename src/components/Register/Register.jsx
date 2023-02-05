@@ -32,7 +32,7 @@ function getUserData(e){
       let data= await axios.post(LOGIN_URL,user)
       console.log(data)
       const accessToken = data?.data?.accessToken;
-            setAuth({ email:user.email, passwword:user.password,accessToken });
+            // setAuth({ email:user.email, passwword:user.password,accessToken });
             SetUser({  email:'',
             password:''});
             // navigate(from, { replace: true });
@@ -54,7 +54,7 @@ function getUserData(e){
             <div className="log-container  py-3">
             <h2 className='mb-3'>أهلا بعودتك</h2>
       <div className="input-cont py-4">
-      <Form.Group className="mb-3" controlId="validationCustom01" >
+      <Form.Group className="mb-5" controlId="validationCustom01" >
                 <Form.Control
                     required
                     type="text"

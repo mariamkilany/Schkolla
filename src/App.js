@@ -10,10 +10,12 @@ import DeleteLevel from './components/popupComponents/DeleteLevel';
 import AddClass from './components/popupComponents/AddClass';
 import PopupContext from './components/popupComponents/PopupContext';
 import { Routes, Route } from 'react-router-dom';
+import SideBar from './components/sideBar/SideBar';
 function App() {
   return (
     <div className="App">
       <Login/>
+      <SideBar/>
     </div>
   );
 }
