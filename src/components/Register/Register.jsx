@@ -1,10 +1,13 @@
-import React from 'react'
+// import React from 'react'
 import React, { useState ,useEffect } from 'react'
 import './rgister.css'
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
-import Modal from 'react-bootstrap/Modal';
-import Joi from 'joi';
+import useAuth from '../../Hooks/useAuth';
+import axios from '../../Api/Api';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
+const LOGIN_URL = '/login';
+
 export default function Register() {
   const[user,SetUser]=useState({
     email:'',
@@ -20,18 +23,19 @@ function getUserData(e){
   const[passEror,setPassError]=useState('');
   // use hoooks
   const { setAuth } = useAuth();
-  const navigate = useNavigate();
-  const location = useLocation();
-  const from = location.state?.from?.pathname || "/";
+  // const navigate = useNavigate();
+  // const location = useLocation();
+  // const from = location.state?.from?.pathname || "/";
   const handleSubmit = async (event) => {
     event.preventDefault();
     try{
       let data= await axios.post(LOGIN_URL,user)
-       const accessToken = data?.data?.accessToken;
+      console.log(data)
+      const accessToken = data?.data?.accessToken;
             setAuth({ email:user.email, passwword:user.password,accessToken });
             SetUser({  email:'',
             password:''});
-            navigate(from, { replace: true });
+            // navigate(from, { replace: true });
     }catch(err){
       if (!err?.response) {
         setEmailError('السرفر لا يستجيب اسفيين يسطا');
@@ -46,11 +50,11 @@ function getUserData(e){
 
     }
   return <>
-  <Form noValidate validated={validated} onSubmit={handleSubmit}>
-            <div className="log-container col-3 py-3">
+  <Form noValidate className='col-md-6 col-sm-8' validated={validated} onSubmit={handleSubmit}>
+            <div className="log-container  py-3">
             <h2 className='mb-3'>أهلا بعودتك</h2>
       <div className="input-cont py-4">
-      <Form.Group className="mb-5" controlId="validationCustom01" >
+      <Form.Group className="mb-3" controlId="validationCustom01" >
                 <Form.Control
                     required
                     type="text"
@@ -88,7 +92,6 @@ function getUserData(e){
                 تسجيل الدخول 
             </Button>
             </div>
-            <button type="submit" className="btn btn-primary">تسجيل الدخول</button>
             </Form>
       {/* <form onSubmit={submitRegsterForm}>
       <div className='log-container col-3 py-3'>

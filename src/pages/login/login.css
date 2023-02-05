@@ -1,0 +1,16 @@
+.slogn{
+    font-family: 'Reem Kufi', sans-serif !important;
+}
+.log-head{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.login-con{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.kids{
+    width: 40% !important;
+}

@@ -1,5 +1,5 @@
 *{
-  font-family: 'El Messiri', sans-serif;
+  font-family: 'El Messiri', sans-serif !important;
 }
 .App {
   text-align: center;

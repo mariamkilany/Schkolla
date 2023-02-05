@@ -2,6 +2,7 @@ import './App.css';
 import Stages from './components/Stages/Stages'
 import Slider from './components/studentSlider/Slider';
 import Register from './components/Register/Register';
+import Login from './pages/login/Login'
 import Donut from './components/donutChart/Donut';
 import Bar from './components/barChart/Bar';
 import AddLevel from './components/popupComponents/AddLevel';
@@ -12,19 +13,7 @@ import { Routes, Route } from 'react-router-dom';
 function App() {
   return (
     <div className="App">
-      {/* <Slider/> */}
-      <Register/>
-      {/* <Stages/> */}
-
-      {/* <Register/>
-      <Slider/>
-      <Donut/>
-      <Bar/>  */}
-      {/* <AddLevel/> */}
-      {/* <PopupContext/> */}
-      {/* <DeleteLevel/> */}
-      {/* <AddClass/> */}
-
+      <Login/>
     </div>
   );
 }
