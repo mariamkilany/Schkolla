@@ -1,11 +1,10 @@
+import React from 'react'
 import React, { useState ,useEffect } from 'react'
 import './rgister.css'
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
-import useAuth from '../../Hooks/useAuth';
-import axios from '../../Api/Api';
-import { Link, useNavigate, useLocation } from 'react-router-dom';
-const LOGIN_URL = '/login';
+import Modal from 'react-bootstrap/Modal';
+import Joi from 'joi';
 export default function Register() {
   const[user,SetUser]=useState({
     email:'',
@@ -89,6 +88,19 @@ function getUserData(e){
                 تسجيل الدخول 
             </Button>
             </div>
+            <button type="submit" className="btn btn-primary">تسجيل الدخول</button>
             </Form>
+      {/* <form onSubmit={submitRegsterForm}>
+      <div className='log-container col-3 py-3'>
+            <h2 className='mb-3'>أهلا بعودتك</h2>
+            <div className="input-cont py-4">
+                <input type="text" placeholder='البريد الالكترونى' name='email' id='email'  onChange={getUserData}/>
+                <input type="password" placeholder='كلمة المرور'  name='password' id='password' onChange={getUserData}/>
+            </div>
+            <button type="submit" className="btn btn-primary"> 
+            {isLoading===true?<i class="fa-solid fa-spinner fa-spin"></i>:'تسجيل الدخول'}
+            </button>
+        </div>
+      </form> */}
       </>
-    }
+}

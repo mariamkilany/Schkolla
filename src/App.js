@@ -12,15 +12,12 @@ import { Routes, Route } from 'react-router-dom';
 function App() {
   return (
     <div className="App">
-          <Routes>
-      <Route path="/" element={<Donut/>}/>
-        <Route path="login" element={ <Register/>} />
-        </Routes>
       {/* <Slider/> */}
+      <Register/>
       {/* <Stages/> */}
 
-       {/* <Register/> */}
-      {/* <Slider/>
+      {/* <Register/>
+      <Slider/>
       <Donut/>
       <Bar/>  */}
       {/* <AddLevel/> */}
