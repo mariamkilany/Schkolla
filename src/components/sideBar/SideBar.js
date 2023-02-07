@@ -21,12 +21,6 @@ import admin from '../../imge/admin.jpg'
 function SideBar() {
 
     const [isVisible,setIsVisible]=useState(false);
-    // const [homeSelected,setHomeSelected]=useState(false);
-    // const [levelsSelected,setLevelsSelected]=useState(false);
-    // const [studentsSelected,setStudentsSelected]=useState(false);
-    // const [teachersSelected,setTeachersSelected]=useState(false);
-    // const [empolyeeSelected,setEmpolyeeSelected]=useState(false);
-    const [qASelected,setQaSelected]=useState(false);
     const navigate = useNavigate();
     const location = useLocation();
         return (
