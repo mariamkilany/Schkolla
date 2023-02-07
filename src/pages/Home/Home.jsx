@@ -7,40 +7,41 @@ import Bar from '../../components/barChart/Bar'
 import './home.css'
 export default function Home() {
     return <>
-    <div className="row mb-5">
-        <div className="col-sm-4 px-5">
-            <div className='number-cont py-3 d-flex '>
-            <span >عدد الطلاب :1000</span>
-            <img src={student} alt="student" className='w-25' />
+    <div className="row mb-5 gy-5">
+        <div className="col-md-4 px-5">
+            <div className='number-cont py-md-5 py-sm-3 d-flex fs-md-3 '>
+            <span  >عدد الطلاب :1000</span>
+            <img src={student} alt="student" />
             </div>
         </div>
-        <div className="col-sm-4 px-5">
-            <div className='number-cont py-3 d-flex '>
+        <div className="col-md-4 px-5">
+            <div className='number-cont py-md-5 py-sm-3 d-flex '>
             <span >عدد المعلمين :250</span>
-            <img src={teachers} alt="teachers"className='w-25' />
+            <img src={teachers} alt="teachers" />
             </div>
         </div>
-        <div className="col-sm-4 px-5">
-            <div className='number-cont py-3 d-flex '>
+        <div className="col-md-4 px-5">
+            <div className='number-cont py-md-5 py-sm-3 d-flex '>
             <span >عدد الموظفين:5</span>
-            <img src={employee} alt="employee" className='w-25' />
+            <img src={employee} alt="employee"  />
+            
             </div>
         </div>        
     </div>
     <div className="row mt-5">
-        <div className="col-sm-8 py-5 mt-5">
+        <div className="col-lg-7 py-5 mt-5">
             <Slider/>
         </div>
-        {/* <div className='col-sm-1'></div> */}
-        <div className="col-sm-4 py-5 mt-5 dounat-cont">
+        {/* <div className='col-md-1'></div> */}
+        <div className="col-lg-5 col-md-8  py-5 mt-5 dounat-cont">
             <Donut/>
         </div>
     </div>
     <div className="row mt-5">
-        <div className="col-sm-6 py-5 mt-5">
+        <div className="col-lg-6 col-md-10 bar-cont">
             <Bar/>
         </div>
-        <div className="col-sm-6 py-5 mt-5">
+        <div className="col-md-6 py-5 mt-5">
             ااااااااااااااه يانى
         </div>
     </div>

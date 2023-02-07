@@ -1,7 +1,7 @@
 *{
   font-family: 'El Messiri', sans-serif !important;
 }
-.App {
+.App , html {
   text-align: center;
   height: 100%;
 }
