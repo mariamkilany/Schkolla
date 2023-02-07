@@ -23,19 +23,20 @@ function getUserData(e){
   const[passEror,setPassError]=useState('');
   // use hoooks
   const { setAuth } = useAuth();
-  // const navigate = useNavigate();
-  // const location = useLocation();
-  // const from = location.state?.from?.pathname || "/";
+  const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "/DashBoard";
   const handleSubmit = async (event) => {
     event.preventDefault();
     try{
-      let data= await axios.post(LOGIN_URL,user)
-      console.log(data)
-      const accessToken = data?.data?.accessToken;
-            // setAuth({ email:user.email, passwword:user.password,accessToken });
+      let response= await axios.post(LOGIN_URL,user)
+      // console.log(response.data.id)
+      const accessToken = response?.data?.accessToken;
+            setAuth({ email:user.email, passwword:user.password,accessToken,id:response.data.id });
             SetUser({  email:'',
             password:''});
-            // navigate(from, { replace: true });
+            localStorage.setItem('id',response.data.id);
+            navigate(from, { replace: true });
     }catch(err){
       if (!err?.response) {
         setEmailError('السرفر لا يستجيب اسفيين يسطا');

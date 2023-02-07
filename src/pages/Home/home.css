@@ -1,0 +1,21 @@
+.number-cont{
+    background: #FFFFFF;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 20px;
+    justify-content:space-evenly;
+}
+.number-cont span{
+    font-style: normal;
+    font-weight: 700;
+    font-size: 25px;
+    line-height: 47px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    color: rgba(0, 0, 0, 0.7);
+}
+/* .dounat-cont{
+    display: flex;
+    justify-content: flex-end;
+} */

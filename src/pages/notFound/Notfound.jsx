@@ -1,6 +1,5 @@
 import React from 'react'
 import './notfound.css'
-import notFound from '../../imge/funny-404-error-page-design.gif'
 
 export default function Notfound() {   
     return<>
@@ -31,6 +30,5 @@ export default function Notfound() {
   <a className="button" href="#"> الصفحة الرئسية</a>
 </div>
         </div>
-        {/* <img src={notFound} alt="" /> */}
     </>
 }

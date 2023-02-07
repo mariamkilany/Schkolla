@@ -14,7 +14,7 @@ function Bar() {
         })
         return (
         <div className="row">
-            <div className="mixed-chart col-5">
+            <div className="mixed-chart">
                 <span className='title'>نسب الغياب</span>
                 <Chart
                     options={options}

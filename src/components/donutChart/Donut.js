@@ -10,12 +10,10 @@ function Donut() {
             legend: {markers: {  fillColors:['#FDBAB1','#63D0B4']}}
         })
         return (
-        <div className='row'>
-            <div className="donut col-4">
+            <div className="donut">
                 <span className='title'>الطلاب</span>
                 <Chart options={chartOptions} series={series} type="donut" />
             </div>
-        </div>
         );
     }
 

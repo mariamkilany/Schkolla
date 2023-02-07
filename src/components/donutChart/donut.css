@@ -2,6 +2,7 @@
     box-shadow: 2px 2px 2px 1px rgb(0 0 0 / 20%);
     border-radius: 20px;
     font-family: inherit !important;
+    background-color: #fff;
 }
 .apexcharts-legend-text{
     font-family: inherit !important;
