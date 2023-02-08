@@ -7,7 +7,7 @@ import Bar from '../../components/barChart/Bar'
 import './home.css'
 export default function Home() {
     return <>
-    <div className="row mb-5 gy-5">
+    <div className="row mb-5 gy-5 nums-cont">
         <div className="col-md-4 px-5">
             <div className='number-cont py-md-5 py-sm-3 d-flex fs-md-3 '>
             <span  >عدد الطلاب :1000</span>
@@ -29,7 +29,7 @@ export default function Home() {
         </div>        
     </div>
     <div className="row mt-5">
-        <div className="col-lg-7 py-5 mt-5">
+        <div className="col-lg-7 py-5 mt-5 slider-cont">
             <Slider/>
         </div>
         {/* <div className='col-md-1'></div> */}
