@@ -1,42 +1,26 @@
-// import React from 'react'
-import React, { useState ,useEffect } from 'react'
+import AuthContext from "../shared/AuthContext"
+import React, { useState ,useContext , useRef } from 'react'
 import './rgister.css'
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
-import useAuth from '../../Hooks/useAuth';
-import axios from '../../Api/Api';
-import { Link, useNavigate, useLocation } from 'react-router-dom';
-const LOGIN_URL = '/login';
 
-export default function Register() {
-  const[user,SetUser]=useState({
-    email:'',
-    password:''
-});
-const [validated, setValidated] = useState(false);
-function getUserData(e){
-  let myUser ={...user};
-  myUser[e.target.name]=e.target.value;
-  SetUser(myUser);
-}
+
+export default function Login() {
+  const email = useRef("");
+  const password = useRef("");
+  const [validated, setValidated] = useState(false);
   const[emailEror,setEmailError]=useState('');
   const[passEror,setPassError]=useState('');
-  // use hoooks
-  const { setAuth } = useAuth();
-  const navigate = useNavigate();
-  const location = useLocation();
-  const from = location.state?.from?.pathname || "/DashBoard";
-  const handleSubmit = async (event) => {
-    event.preventDefault();
+
+  const { login } = useContext(AuthContext);
+
+  const handleSubmit = async () => {
     try{
-      let response= await axios.post(LOGIN_URL,user)
-      // console.log(response.data.id)
-      const accessToken = response?.data?.accessToken;
-            setAuth({ email:user.email, passwword:user.password,accessToken,id:response.data.id });
-            SetUser({  email:'',
-            password:''});
-            localStorage.setItem('id',response.data.id);
-            navigate(from, { replace: true });
+      let payload = {
+            email: email.current.value,
+            password: password.current.value
+          };
+      await login(payload);
     }catch(err){
       if (!err?.response) {
         setEmailError('السرفر لا يستجيب اسفيين يسطا');
@@ -48,7 +32,6 @@ function getUserData(e){
         setValidated(true);
     }
 }
-
     }
   return <>
   <Form noValidate className='col-md-6 col-sm-8' validated={validated} onSubmit={handleSubmit}>
@@ -62,7 +45,7 @@ function getUserData(e){
                     placeholder="البريد الالكترونى"
                     name='email'
                     autoFocus
-                    onChange={getUserData}
+                    ref={email}
                 />
                   <Form.Control.Feedback type="invalid">
                         الرجاء ادخال البريد الالكترونى
@@ -79,7 +62,7 @@ function getUserData(e){
                     placeholder="كلمة المرور"
                     name='password'
                     autoFocus
-                    onChange={getUserData}
+                    ref={password}
                 />
                   <Form.Control.Feedback type="invalid">
                     الرجاء ادخال كلمة المرور
@@ -89,22 +72,10 @@ function getUserData(e){
             </div>
                 </Form.Group>
       </div>
-      <Button variant="primary" type="submit" onClick={ (e)=>{handleSubmit(e)}}>
+      <Button variant="primary" onClick={ ()=>{handleSubmit()}}>
                 تسجيل الدخول 
             </Button>
             </div>
             </Form>
-      {/* <form onSubmit={submitRegsterForm}>
-      <div className='log-container col-3 py-3'>
-            <h2 className='mb-3'>أهلا بعودتك</h2>
-            <div className="input-cont py-4">
-                <input type="text" placeholder='البريد الالكترونى' name='email' id='email'  onChange={getUserData}/>
-                <input type="password" placeholder='كلمة المرور'  name='password' id='password' onChange={getUserData}/>
-            </div>
-            <button type="submit" className="btn btn-primary"> 
-            {isLoading===true?<i class="fa-solid fa-spinner fa-spin"></i>:'تسجيل الدخول'}
-            </button>
-        </div>
-      </form> */}
       </>
 }

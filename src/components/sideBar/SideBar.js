@@ -1,17 +1,15 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import "@trendmicro/react-sidenav/dist/react-sidenav.css";
-import { Routes,Router, Route } from 'react-router-dom';
 import './sidebar.css'
 import {AiOutlineHome} from 'react-icons/ai';
 import {GiStairsGoal,GiTeacher} from 'react-icons/gi';
 import {MdOutlinePeopleAlt} from 'react-icons/md';
 import {SlPeople} from 'react-icons/sl';
 import {IoChatbubblesOutline} from 'react-icons/io5';
-import {Link} from 'react-router-dom'
+import {RiLogoutCircleFill} from 'react-icons/ri';
 import { useNavigate ,useLocation} from 'react-router-dom';
+import AuthContext from "../shared/AuthContext";
     import SideNav, {
-    Toggle,
-    Nav,
     NavItem,
     NavIcon,
     NavText
@@ -23,6 +21,7 @@ function SideBar() {
     const [isVisible,setIsVisible]=useState(false);
     const navigate = useNavigate();
     const location = useLocation();
+    const {logout,user } = useContext(AuthContext);
         return (
         <SideNav expanded={isVisible}>
             <SideNav.Toggle
@@ -33,7 +32,7 @@ function SideBar() {
             <SideNav.Nav >
                 <NavItem onClick={
                     ()=>{navigate('')
-                    }} className={location.pathname==='/DashBoard'?'sidenav---selected---1EK3y sidenav---highlighted---oUx9u':''}>
+                    }} className={location.pathname.toLowerCase()==='/dashboard'?'sidenav---selected---1EK3y sidenav---highlighted---oUx9u':''}>
                 <NavIcon>
                 <AiOutlineHome className="nav-icon"/>
                 </NavIcon>
@@ -41,7 +40,7 @@ function SideBar() {
             </NavItem>
                 <NavItem onClick={()=>{
                     navigate('Levels')
-                    }}className={location.pathname==='/DashBoard/Levels'?'sidenav---selected---1EK3y sidenav---highlighted---oUx9u':''}
+                    }}className={location.pathname.toLowerCase()==='/dashboard/levels'?'sidenav---selected---1EK3y sidenav---highlighted---oUx9u':''}
                     >
                 <NavIcon>
                     <GiStairsGoal className="nav-icon"/>
@@ -51,7 +50,7 @@ function SideBar() {
             <NavItem onClick={()=>{
                 navigate('Students')
                 }}
-                className={location.pathname==='/DashBoard/Students'?'sidenav---selected---1EK3y sidenav---highlighted---oUx9u':''}
+                className={location.pathname.toLowerCase()==='/dashboard/students'?'sidenav---selected---1EK3y sidenav---highlighted---oUx9u':''}
                 >
                 <NavIcon>
                     <MdOutlinePeopleAlt className="nav-icon"/>
@@ -61,7 +60,7 @@ function SideBar() {
             <NavItem onClick={()=>{
                 navigate('Teachers')
                 }}
-                className={location.pathname==='/DashBoard/Teachers'?'sidenav---selected---1EK3y sidenav---highlighted---oUx9u':''}
+                className={location.pathname.toLowerCase()==='/dashboard/teachers'?'sidenav---selected---1EK3y sidenav---highlighted---oUx9u':''}
                 >
                 <NavIcon>
                     <GiTeacher className="nav-icon"/>
@@ -69,9 +68,9 @@ function SideBar() {
                 <NavText>المعلمين</NavText>
             </NavItem>
             <NavItem onClick={()=>{
-                navigate('Empolyee')
+                navigate('Employee')
                 }}
-                className={location.pathname==='/DashBoard/Empolyee'?'sidenav---selected---1EK3y sidenav---highlighted---oUx9u':''}
+                className={location.pathname.toLowerCase()==='/dashboard/employee'?'sidenav---selected---1EK3y sidenav---highlighted---oUx9u':''}
                 >
                 <NavIcon>
                     <SlPeople className="nav-icon"/>
@@ -81,7 +80,7 @@ function SideBar() {
             <NavItem onClick={()=>{
                 navigate('QA')
                 }}
-                className={location.pathname==='/DashBoard/QA'?'sidenav---selected---1EK3y sidenav---highlighted---oUx9u':''}
+                className={location.pathname.toLowerCase()==='/dashboard/qa'?'sidenav---selected---1EK3y sidenav---highlighted---oUx9u':''}
                 >
                 <NavIcon>
                     <IoChatbubblesOutline className="nav-icon"/>
@@ -92,8 +91,14 @@ function SideBar() {
                 <NavIcon>
                     <img src={admin} alt="admin" className="admin-pic shadow-lg rounded-circle"  />
                 </NavIcon>
+                <NavText>{user.email}</NavText>
             </NavItem>
-            
+            <NavItem eventKey="logout" onClick={()=>logout()}>
+                <NavIcon>
+                    <RiLogoutCircleFill className="nav-icon"/>
+                </NavIcon>
+                <NavText>تسجيل الخروج</NavText>
+            </NavItem>
             </SideNav.Nav>
         </SideNav>
         );

@@ -2,8 +2,8 @@ import React from 'react'
 import logo from './images/logo.png'
 import kids from './images/kids.png'
 import './login.css'
-import Register from '../../components/Register/Register'
-function Login() {
+import Login from '../../components/Login/Login'
+function LoginPage() {
     return <>
         <header className='row'>
             <img className='col-md-2 col-sm-6 logo' src={logo} alt="logo"/>
@@ -15,10 +15,10 @@ function Login() {
         <div className='row mt-sm-2'>
             <img src={kids} alt="kids" className='col-sm-6 kids d-none d-sm-block' />
             <div className='col-sm-6 login-con'>
-                <Register/>
+                <Login/>
             </div>
         </div>
         </>
 }
 
-export default Login
+export default LoginPage
