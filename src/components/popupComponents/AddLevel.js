@@ -58,10 +58,6 @@ function AddLevel() {
                     <option value="التربية الدينية">التربية الدينية</option>
                     <option value="الدراسات الإجتماعية">الدراسات الإجتماعية</option>
                 </Form.Select>
-                {/* <Button className='addbtn' variant="primary" onClick={()=>{
-                    if(subject!==''&& !selectdSubjects.includes(subject))
-                    setSelectedSubjects([...selectdSubjects,subject])
-                    }}>إضافة</Button> */}
                     <Button className='addbtn' variant="primary" onClick={()=>selectdSubjectsDispatch({type:'ADD SUBJECT',newSubject:subject})}>إضافة</Button>
                 </Form.Group>
             </Form>

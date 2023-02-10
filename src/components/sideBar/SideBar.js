@@ -7,6 +7,7 @@ import {MdOutlinePeopleAlt} from 'react-icons/md';
 import {SlPeople} from 'react-icons/sl';
 import {IoChatbubblesOutline} from 'react-icons/io5';
 import {RiLogoutCircleFill} from 'react-icons/ri';
+import {TbBooks} from 'react-icons/tb'
 import { useNavigate ,useLocation} from 'react-router-dom';
 import AuthContext from "../shared/AuthContext";
     import SideNav, {
@@ -76,6 +77,16 @@ function SideBar() {
                     <SlPeople className="nav-icon"/>
                 </NavIcon>
                 <NavText>الموظفون</NavText>
+            </NavItem>
+            <NavItem onClick={()=>{
+                navigate('Subjects')
+                }}
+                className={location.pathname.toLowerCase()==='/dashboard/employee'?'sidenav---selected---1EK3y sidenav---highlighted---oUx9u':''}
+                >
+                <NavIcon>
+                    <TbBooks className="nav-icon"/>
+                </NavIcon>
+                <NavText>المواد الدراسية</NavText>
             </NavItem>
             <NavItem onClick={()=>{
                 navigate('QA')
