@@ -1,6 +1,7 @@
 import axios from "axios";
 import { createContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import jwt_decode from "jwt-decode";
 
 // The 'createContext' assigned to the 'AuthContex' variable. 
 //The 'createContex' loads from the 'react' library
