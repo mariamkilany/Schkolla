@@ -4,22 +4,22 @@ import AddSubject from '../../components/popupComponents/AddSubject'
 import AuthContext from "../../components/shared/AuthContext";
 import Table from 'react-bootstrap/Table';
 import { Button } from 'react-bootstrap';
+import jwtInterceoptor from '../../helpers/jwtInterceptor';
 
 function Subjects() {
     const [subjects, setSubjects] = useState([]);
     const {user} =useContext(AuthContext)
     const handleDelete=async (subjectId)=>{
-        axios.delete(`https://h1.publisher-hub.com/v1/subject/deleteSubject/${subjectId}`,{ params: { userId: user.id } , headers: {'Authorization': `Bearer ${user.accessToken}`} })
+        jwtInterceoptor.delete(`https://h1.publisher-hub.com/v1/subject/deleteSubject/${subjectId}`,{ params: { userId: user.id } , headers: {'Authorization': `Bearer ${user.accessToken}`} })
     }
     useEffect(() => {
-    axios
+    jwtInterceoptor
     .get(`https://h1.publisher-hub.com/v1/subject/getAllSubjects`,{ params: { userId: user.id } , headers: {'Authorization': `Bearer ${user.accessToken}`} })
     .then((response) => {
         setSubjects(response.data);});}, [subjects]);
     return (
         <>
         <AddSubject/>
-        {/* {subjects.map((item) =><div>{item.name}</div>)} */}
         <Table>
             <thead>
                 <tr>

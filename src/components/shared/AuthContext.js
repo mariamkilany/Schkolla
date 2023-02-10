@@ -1,6 +1,7 @@
 import axios from "axios";
 import { createContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import jwt_decode from "jwt-decode";
 
 // The 'createContext' assigned to the 'AuthContex' variable. 
 //The 'createContex' loads from the 'react' library
@@ -12,9 +13,10 @@ export const AuthContextProvider = ({ children }) => {
 //For the initial value here we check for browser local storage, 
 //this case helps when the user reloads the page.
     const [user, setUser] = useState(() => {
-        let userProfle = localStorage.getItem("userProfile");
-        if (userProfle) {
-        return JSON.parse(userProfle);
+        let id = localStorage.getItem("id");
+        let accessToken =localStorage.getItem("accessToken")
+        if (id&&accessToken) {
+        return {id,accessToken};
         }
         return null;
     });
@@ -25,16 +27,20 @@ export const AuthContextProvider = ({ children }) => {
     //Here for every API call, we have to pass configuration to API call like 'withCredentials' with 'true' because our client application and 
     //API application runs under different ports or domains so to store the login cookie into the browser or attach the cookie for every secured API endpoint request we need those configurations.
     const login = async (payload) => {
-        let apiResponse =await axios.post("https://h1.publisher-hub.com/v1/admin/login", payload);
-        localStorage.setItem("userProfile", JSON.stringify(apiResponse.data));
-        setUser(apiResponse.data);
+        let apiResponse =await axios.post("https://h1.publisher-hub.com/v1/admin/login", payload,{
+        withCredentials:true
+        });
+        localStorage.setItem("id", apiResponse.data.id);
+        localStorage.setItem("accessToken", apiResponse.data.accessToken);
+        setUser({accessToken:apiResponse.data.accessToken, id:apiResponse.data.id});
         navigate("/dashboard");
     };
     const logout = async () => {
         //Invoking the 'Logout' API call
-    await axios.get("https://h1.publisher-hub.com/v1/admin/logout");
+    await axios.get("https://h1.publisher-hub.com/v1/admin/logout",{withCredentials:true});
     //Then remove the user profile information from the browser's local storage.
-    localStorage.removeItem("userProfile");
+    localStorage.removeItem("id");
+    localStorage.removeItem("accessToken")
     //Then empty the 'user' state variable and then navigate to 'login' page
     setUser(null);
     navigate("/login");
