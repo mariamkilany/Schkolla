@@ -34,9 +34,9 @@ function PopupContext({children}){
 
 const[selectdSubjects,selectdSubjectsDispatch]=useReducer(handleSelectedSubjects,[])
 const[teachersForSub,teachersForSubDidpatch]=useReducer(handleTeacherForSub,{});
-
+const[subjects,setSubjects]=useState([])
 return(
-    <PopupsContext.Provider value={{selectdSubjects,selectdSubjectsDispatch,teachersForSubDidpatch}}>
+    <PopupsContext.Provider value={{selectdSubjects,selectdSubjectsDispatch,teachersForSubDidpatch,subjects,setSubjects}}>
         {children}
     </PopupsContext.Provider>
 )

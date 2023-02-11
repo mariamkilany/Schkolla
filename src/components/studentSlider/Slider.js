@@ -1,68 +1,64 @@
-import React, { useState,createContext, useReducer } from 'react'
-import StuCard from './Card'
 import './slider.css';
-import staudents from './data'
 
-//create context for slider
-export const SliderContext = createContext(null)
+import Button from 'react-bootstrap/Button';
+import Card from 'react-bootstrap/Card';
 
-const handleCurrent = (num)=>{
-    if(num<0){
-        return staudents.length -1
-    }
-    else if(num===staudents.length)
-        return 0
-    else
-    return num
-}
+import React, { useRef, useState } from "react";
+// Import Swiper React components
+import { Swiper, SwiperSlide } from "swiper/react";
 
-const currentSwitch=(state,action)=>{
-    switch(action.type){
-        case 'INCREMENT':
-            return handleCurrent(state+1)
-        case 'DECREMENT':
-            return handleCurrent(state-1)
-        default:
-            return new Error()
-    }
-}
+// Import Swiper styles
+import "swiper/css";
+import "swiper/css/effect-coverflow";
+import "swiper/css/pagination";
 
-const colorSwitch=(state,action)=>{
-    switch(action.type){
-        case'INCREMENT':
-            return {curr:state.next,next:state.prev,prev:state.curr}
-        case 'DECREMENT':
-            return {curr:state.prev,next:state.curr,prev:state.next}
-        default:
-            return new Error()
-    }
-}
+// import required modules
+import { EffectCoverflow, Pagination } from "swiper";
+import students from './data';
+
 
 function Slider() {
-    //reducer to handle current card
-    const [current,currentDispatch]=useReducer(currentSwitch,0);
-    //set data from api in state
-    const [data,setData]=useState(staudents);
-    //handle switch between colors
-    const [colors,colorDispatch]=useReducer(colorSwitch,{curr:0,prev:1,next:2});
-
     return (
-    <SliderContext.Provider value={{current,currentDispatch,data,handleCurrent,colors,colorDispatch}}>
-        <div className=' w3-container d-flex'>
-            {data.map((student,index)=>{
-                //check current ,prev ,next and other cards 
-                if(index===current) 
-                return <StuCard props={{...student,display:'curr',num:colors.curr}} key={student.id} />
-                else if(index===handleCurrent(current-1))
-                return <StuCard props={{...student,display:'prev',num:colors.prev}} key={student.id} />
-                else if(index===handleCurrent(current+1))
-                return <StuCard props={{...student,display:'next',num:colors.next}} key={student.id} />
-                else 
-                return <StuCard props={{...student}} key={student.id} />
-            })}
-        </div>
-    </SliderContext.Provider>
-    )
+    <>
+        <Swiper
+        effect={"coverflow"}
+        grabCursor={true}
+        centeredSlides={true}
+        slidesPerView={"auto"}
+        coverflowEffect={{
+            rotate: 50,
+            stretch: 0,
+            depth: 100,
+            modifier: 1,
+            slideShadows: true,
+        }}
+        pagination={true}
+        modules={[EffectCoverflow, Pagination]}
+        className="mySwiper"
+        >
+        {
+            students.map((student,index)=>{
+                return <SwiperSlide >
+                        <Card className={`${index%3===0?'green-card':index%3===1?'blue-card':'pink-card'}`}>
+                    <Card.Img variant="top" src="./images/student1.png" />
+                    <Card.Body>
+                    <Card.Text>
+                        <span>الإسم: {student.name}</span>
+                        <span>المرحلة: {student.level}</span>
+                        <span> الفصل: {student.class}</span>
+                    </Card.Text>
+                    <Button className='btn btn-secondary'>عرض الطالب</Button>
+                    </Card.Body>
+                </Card>
+                </SwiperSlide>
+            })
+        }
+        
+        </Swiper>
+    </>
+  );
+
+
 }
 
 export default Slider

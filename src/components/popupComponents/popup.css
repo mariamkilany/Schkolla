@@ -14,10 +14,14 @@
     -o-border-radius: 5px !important;
     border-top: 5px solid #254C71 !important;
 }
-.modal-content .btn-primary ,.levelbtn{
+.levelbtn{
     background-color: #254C71 !important;
     border: none !important;
     box-shadow: 2px 2px 2px 1px rgb(0 0 0 / 20%);
+    width: 120px !important;
+    padding: 10px !important;
+    font-size: 12px !important;
+    font-weight: 700 !important;
 }
 .form-select {
     text-align: right !important;

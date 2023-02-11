@@ -7,7 +7,6 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle'
 // import { AuthProvider } from './helpers/
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { ProSidebarProvider } from "react-pro-sidebar";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

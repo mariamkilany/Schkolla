@@ -6,6 +6,7 @@ import './popup.css';
 import AuthContext from "../shared/AuthContext";
 import axios from 'axios';
 import jwtInterceptor from '../../helpers/jwtInterceptor';
+import { PopupsContext } from './PopupContext';
 
 function AddSubject() {
     const [show, setShow] = useState(false);
@@ -13,7 +14,7 @@ function AddSubject() {
 
     const subject=useRef();
     const {user} =useContext(AuthContext)
-
+    const {subjects,setSubjects}=useContext(PopupsContext)
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
@@ -25,7 +26,8 @@ function AddSubject() {
     }
     setValidated(true);
     await jwtInterceptor.post('https://h1.publisher-hub.com/v1/subject/addSubject',{name:subject.current.value},
-    {params: { userId: user.id } ,headers: {'Authorization': `Bearer ${user.accessToken}`}}).then(handleClose)
+    {params: { userId: user.id } ,headers: {'Authorization': `Bearer ${user.accessToken}`, withCradintials : true}})
+    .then(handleClose)
     };
     return (
         <>

@@ -9,19 +9,19 @@ export default function Home() {
     return <>
     <div className="row mb-5 gy-5 nums-cont">
         <div className="col-md-4 px-5">
-            <div className='number-cont py-md-5 py-sm-3 d-flex fs-md-3 '>
+            <div className='number-cont py-md-4 py-sm-3 d-flex fs-md-3 '>
             <span  >عدد الطلاب :1000</span>
             <img src={student} alt="student" />
             </div>
         </div>
         <div className="col-md-4 px-5">
-            <div className='number-cont py-md-5 py-sm-3 d-flex '>
+            <div className='number-cont py-md-4 py-sm-3 d-flex '>
             <span >عدد المعلمين :250</span>
             <img src={teachers} alt="teachers" />
             </div>
         </div>
         <div className="col-md-4 px-5">
-            <div className='number-cont py-md-5 py-sm-3 d-flex '>
+            <div className='number-cont py-md-4 py-sm-3 d-flex '>
             <span >عدد الموظفين:5</span>
             <img src={employee} alt="employee"  />
             

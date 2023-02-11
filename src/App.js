@@ -17,13 +17,6 @@ import Base from './pages/Base/Base';
 import Subjects from './pages/Subjects/Subjects';
 import axios from 'axios';
 function App() {
-  const refresh=async()=>{
-    console.log('from app')
-    await fetch("https://h1.publisher-hub.com/v1/admin/refreshToken")
-            .then(res => console.log(res))
-    await axios.get("https://h1.publisher-hub.com/v1/admin/refreshToken").then((res,req)=>{console.log(res)})
-  }
-  refresh()
   return (
     <div className="App">
       <AuthContextProvider>
