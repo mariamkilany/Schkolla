@@ -37,7 +37,7 @@ export const AuthContextProvider = ({ children }) => {
     };
     const logout = async () => {
         //Invoking the 'Logout' API call
-    await axios.get("https://h1.publisher-hub.com/v1/admin/logout",{withCredentials:true});
+    await axios.get("https://h1.publisher-hub.com/v1/admin/logout");
     //Then remove the user profile information from the browser's local storage.
     localStorage.removeItem("id");
     localStorage.removeItem("accessToken")

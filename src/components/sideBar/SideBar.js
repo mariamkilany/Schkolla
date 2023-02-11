@@ -81,7 +81,7 @@ function SideBar() {
             <NavItem onClick={()=>{
                 navigate('Subjects')
                 }}
-                className={location.pathname.toLowerCase()==='/dashboard/employee'?'sidenav---selected---1EK3y sidenav---highlighted---oUx9u':''}
+                className={location.pathname.toLowerCase()==='/dashboard/subjects'?'sidenav---selected---1EK3y sidenav---highlighted---oUx9u':''}
                 >
                 <NavIcon>
                     <TbBooks className="nav-icon"/>
