@@ -1,10 +1,17 @@
 .slogn{
     font-family: 'Reem Kufi', sans-serif !important;
+    font-size: 35px !important;
 }
 .log-head{
     display: flex;
     justify-content: center;
     align-items: center;
+    font-size: 28px !important;
+    transform: translateX(20px);
+    -webkit-transform: translateX(20px);
+    -moz-transform: translateX(20px);
+    -ms-transform: translateX(20px);
+    -o-transform: translateX(20px);
 }
 .login-con{
     display: flex;

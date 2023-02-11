@@ -1,0 +1,43 @@
+.shap-sec{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transform: translateY(30px);
+    -webkit-transform: translateY(30px);
+    -moz-transform: translateY(30px);
+    -ms-transform: translateY(30px);
+    -o-transform: translateY(30px);
+}
+.shape{
+    background: rgb(74,123,170);
+    background: linear-gradient(90deg, rgba(74,123,170,1) 0%, rgba(37,76,113,1) 82%);
+    border-radius: 30% 70% 70% 30% / 30% 36% 64% 70% ;
+    -webkit-border-radius: 30% 70% 70% 30% / 30% 36% 64% 70% ;
+    -moz-border-radius: 30% 70% 70% 30% / 30% 36% 64% 70% ;
+    -ms-border-radius: 30% 70% 70% 30% / 30% 36% 64% 70% ;
+    -o-border-radius: 30% 70% 70% 30% / 30% 36% 64% 70% ;
+    width: 60vh;
+    height: 60vh;
+}
+.student-svg{
+    transform: translateY(80px);
+    -webkit-transform: translateY(80px);
+    -moz-transform: translateY(80px);
+    -ms-transform: translateY(80px);
+    -o-transform: translateY(80px);
+}
+.disciption h1{
+    font-size: 49px !important;
+    font-weight: 600 !important;
+}
+.disciption span{
+    font-size: 45px !important;
+    font-weight: 600 !important;
+}
+.serv{
+    border-radius: 8px;
+    -webkit-border-radius: 8px;
+    -moz-border-radius: 8px;
+    -ms-border-radius: 8px;
+    -o-border-radius: 8px;
+}

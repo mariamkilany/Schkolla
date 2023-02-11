@@ -36,7 +36,7 @@ export default function Login() {
   return <>
   <Form noValidate className='col-md-6 col-sm-8' validated={validated} onSubmit={handleSubmit}>
             <div className="log-container  py-3">
-            <h2 className='mb-3'>أهلا بعودتك</h2>
+            <h2 className='mb-3 welcome-back'>أهلا بعودتك</h2>
       <div className="input-cont py-4">
       <Form.Group className="mb-5" controlId="validationCustom01" >
                 <Form.Control
