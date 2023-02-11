@@ -30,16 +30,14 @@ const handleTeacherForSub=(state,action)=>{
     }
 }
 
-function PopupContext(){
+function PopupContext({children}){
 
 const[selectdSubjects,selectdSubjectsDispatch]=useReducer(handleSelectedSubjects,[])
 const[teachersForSub,teachersForSubDidpatch]=useReducer(handleTeacherForSub,{});
 
 return(
     <PopupsContext.Provider value={{selectdSubjects,selectdSubjectsDispatch,teachersForSubDidpatch}}>
-        <AddLevel/>
-        <AddClass/>
-        <DeleteLevel/>
+        {children}
     </PopupsContext.Provider>
 )
 }

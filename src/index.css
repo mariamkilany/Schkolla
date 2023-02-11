@@ -5,6 +5,7 @@ body {
   text-align: right !important;
   font-family: 'El Messiri', sans-serif !important;
   background-color: #F3F4F8 !important;
+  height: 100%;
   /* overflow: hidden; */
 }
 

@@ -48,7 +48,7 @@ function Slider() {
 
     return (
     <SliderContext.Provider value={{current,currentDispatch,data,handleCurrent,colors,colorDispatch}}>
-        <div className='row w3-container'>
+        <div className=' w3-container d-flex'>
             {data.map((student,index)=>{
                 //check current ,prev ,next and other cards 
                 if(index===current) 

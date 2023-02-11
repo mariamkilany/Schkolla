@@ -13,7 +13,6 @@ function Bar() {
         plotOptions: {bar: {distributed: true}}  
         })
         return (
-        <div className="row">
             <div className="mixed-chart">
                 <span className='title'>نسب الغياب</span>
                 <Chart
@@ -23,7 +22,6 @@ function Bar() {
                     width="500"
                 />
             </div>
-        </div>
         );
     }
 
