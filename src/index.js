@@ -4,13 +4,8 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import 'bootstrap/dist/css/bootstrap.min.css';
-<<<<<<< HEAD
 import 'bootstrap/dist/js/bootstrap.bundle'
-import { AuthProvider } from './context/AuthProvider';
-=======
->>>>>>> 8c25d2df8bae415821ef7ea87528179ec6971cc6
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { ProSidebarProvider } from "react-pro-sidebar";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
