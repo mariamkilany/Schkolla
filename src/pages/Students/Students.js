@@ -1,3 +1,6 @@
+import Moreinfo from '../../components/Moreinfo/Moreinfo'
 export default function Students() {
-    return <h3>Students</h3>;
+    return <>
+        <Moreinfo/>
+    </>;
 }
