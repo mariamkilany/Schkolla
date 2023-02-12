@@ -9,17 +9,20 @@ import './subjects.css'
 import { PopupsContext } from '../../components/popupComponents/PopupContext';
 function Subjects() {
     const{subjects,setSubjects}=useContext(PopupsContext)
-    const {user} =useContext(AuthContext)
+    const {accessToken} =useContext(AuthContext)
+    const id=localStorage.getItem('id')
+    
     const handleDelete=async (subjectId)=>{
-        jwtInterceoptor
-        .delete(`https://h1.publisher-hub.com/v1/subject/deleteSubject/${subjectId}`,{ params: { userId: user.id } , headers: {Authorization : `Bearer ${user.accessToken}`, withCradintials : true} })
+        axios
+        .delete(`subject/deleteSubject/${subjectId}`,{ params: { userId: id } , headers: {authorization : `Bearer ${accessToken}`} })
     }
     useEffect(() => {
-    jwtInterceoptor
-    .get(`https://h1.publisher-hub.com/v1/subject/getAllSubjects`,{ params: { userId: user.id } , headers: {Authorization: `Bearer ${user.accessToken}`, withCradintials : true} })
+    axios
+    .get(`subject/getAllSubjects`,{ params: { userId: id } , headers: {authorization: `Bearer ${accessToken}`} })
     .then((response) => {
+        console.log(response.data)
         setSubjects(response.data)
-        ;});}, [subjects]);
+        ;});}, [subjects,setSubjects,id,accessToken]);
     return (
         <>
         <div className="row sub-cont">

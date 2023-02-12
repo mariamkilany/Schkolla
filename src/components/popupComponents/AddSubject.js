@@ -13,7 +13,8 @@ function AddSubject() {
     const [validated, setValidated] = useState(false);
 
     const subject=useRef();
-    const {user} =useContext(AuthContext)
+    const {accessToken} =useContext(AuthContext)
+    const id=localStorage.getItem('id')
     const {subjects,setSubjects}=useContext(PopupsContext)
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
@@ -25,8 +26,8 @@ function AddSubject() {
         event.stopPropagation();
     }
     setValidated(true);
-    await jwtInterceptor.post('https://h1.publisher-hub.com/v1/subject/addSubject',{name:subject.current.value},
-    {params: { userId: user.id } ,headers: {'Authorization': `Bearer ${user.accessToken}`, withCradintials : true}})
+    await axios.post('subject/addSubject',{name:subject.current.value},
+    {params: { userId: id } ,headers: {'Authorization': `Bearer ${accessToken}`, withCradintials : true}})
     .then(handleClose)
     };
     return (

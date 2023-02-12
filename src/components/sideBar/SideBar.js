@@ -102,7 +102,7 @@ function SideBar() {
                 <NavIcon>
                     <img src={admin} alt="admin" className="admin-pic shadow-lg rounded-circle"  />
                 </NavIcon>
-                <NavText>{user.email}</NavText>
+                {/* <NavText>{user.email}</NavText> */}
             </NavItem>
             <NavItem eventKey="logout" onClick={()=>logout()}>
                 <NavIcon>
