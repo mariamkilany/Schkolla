@@ -6,11 +6,11 @@
     padding: 20px 18px 80px 0;
 }
 .nav-pills .nav-link {
-    transform: translateX(10%);
-    -webkit-transform: translateX(10%);
-    -moz-transform: translateX(10%);
-    -ms-transform: translateX(10%);
-    -o-transform: translateX(10%);
+    transform: translateX(6%);
+    -webkit-transform: translateX(6%);
+    -moz-transform: translateX(6%);
+    -ms-transform: translateX(6%);
+    -o-transform: translateX(6%);
     align-items: center;
     text-align: center;
     color: #254C71;

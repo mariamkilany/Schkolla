@@ -1,6 +1,6 @@
-import Moreinfo from '../../components/Moreinfo/Moreinfo'
+import MoreinfoStudnt from '../../components/Moreinfo/MoreinfoStudnt'
 export default function Students() {
     return <>
-        <Moreinfo/>
+        <MoreinfoStudnt/>
     </>;
 }

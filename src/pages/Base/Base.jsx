@@ -5,7 +5,7 @@ import report from '../../imge/report.png'
 import calender from '../../imge/casual-life-3d-blue-desk-calendar-1.png'
 import qustion from '../../imge/qusetion.png'
 import app from '../../imge/casual-life-3d-smarphone-display-with-instagram.png'
-import info from '../../imge/lumiere-plaque-with-information.png'
+import info from '../../imge/3d-casual-life-statistics.png'
 
     
 const Base = () => {
@@ -22,41 +22,43 @@ const Base = () => {
                     <h1> Schkolla <span>مرحبا بكم فى</span></h1>
                     <p className='fw-bolder mt-2'>نظام ادارة المدرسة بشكل أسهل</p>
                     <p>نحن نظام ادارة مدسي يتمتع بخصائص فريدة لجعل العمليات التعليمة و الادارية ابسط و تسهيل العمليات اليومية المعقده وفيما يلى ابرز الخدمات المقدمه من النظام</p>
-                        <div className="row mt-5 py-5">
-                        <div className="col-md-4">
+                        <div className="row mt-4 py-4">
+                        <div className="col-md-4 mt-3 h-100">
                             <div className="serv bg-white p-3">
-                                <img src={qr} alt="qr code" className='w-100' />
-                                <h4 className='mt-2'>مسح الكود لاخذ الغياب</h4>
+                                <img src={qr} alt="qr code" className='w-50' />
+                                <h4 className=''>مسح الكود لاخذ الغياب</h4>
                             </div>
                     </div>
-                    <div className="col-md-4">
+                    <div className="col-md-4 mt-3 h-100">
                             <div className="serv bg-white p-3">
-                                <img src={report} alt="report" className='w-100' />
-                                <h4 className='mt-5'>تقارير شهرية للمتابعة </h4>
+                                <img src={report} alt="report" className='w-50' />
+                                <h4 className=''>تقارير شهرية للمتابعة </h4>
                             </div>
                     </div>
-                    <div className="col-md-4">
-                            <div className="serv bg-white p-3 pb-4">
-                                <img src={calender} alt="calender" className='w-100' />
-                                <h4 className='mt-4'>المتابعة فى اخذ الغياب</h4>
-                            </div>
-                    </div>
-                    <div className="col-md-4 mt-3">
-                            <div className="serv bg-white p-3 pb-4">
-                                <img src={qustion} alt="qustion" className='w-100' />
-                                <h4 className='mt-4'>امكانية الاطلاع على الشكاوى</h4>
-                            </div>
-                    </div>
-                    <div className="col-md-4 mt-3">
+                    <div className="col-md-4 mt-3 h-100">
                             <div className="serv bg-white p-3 ">
-                                <img src={app} alt="app" className='w-100' />
-                                <h4 className='mt-2'> الاحتواء على انظمة صغرى</h4>
+                                <img src={calender} alt="calender" className='w-50' />
+                                <h4 className=''>المتابعة فى اخذ الغياب</h4>
                             </div>
                     </div>
-                    <div className="col-md-4 mt-3">
-                            <div className="serv bg-white p-3 pb-3">
-                                <img src={info} alt="info" className='w-75' />
-                                <h4 className='mt-4'>الاطلاع على البيانات</h4>
+            </div>
+            <div className="row">
+            <div className="col-md-4 mt-3 h-100">
+                            <div className="serv bg-white p-3">
+                                <img src={qustion} alt="qustion" className='w-50' />
+                                <h4 className=''>امكانية الاطلاع على الشكاوى</h4>
+                            </div>
+                    </div>
+                    <div className="col-md-4 mt-3 h-100">
+                            <div className="serv bg-white p-3">
+                                <img src={app} alt="app" className='w-50' />
+                                <h4 className=''> الاحتواء على انظمة صغرى</h4>
+                            </div>
+                    </div>
+                    <div className="col-md-4 mt-3 h-100">
+                            <div className="serv bg-white p-3">
+                                <img src={info} alt="info" className='w-50 ' />
+                                <h4 className=''>الاطلاع على البيانات</h4>
                             </div>
                     </div>
             </div>
