@@ -20,11 +20,11 @@
     height: 60vh;
 }
 .student-svg{
-    transform: translateY(80px);
-    -webkit-transform: translateY(80px);
-    -moz-transform: translateY(80px);
-    -ms-transform: translateY(80px);
-    -o-transform: translateY(80px);
+    transform: translateY(45px);
+    -webkit-transform: translateY(45px);
+    -moz-transform: translateY(45px);
+    -ms-transform: translateY(45px);
+    -o-transform: translateY(45px);
 }
 .disciption h1{
     font-size: 49px !important;
@@ -40,5 +40,9 @@
     -moz-border-radius: 8px;
     -ms-border-radius: 8px;
     -o-border-radius: 8px;
-    height: 100% !important;
+    height: 140px !important;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
 }

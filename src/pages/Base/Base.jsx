@@ -11,7 +11,7 @@ import info from '../../imge/3d-casual-life-statistics.png'
 const Base = () => {
     return (
         <>
-        <div className="container">
+        <div className="container overflow-hidden">
             <div className="row">
                 <div className="shap-sec col-md-6">
                     <div className="shape">
