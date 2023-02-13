@@ -33,7 +33,7 @@ function App() {
         } catch (err) {
           localStorage.removeItem("firstLogin");
           console.log(err)
-          // window.location.href = "/login";
+          window.location.href = "/login";
         }
       };
       refreshToken();
