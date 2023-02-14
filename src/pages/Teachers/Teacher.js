@@ -1,3 +1,10 @@
+import TeacherShow from "../../components/ShowData/Teacher"
+
 export default function Teacher() {
-    return <h3>Teacher</h3>;
+    return
+    <div>
+        <TeacherShow/>
+    </div>
+    
+    
 }

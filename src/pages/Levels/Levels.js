@@ -1,3 +1,6 @@
+import Tabs from "../../components/tabs/Tabs";
 export default function Levels() {
-    return <h3>levels</h3>;
+    return <div>
+        <Tabs/>
+    </div>;
 }
