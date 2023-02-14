@@ -6,18 +6,19 @@ import AuthContext from "./AuthContext";
 //'accessBy'(a custom configuration whether the route can be accessed by either authenticated or non-authenticated user)
 const ProtectedRoute = ({ children, accessBy }) => {
     //Fetching the 'user' information form the 'AuthContext'.
-    const { user } = useContext(AuthContext);
+    // const { accessToken } = useContext(AuthContext);
+    const login=localStorage.getItem('firstLogin')
     //If the 'accessBy' value is 'non-authenticated' and the user is not logged into our application 
     //then the user can access the page of the route.
     if (accessBy === "non-authenticated") {
-        if (!user) {
+        if (!login) {
             return children;
         }
     }
     //If the 'accessBy' value is 'authenticated' and the user is logged into our application 
     //then the user can access the page of the route.
     else if (accessBy === "authenticated") {
-        if (user) {
+        if (login) {
         return children;
         }
     }

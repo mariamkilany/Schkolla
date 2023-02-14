@@ -9,15 +9,14 @@
     -ms-border-radius: 27px;
     -o-border-radius: 27px;
     padding: 10px 15px;
+    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
 }
-h2{
-    /* font-family: 'El Messiri'; */
-    font-style: normal;
-    font-weight: 400;
-    font-size: 31px;
-    line-height: 48px;
+.welcome-back{
+    font-style: normal !important;
+    font-size: 30px !important;
+    line-height: 48px !important;
     text-align: center;
-    color: #21161B;
+    color: #21161B !important;
 }
 input{
     /* box-sizing: border-box; */
