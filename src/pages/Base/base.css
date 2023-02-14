@@ -2,11 +2,6 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    transform: translateY(30px);
-    -webkit-transform: translateY(30px);
-    -moz-transform: translateY(30px);
-    -ms-transform: translateY(30px);
-    -o-transform: translateY(30px);
 }
 .shape{
     background: rgb(74,123,170);
@@ -20,11 +15,11 @@
     height: 60vh;
 }
 .student-svg{
-    transform: translateY(45px);
+    /* transform: translateY(45px);
     -webkit-transform: translateY(45px);
     -moz-transform: translateY(45px);
     -ms-transform: translateY(45px);
-    -o-transform: translateY(45px);
+    -o-transform: translateY(45px); */
 }
 .disciption h1{
     font-size: 49px !important;
