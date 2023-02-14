@@ -45,4 +45,11 @@
     flex-direction: column;
     align-items: center;
     justify-content: space-around;
+    box-shadow: 2px 3px 0 #00000012;
+}
+.disciption h1{
+    font-size: 217% !important;
+}
+.serv img{
+    width: 80px;
 }
