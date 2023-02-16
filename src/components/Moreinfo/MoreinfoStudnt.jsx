@@ -2,7 +2,11 @@ import React, {useState } from 'react';
 import Select from 'react-select'
 import FullCalendar from '@fullcalendar/react' 
 import dayGridPlugin from '@fullcalendar/daygrid'
+import * as bootstrap from "bootstrap";
+import "bootstrap/dist/css/bootstrap.min.css";
+// import interactionPlugin from "@fullcalendar/interaction"
 import './moreinfo.css'
+import { height } from '@mui/system';
 export default function More() {
     const options = [
         { value: 'January ', label: 'يناير ' },
@@ -22,6 +26,13 @@ export default function More() {
         const handleUpload =() => {
     alert("File uploaded")
         };
+        const events = [
+            {
+              title: "The Title",
+              start: "2023-01-05T08:00:00",
+              end: "2023-01-05T09:00:00",
+            }]
+            
 return <>
         <div class="d-flex align-items-start">
         <div class="nav flex-column nav-pills me-3" id="v-pills-tab" role="tablist" aria-orientation="vertical">
@@ -46,15 +57,30 @@ return <>
         </div>
         </div>
     <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab" tabindex="0">
-        <div className="upsent">
+        <div className="upsent m-3">
         <FullCalendar
-        plugins={[ dayGridPlugin ]}
-        initialView="dayGridMonth"
+        plugins={[ dayGridPlugin]}
+        initialView={"dayGridMonth"}
+        headerToolbar={{
+            start:"today,prev,next",
+            center:"title",
+            end:"dayGridMonth,dayGridWeek,dayGridDay"
+        }
+        }
+        height={"50vh"}
         weekends={false}
-        events={[
-            { title: 'event 1', date: '2019-04-01' },
-            { title: 'event 2', date: '2019-04-02' }
-        ]}
+        events={events}
+        eventDidMount={(info)=>{
+            return new bootstrap.Popover(info.el,{
+                title:info.event.title,
+                placement:"auto",
+                trigger:"hover",
+                customClass:"popoverStyle",
+                content:
+                "<p>Please subscribe<strong>Bootstrap popover</strong>.</p>",
+              html: true,
+            })
+        }}
     />
         </div>
     </div>
