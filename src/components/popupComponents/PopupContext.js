@@ -1,10 +1,9 @@
-import React , {createContext , useReducer, useState} from 'react';
-import AddClass from './AddClass';
-import AddLevel from './AddLevel';
-import DeleteLevel from './DeleteLevel';
+import React , {createContext , useReducer, useState } from 'react';
 
 //create context for popups
 export const PopupsContext = createContext(null);
+
+
 
 const handleSelectedSubjects=(state,action)=>{
     switch(action.type){

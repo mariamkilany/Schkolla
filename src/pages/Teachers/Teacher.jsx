@@ -1,6 +1,8 @@
 import MoreinfoTeacher from '../../components/Moreinfo/MoreinfoTeacher'
+import AddTeacher from '../../components/popupComponents/AddTeacher';
 import teacher from '../../imge/admin.jpg'
 import './teacher.css'
+import UploadWidget from '../../components/cloudinary/UploadWidget';
 export default function Teacher() {
     return <>
         <div className="container">
@@ -20,7 +22,7 @@ export default function Teacher() {
             <div class="d-flex row teacher-row-2 align-items-start gy-4">
                 <MoreinfoTeacher/>
             </div>
+            <AddTeacher/>
         </div>
-    
     </>; 
 }

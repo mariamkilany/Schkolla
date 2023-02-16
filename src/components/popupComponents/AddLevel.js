@@ -1,10 +1,12 @@
-import React, { useState ,useContext } from 'react';
+import React, { useState ,useContext, useEffect, useRef } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
 import Table from 'react-bootstrap/Table';
 import { PopupsContext } from './PopupContext';
+import AuthContext from '../shared/AuthContext';
 import './popup.css';
+import axios from 'axios'
 
 function AddLevel() {
     const [show, setShow] = useState(false);
@@ -12,16 +14,29 @@ function AddLevel() {
     // const[selectdSubjects,setSelectedSubjects]=useState([]);
     const{selectdSubjects,selectdSubjectsDispatch}=useContext(PopupsContext)
     const[subject,setSubject]=useState('');
+    const [subjects,setSubjects]=useState([]);
+    const name=useRef(null);
+    const accessToken =localStorage.getItem('accessToken');
+    const id=localStorage.getItem('id');
+    useEffect(()=>{
+        axios.get(`subject/getAllSubjects`
+    ,{ params: { userId: id } , headers: {authorization: `Bearer ${accessToken}`} })
+    .then((response) =>setSubjects(response.data))
+    },[])
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async(event) => {
     const form = event.currentTarget;
     if (form.checkValidity() === false) {
         event.preventDefault();
         event.stopPropagation();
     }
+    console.log(selectdSubjects)
+    await axios.post('grade/addGrade',{name:name.current.value,subjects:selectdSubjects},
+    {params: { userId: id } ,headers: {'Authorization': `Bearer ${accessToken}`}})
+    .then(handleClose)
     setValidated(true);
     };
     return (
@@ -42,6 +57,7 @@ function AddLevel() {
                     required
                     type="text"
                     placeholder="مثال : الاولى"
+                    ref={name}
                     autoFocus
                 />
                 </Form.Group>
@@ -52,11 +68,13 @@ function AddLevel() {
                 <Form.Label>إضافة مواد</Form.Label>
                 <Form.Select required onChange={(e)=>setSubject(e.target.value)}>
                     <option value=''>اختر مادة</option>
-                    <option value="اللغة العربية">اللغة العربية</option>
-                    <option value="اللغة الإنجليزية">اللغة الإنجليزية</option>
-                    <option value="الرياضيات">الرياضيات</option>
-                    <option value="التربية الدينية">التربية الدينية</option>
-                    <option value="الدراسات الإجتماعية">الدراسات الإجتماعية</option>
+                    {subjects.map((sub)=>{
+                        return (
+                            <option value={sub._id} key={sub._id}>
+                                {sub.name}
+                            </option>
+                        )
+                    })}
                 </Form.Select>
                     <Button className='addbtn' variant="primary" onClick={()=>selectdSubjectsDispatch({type:'ADD SUBJECT',newSubject:subject})}>إضافة</Button>
                 </Form.Group>

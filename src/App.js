@@ -30,10 +30,11 @@ function App() {
             withCredentials: true
           });
           setAccessToken(res1.data.accessToken)
+          localStorage.setItem('accessToken',res1.data.accessToken)
         } catch (err) {
           localStorage.removeItem("firstLogin");
           console.log(err)
-          // window.location.href = "/login";
+          window.location.href = "/login";
         }
       };
       refreshToken();
