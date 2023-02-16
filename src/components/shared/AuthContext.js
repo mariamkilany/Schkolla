@@ -39,6 +39,7 @@ export const AuthContextProvider = ({ children }) => {
         // setId(apiResponse.data.id)
         localStorage.setItem('id',apiResponse.data.id)
         setAccessToken(apiResponse.data.accessToken)
+        localStorage.setItem('accessToken',apiResponse.data.accessToken)
         localStorage.setItem('firstLogin', 'true');
         // navigate("/dashboard");
         window.location.href='/dashboard'

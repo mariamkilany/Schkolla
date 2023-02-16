@@ -12,18 +12,16 @@ const Layout = ({ children }) => {
         <>
         {!(location.pathname.toLowerCase().includes('dashboard'))&&
         <Navbar style={{background:'#F3F4F8'}}>
-            <Navbar.Brand as={Link} to="/">
-                    <img src={logo} alt=""  className="w-50"/>
+            <Navbar.Brand as={Link} to="/" className="d-flex">
+                    <img src={logo} alt="logo"  className="w-50"/>
             </Navbar.Brand>
-            <Nav>
-                {accessToken && (<Nav.Link as={Link} to="/dashboard">DashBoard</Nav.Link>)}
+            <Nav className="ms-auto me-2 ">
+                {accessToken && (<Nav.Link as={Link} to="/dashboard">لوحة التحكم</Nav.Link>)}
             </Nav>
-            <Nav className="ms-auto me-5 ">
-            {/* Display authenticated user email address. */}
-            {/* {accessToken && <Nav.Link>{user?.email}</Nav.Link>} */}
-            {/* Show the login menu item if the user is not authenticated. */}
-            {!accessToken&&location.pathname!=='/login' && (<Nav.Link as={Link} to="/login">تسجيل الدخول</Nav.Link>)}
-            </Nav>
+            {!accessToken&&location.pathname!=='/login' &&
+            <Nav className="ms-auto me-2">
+            <Nav.Link as={Link} to="/login">تسجيل الدخول</Nav.Link>
+            </Nav>}
         </Navbar>}
         <Container>{children}</Container>
         </>

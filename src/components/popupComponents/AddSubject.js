@@ -13,9 +13,8 @@ function AddSubject() {
     const [validated, setValidated] = useState(false);
 
     const subject=useRef();
-    const {accessToken} =useContext(AuthContext)
+    const accessToken =localStorage.getItem('accessToken');
     const id=localStorage.getItem('id')
-    const {subjects,setSubjects}=useContext(PopupsContext)
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 

@@ -6,11 +6,6 @@
     padding: 20px 18px 80px 0;
 }
 .nav-pills .nav-link {
-    transform: translateX(6%);
-    -webkit-transform: translateX(6%);
-    -moz-transform: translateX(6%);
-    -ms-transform: translateX(6%);
-    -o-transform: translateX(6%);
     align-items: center;
     text-align: center;
     color: #254C71;
@@ -31,10 +26,11 @@
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     border-radius: 10px;
     padding: 20px 40px;
+    width: 70% !important;
 }
 .personal-info{
     text-align: right;
- }
+}
 .personal-info h3{
     /* margin-bottom: 10px !important; */
     font-style: normal;
@@ -55,4 +51,9 @@
 }
 .upsen{
     padding: 20px 50px 50px 0px;
+}
+.nav-teacher{
+    padding-top: 60px;
+    padding-left: 0;
+    padding-right: 0;
 }

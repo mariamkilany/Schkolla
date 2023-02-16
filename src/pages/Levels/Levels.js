@@ -1,3 +1,8 @@
+import Tabs from "../../components/tabs/Tabs";
+import AddLevel from '../../components/popupComponents/AddLevel'
 export default function Levels() {
-    return <h3>levels</h3>;
+    return <div>
+        <Tabs/>
+        <AddLevel/>
+    </div>;
 }
