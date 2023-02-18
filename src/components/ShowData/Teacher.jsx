@@ -1,6 +1,6 @@
 
 import TeacherData from "./TeacherData";
-import Button from 'react-bootstrap/Button';
+import Table from 'react-bootstrap/Table';
 import"./style.css"
 import { useEffect, useRef, useState } from "react";
 import axios from "axios";
@@ -19,11 +19,13 @@ export default function TeacherShow() {
 
     return (
         <>
-        <input type="search1" placeholder="البحث بالاسم"/>
-        <input type="search2" placeholder="البحث بالرقم القومي" ref={teacherId} />
-            <table>
+        <div className="input-cont row mb-5">
+        <input className="col-md-4"  type="search1" placeholder="البحث بالاسم"/>
+        <input  className="col-md-4" type="search2" placeholder="البحث بالرقم القومي" ref={teacherId} />
+        </div>
+        <Table striped  hover>
                 <thead className="line">
-                    <th>الرقم القومي</th>
+                    <th >الرقم القومي</th>
                     <th>الصورة </th>
                     <th>الاسم </th>
                     <th>النوع </th>
@@ -35,7 +37,7 @@ export default function TeacherShow() {
                     { teacherId.current.value===''? teachersDate.map((data)=>{
                             return(
                         <tr className={`teacherImg`}>
-                            <td>{data._id}</td>
+                            <td>{data.nationalId}</td>
                             <td><img src={data.imgUrl}alt={"name"} /></td>
                             <td>{data.name}</td>
                             <td>{data.gendre}</td>
@@ -45,7 +47,7 @@ export default function TeacherShow() {
                         </tr>)
                     }):
                     teachersDate.map((data)=>
-                        <tr className={`teacherImg ${teacherId.current.value!==data._id?'disapear':''}`}>
+                        <tr className={`teacherImg ${teacherId.current.value!==data.nationalId?'disapear':''}`}>
                             <td>{data._id}</td>
                             <td><img src={data.imgUrl}alt={"name"} /></td>
                             <td>{data.name}</td>
@@ -57,7 +59,7 @@ export default function TeacherShow() {
                     )
                 }
                 </tbody>
-            </table>
+            </Table>
         </>
 
     );

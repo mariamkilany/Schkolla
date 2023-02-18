@@ -72,7 +72,7 @@ const AddTeacher = () => {
     };
     return (
         <>
-        <Button variant="primary" className='levelbtn' onClick={handleShow}>إضافة معلم جديد</Button>
+        <Button variant="primary" className='levelbtn mt-5' onClick={handleShow}>إضافة معلم جديد</Button>
         <Modal show={show} onHide={handleClose}>
             <Modal.Header closeButton>
             <Modal.Title>معلومات المعلم الشخصية</Modal.Title>
