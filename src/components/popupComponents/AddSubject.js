@@ -1,12 +1,9 @@
-import React, { useState ,useContext, useRef } from 'react';
+import React, { useState ,useRef } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
 import './popup.css';
-import AuthContext from "../shared/AuthContext";
 import axios from 'axios';
-import jwtInterceptor from '../../helpers/jwtInterceptor';
-import { PopupsContext } from './PopupContext';
 
 function AddSubject() {
     const [show, setShow] = useState(false);
@@ -34,7 +31,6 @@ function AddSubject() {
         <Button variant="primary" className='levelbtn' onClick={handleShow}>
         إضافة مادة دراسية
         </Button>
-
         <Modal show={show} onHide={handleClose}>
             <Modal.Header closeButton>
             <Modal.Title>إضافة مادة جديدة</Modal.Title>

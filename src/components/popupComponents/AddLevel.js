@@ -4,7 +4,6 @@ import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
 import Table from 'react-bootstrap/Table';
 import { PopupsContext } from './PopupContext';
-import AuthContext from '../shared/AuthContext';
 import './popup.css';
 import axios from 'axios'
 
@@ -15,6 +14,7 @@ function AddLevel() {
     const{selectdSubjects,selectdSubjectsDispatch}=useContext(PopupsContext)
     const[subject,setSubject]=useState('');
     const [subjects,setSubjects]=useState([]);
+    const [subjectsIds,setSubjectsIds]=useState([])
     const name=useRef(null);
     const accessToken =localStorage.getItem('accessToken');
     const id=localStorage.getItem('id');
@@ -33,8 +33,8 @@ function AddLevel() {
         event.preventDefault();
         event.stopPropagation();
     }
-    console.log(selectdSubjects)
-    await axios.post('grade/addGrade',{name:name.current.value,subjects:selectdSubjects},
+    console.log(subjectsIds)
+    await axios.post('grade/addGrade',{name:name.current.value,subjects:subjectsIds},
     {params: { userId: id } ,headers: {'Authorization': `Bearer ${accessToken}`}})
     .then(handleClose)
     setValidated(true);
@@ -44,7 +44,6 @@ function AddLevel() {
         <Button variant="primary" className='levelbtn' onClick={handleShow}>
         إضافة مرحلة دراسية
         </Button>
-
         <Modal show={show} onHide={handleClose}>
             <Modal.Header closeButton>
             <Modal.Title>إضافة مرحلة جديدة</Modal.Title>
@@ -70,13 +69,19 @@ function AddLevel() {
                     <option value=''>اختر مادة</option>
                     {subjects.map((sub)=>{
                         return (
-                            <option value={sub._id} key={sub._id}>
+                            <option value={sub.name+"  "+sub._id} key={sub._id}>
                                 {sub.name}
                             </option>
                         )
                     })}
                 </Form.Select>
-                    <Button className='addbtn' variant="primary" onClick={()=>selectdSubjectsDispatch({type:'ADD SUBJECT',newSubject:subject})}>إضافة</Button>
+                    <Button className='addbtn' variant="primary" onClick={()=>{
+                        var subname= subject.split("  ")[0]
+                        var subid = subject.split("  ")[1]
+                        selectdSubjectsDispatch({type:'ADD SUBJECT',newSubject:subname})
+                        if(!subjectsIds.includes(subid))
+                        setSubjectsIds([...subjectsIds,subid])
+                        }}>إضافة</Button>
                 </Form.Group>
             </Form>
             {(selectdSubjects && selectdSubjects.length)?
@@ -91,7 +96,9 @@ function AddLevel() {
             {selectdSubjects.map((sub)=>{
                 return (
             <tr key={sub}>
-                <td><Button variant="danger" onClick={()=>selectdSubjectsDispatch({type:'DELETE SUBJECT',deletedSubject:sub})}>حذف</Button></td>
+                <td><Button variant="danger" onClick={
+                    ()=>selectdSubjectsDispatch({type:'DELETE SUBJECT',deletedSubject:sub})}>حذف</Button>
+                </td>
                 <td>{sub}</td>
             </tr>
             )

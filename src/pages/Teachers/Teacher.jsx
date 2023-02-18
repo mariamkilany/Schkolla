@@ -7,7 +7,7 @@ export default function Teacher() {
     return <>
         <div className="container">
             <div className="row mb-4 teacher-row1 gy-4">
-            <div className="col-sm-3 btn-container">
+            <div className="col-sm-3 btn-container ">
                     <button className='btn btn-warning btn-1 w-100'>تعديل البيانات</button>
                     <button className='btn btn-danger btn-2 w-100'>حذف من النظام</button>
                 </div>

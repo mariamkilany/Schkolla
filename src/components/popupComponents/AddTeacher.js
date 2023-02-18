@@ -11,7 +11,7 @@ const AddTeacher = () => {
     const [show, setShow] = useState(false);
     const [validated, setValidated] = useState(false);
 
-    const {accessToken} =useContext(AuthContext)
+    const accessToken = localStorage.getItem('accessToken')
     const id=localStorage.getItem('id')
 
     const name = useRef(null);
@@ -19,7 +19,7 @@ const AddTeacher = () => {
     const nationalId = useRef(null);
     const dateOfBirth = useRef(null);
     const age = useRef(null);
-    const [gender,setSelected] = useState(null);
+    const [gender,setSelected] = useState('ذكر');
     const email = useRef(null);
     const phoneNumber = useRef(null);
     const address = useRef(null);
@@ -115,7 +115,6 @@ const AddTeacher = () => {
                 <Form.Control
                     required
                     type="number"
-                    autoFocus
                     ref={age}
                 />
                 </Form.Group>
@@ -133,7 +132,6 @@ const AddTeacher = () => {
                 ref={email}
                     required
                     type="email"
-                    autoFocus
                 />
                 </Form.Group>
                 <Form.Group className="mb-3" controlId="validationCustom01" >
@@ -142,7 +140,6 @@ const AddTeacher = () => {
                 ref={phoneNumber}
                     required
                     type="text"
-                    autoFocus
                 />
                 </Form.Group>
                 <Form.Group className="mb-3" controlId="validationCustom01" >
@@ -151,7 +148,6 @@ const AddTeacher = () => {
                 ref={password}
                     required
                     type="password"
-                    autoFocus
                 />
                 </Form.Group>
                 <Form.Group className="mb-3" controlId="validationCustom01" >
@@ -160,7 +156,6 @@ const AddTeacher = () => {
                 ref={address}
                     required
                     type="text"
-                    autoFocus
                 />
                 </Form.Group>
                 <Form.Group className="mb-3" controlId="validationCustom01" >
@@ -169,7 +164,6 @@ const AddTeacher = () => {
                 ref={role}
                     required
                     type="text"
-                    autoFocus
                 />
                 </Form.Group>
                 <Form.Group className="mb-3" controlId="validationCustom01" >
@@ -178,7 +172,6 @@ const AddTeacher = () => {
                 ref={salary}
                     required
                     type="number"
-                    autoFocus
                 />
                 </Form.Group>
             </Form>

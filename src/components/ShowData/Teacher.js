@@ -2,20 +2,25 @@
 import TeacherData from "./TeacherData";
 import Button from 'react-bootstrap/Button';
 import"./style.css"
+import { useEffect, useRef, useState } from "react";
+import axios from "axios";
 export default function TeacherShow() {
-    const iteam = ({ Nid, image, name, gendre, field, phone, email }) => <tr>
-        <td>{Nid}</td>
-        <td><img src={image}alt={"name"} /></td>
-        <td>{name}</td>
-        <td>{gendre}</td>
-        <td>{field}</td>
-        <td>{phone}</td>
-        <td>{email}</td>
-    </tr>;
+    const accessToken = localStorage.getItem('accessToken');
+    const id=localStorage.getItem('id');
+    const teacherId=useRef('');
+    const [teachersDate,setTeachersData]=useState([]);
+    useEffect(()=>{
+        axios.get(`teacher/getAllTeachers`,{ params: { userId: id } , headers: {authorization: `Bearer ${accessToken}`} }).then(
+        (response)=>{
+            setTeachersData(response.data)
+        }
+        )
+    },[teachersDate,setTeachersData,id,accessToken])
+
     return (
         <>
         <input type="search1" placeholder="البحث بالاسم"/>
-        <input type="search2" placeholder="البحث بالرقم القومي"/>
+        <input type="search2" placeholder="البحث بالرقم القومي" ref={teacherId} />
             <table>
                 <thead className="line">
                     <th>الرقم القومي</th>
@@ -27,12 +32,32 @@ export default function TeacherShow() {
                     <th> الايميل </th>
                 </thead>
                 <tbody>
-                    {TeacherData.map(iteam)}
+                    { teacherId.current.value===''? teachersDate.map((data)=>{
+                            return(
+                        <tr className={`teacherImg`}>
+                            <td>{data._id}</td>
+                            <td><img src={data.imgUrl}alt={"name"} /></td>
+                            <td>{data.name}</td>
+                            <td>{data.gendre}</td>
+                            <td>{data.role}</td>
+                            <td>{data.phoneNumber}</td>
+                            <td>{data.email}</td>
+                        </tr>)
+                    }):
+                    teachersDate.map((data)=>
+                        <tr className={`teacherImg ${teacherId.current.value!==data._id?'disapear':''}`}>
+                            <td>{data._id}</td>
+                            <td><img src={data.imgUrl}alt={"name"} /></td>
+                            <td>{data.name}</td>
+                            <td>{data.gendre}</td>
+                            <td>{data.role}</td>
+                            <td>{data.phoneNumber}</td>
+                            <td>{data.email}</td>
+                        </tr>
+                    )
+                }
                 </tbody>
             </table>
-            <Button variant="primary" className='levelbtn'>
-        إضافة معلم جديد
-        </Button>
         </>
 
     );

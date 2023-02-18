@@ -10,16 +10,18 @@ import { PopupsContext } from '../../components/popupComponents/PopupContext';
 function Subjects() {
     const{subjects,setSubjects}=useContext(PopupsContext)
     const accessToken =localStorage.getItem('accessToken');
-    const id=localStorage.getItem('id')
+    const id=localStorage.getItem('id');
     
     const handleDelete=async (subjectId)=>{
-        axios.delete(`subject/deleteSubject/${subjectId}`
+        await axios.delete(`subject/deleteSubject/${subjectId}`
         ,{ params: { userId: id } , headers: {authorization : `Bearer ${accessToken}`} })
     }
     useEffect(() => {
     axios.get(`subject/getAllSubjects`
     ,{ params: { userId: id } , headers: {authorization: `Bearer ${accessToken}`} })
-    .then((response) =>setSubjects(response.data));}, [subjects,setSubjects,id,accessToken]);
+    .then((response) =>{
+        console.log(response)
+        setSubjects(response.data)});}, [subjects,setSubjects,id,accessToken]);
     return (
         <>
         <div className="row sub-cont">
