@@ -4,6 +4,7 @@ import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
 import Table from 'react-bootstrap/Table';
 import './popup.css';
+import Stages from '../Stages/Stages'
 
 function DeleteLevel() {
     const [show, setShow] = useState(false);
@@ -15,9 +16,10 @@ function DeleteLevel() {
 
     return (
         <>
-        <Button variant="primary" className='levelbtn' onClick={handleShow}>
+        {/* <Button variant="primary" className='levelbtn' onClick={handleShow}>
             حذف المرحلة
-        </Button>
+        </Button> */}
+        <Stages  handshow={handleShow}/>
 
         <Modal show={show} onHide={handleClose}>
             <Modal.Header closeButton>
