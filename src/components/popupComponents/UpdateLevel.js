@@ -1,28 +1,48 @@
-import React, { useState ,useContext, useEffect, useRef } from 'react';
+import React, { useState ,useEffect, } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
 import Table from 'react-bootstrap/Table';
-import { PopupsContext } from './PopupContext';
 import './popup.css';
 import axios from 'axios'
 
-function AddLevel() {
+function UpdateLevel(props) {
+    const level =props.level
     const [show, setShow] = useState(false);
     const [validated, setValidated] = useState(false);
-    // const[selectdSubjects,setSelectedSubjects]=useState([]);
-    const{selectdSubjects,selectdSubjectsDispatch}=useContext(PopupsContext)
     const[subject,setSubject]=useState('');
     const [subjects,setSubjects]=useState([]);
+    const [gradeSubjects,setGradeSubjects]=useState([])
     const [subjectsIds,setSubjectsIds]=useState([])
-    const name=useRef(null);
+    const [name,setName]=useState(level.name)
     const accessToken =localStorage.getItem('accessToken');
     const id=localStorage.getItem('id');
+
     useEffect(()=>{
         axios.get(`subject/getAllSubjects`
     ,{ params: { userId: id } , headers: {authorization: `Bearer ${accessToken}`} })
     .then((response) =>setSubjects(response.data))
+        axios.get(`grade/getGradeSubjects/${level._id}`
+    ,{ params: { userId: id } , headers: {authorization: `Bearer ${accessToken}`} })
+    .then((response) =>{
+        setGradeSubjects(response.data.subjects)
+        setSubjectsIds(gradeSubjects.map((sub)=>sub._id))
+    })
     },[])
+
+    const handleDelete =(subId)=>{
+        setGradeSubjects(gradeSubjects.filter((subject)=>{
+            return subId!==subject._id
+        }))
+        setSubjectsIds(subjectsIds.filter((cId)=>cId!==subId))
+    }
+
+    const handleAddSub =(sub)=>{
+        if(!subjectsIds.includes(sub._id)){
+        setGradeSubjects([...gradeSubjects,sub])
+        setSubjectsIds([...subjectsIds,sub._id])
+        }
+    }
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
@@ -33,19 +53,19 @@ function AddLevel() {
         event.preventDefault();
         event.stopPropagation();
     }
-    await axios.post('grade/addGrade',{name:name.current.value,subjects:subjectsIds},
-    {params: { userId: id } ,headers: {'Authorization': `Bearer ${accessToken}`}})
-    .then(handleClose)
     setValidated(true);
+    await axios.patch(`grade/updateGrade/${level._id}`,{name,subjects:subjectsIds},
+    { params: { userId: id } , headers: {authorization: `Bearer ${accessToken}`} }
+    ).then(handleClose)
     };
     return (
         <>
-        <Button variant="primary" className='levelbtn' onClick={handleShow}>
-        إضافة مرحلة دراسية
+        <Button variant="primary" className='btn updat-btn bttm mx-4 pt-2' onClick={handleShow}>
+        <h5>تعديل</h5> 
         </Button>
         <Modal show={show} onHide={handleClose}>
             <Modal.Header closeButton>
-            <Modal.Title>إضافة مرحلة جديدة</Modal.Title>
+            <Modal.Title> تعديل بيانات المرحلة  {level.name} </Modal.Title>
             </Modal.Header>
             <Modal.Body>
             <Form noValidate validated={validated} onSubmit={handleSubmit}>
@@ -55,8 +75,9 @@ function AddLevel() {
                     required
                     type="text"
                     placeholder="مثال : الاولى"
-                    ref={name}
+                    onChange={(e)=>setName(e.target.value)}
                     autoFocus
+                    value={name}
                 />
                 </Form.Group>
                 <Form.Group
@@ -64,7 +85,8 @@ function AddLevel() {
                 controlId="exampleForm.ControlTextarea1"
                 >
                 <Form.Label>إضافة مواد</Form.Label>
-                <Form.Select required onChange={(e)=>setSubject(e.target.value)}>
+                <Form.Select 
+                onChange={(e)=>setSubject(e.target.value)}>
                     <option value=''>اختر مادة</option>
                     {subjects.map((sub)=>{
                         return (
@@ -77,13 +99,13 @@ function AddLevel() {
                     <Button className='addbtn' variant="primary" onClick={()=>{
                         var subname= subject.split("  ")[0]
                         var subid = subject.split("  ")[1]
-                        selectdSubjectsDispatch({type:'ADD SUBJECT',newSubject:subname})
-                        if(!subjectsIds.includes(subid))
-                        setSubjectsIds([...subjectsIds,subid])
+                        if(subject!=='')
+                        handleAddSub({name:subname,_id:subid})
+                        setSubject('')
                         }}>إضافة</Button>
                 </Form.Group>
             </Form>
-            {(selectdSubjects && selectdSubjects.length)?
+            {(gradeSubjects)?
             <Table striped bordered hover>
         <thead>
             <tr>
@@ -92,13 +114,13 @@ function AddLevel() {
             </tr>
         </thead>
         <tbody>
-            {selectdSubjects.map((sub)=>{
+            {gradeSubjects.map((sub)=>{
                 return (
-            <tr key={sub}>
+            <tr key={sub._id}>
                 <td><Button variant="danger" onClick={
-                    ()=>selectdSubjectsDispatch({type:'DELETE SUBJECT',deletedSubject:sub})}>حذف</Button>
+                    ()=>handleDelete(sub._id)}>حذف</Button>
                 </td>
-                <td>{sub}</td>
+                <td>{sub.name}</td>
             </tr>
             )
             })}
@@ -118,4 +140,4 @@ function AddLevel() {
     );
 }
 
-export default AddLevel;
+export default UpdateLevel;

@@ -2,7 +2,8 @@ import React, {useState } from 'react';
 import Select from 'react-select'
 import './moreinfo.css'
 
-export default function MoreinfoTeacher() {
+export default function MoreinfoTeacher(props) {
+    const teacherData=props.props
     const options = [
         { value: 'January ', label: 'يناير ' },
         { value: 'February', label: 'فبراير ' },
@@ -27,14 +28,14 @@ return <>
 <div class="tab-content" id="v-pills-tabContent">
     <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab" tabindex="0">
         <div className="personal-info">
-            <h3>تاريخ الميلاد</h3>
-            <div className='d-flex'><h3>الجنس : ذكر</h3> <h3>السن:</h3></div>
-            <h3> saliem@gmail.com :<span>الإيميل</span></h3>
-            <h3>رقم هاتف 1: 0104849370</h3>
-            <h3>العنوان : طنطا شارع الفاتح تفرع عمر بن عبد العزيز</h3>
-            <h3> رقم الهاتف:    0104849370</h3>
-            <h3>التخصص: لغه عربيه</h3>
-            <h3>المرتب: 8000 ج</h3>
+            <h3>تاريخ الميلاد : <span>{teacherData.dateOfBirth}</span></h3>
+            <h3>السن: {teacherData.age}</h3>
+            <h3>الجنس : {teacherData.gender}</h3>
+            <h3> {teacherData.email} :<span>الإيميل</span></h3>
+            <h3>رقم هاتف :{teacherData.phoneNumber}</h3>
+            <h3>العنوان :{teacherData.address}</h3>
+            <h3>التخصص: {teacherData.role} </h3>
+            <h3>المرتب: {teacherData.salary} ج</h3>
         </div>
         </div>
     <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab" tabindex="0">

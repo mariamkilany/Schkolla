@@ -8,6 +8,7 @@ import 'bootstrap/dist/js/bootstrap.bundle'
 // import { AuthProvider } from './helpers/
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { AuthContextProvider } from './components/shared/AuthContext';
+import ShowDataContext from './components/ShowData/ShowDataContext';
 import axios from 'axios';
 axios.defaults.baseURL='http://localhost:4000/v1/';
 axios.defaults.withCredentials=true;

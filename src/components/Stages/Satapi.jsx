@@ -1,15 +1,25 @@
 import axios from 'axios';
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import data from './data'
 import Stages from './Stages'
 export default function Satapi(type,callback) {
-   async function grtSages(){
-    let data= await axios.get(``);
+  //  async function grtSages(){
+  //   let data= await axios.get(``);
 
-    }
-    useEffect(()=>{},[])
+  //   }
+  const id=localStorage.getItem('id')
+  const accessToken=localStorage.getItem('accessToken')
+  const [stagesData,setStagesData]=useState([])
+    useEffect(()=>{
+      axios.get(`grade/getAllGrades`,
+      {params: { userId: id } ,headers: {'Authorization': `Bearer ${accessToken}`, withCradintials : true}}).then(
+        (response)=>{
+          setStagesData(response.data)
+        }
+      )
+    },[id,accessToken,stagesData,setStagesData])
   return <>
-        {data.map((stage,index)=><Stages level={stage} key={index}/>)}
+        {stagesData.map((stage,index)=><Stages level={stage} index={index} key={index}/>)}
   </>
     
   

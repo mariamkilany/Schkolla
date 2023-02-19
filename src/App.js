@@ -18,6 +18,7 @@ import Subjects from './pages/Subjects/Subjects';
 import axios from 'axios';
 import { useContext, useEffect } from 'react';
 import ShowAllTeachers from './pages/Teachers/ShowAllTeachers';
+import ShowDataContext from './components/ShowData/ShowDataContext';
 function App() {
   const {accessToken,setAccessToken}=useContext(AuthContext);
     useEffect(() => {
@@ -51,36 +52,39 @@ function App() {
   return (
     <div className="App">
         <PopupContext>
-      <Layout>
-        <Routes>
-          <Route path='/' element={<Base/>}/>
-          <Route
-              path="/login"
-              element={
-                <ProtectedRoute accessBy="non-authenticated">
-                  <LoginPage />
-                </ProtectedRoute>
-              }
-            ></Route>
-            <Route
-              path="/dashboard"
-              element={
-                <ProtectedRoute accessBy="authenticated">
-                  <DashLayout/>
-                </ProtectedRoute>
-              }
-            >
-              <Route index element={<Home/>} />
-              <Route path='Levels' element={<Levels/>} />
-              <Route path='Students' element={<Students/>} />
-              <Route path='Teachers' element={<ShowAllTeachers/>} />
-              <Route path='Subjects' element={<Subjects/>} />
-              <Route path='Employee' element={<Employee/>} />
-              <Route path='QA' element={<QA/>} />
-            </Route>
-            <Route path='*' element={<Notfound/>} />
-        </Routes>
-      </Layout>
+          <ShowDataContext>
+            <Layout>
+              <Routes>
+                <Route path='/' element={<Base/>}/>
+                <Route
+                    path="/login"
+                    element={
+                      <ProtectedRoute accessBy="non-authenticated">
+                        <LoginPage />
+                      </ProtectedRoute>
+                    }
+                  ></Route>
+                  <Route
+                    path="/dashboard"
+                    element={
+                      <ProtectedRoute accessBy="authenticated">
+                        <DashLayout/>
+                      </ProtectedRoute>
+                    }
+                  >
+                    <Route index element={<Home/>} />
+                    <Route path='Levels' element={<Levels/>} />
+                    <Route path='Students' element={<Students/>} />
+                    <Route path='Teachers' element={<ShowAllTeachers />} />
+                    <Route path='Teachers/teacherData' element={<Teacher/>} />
+                    <Route path='Subjects' element={<Subjects/>} />
+                    <Route path='Employee' element={<Employee/>} />
+                    <Route path='QA' element={<QA/>} />
+                  </Route>
+                  <Route path='*' element={<Notfound/>} />
+              </Routes>
+            </Layout>
+            </ShowDataContext>
       </PopupContext>
     </div>
   );

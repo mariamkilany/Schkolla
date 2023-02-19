@@ -6,7 +6,7 @@ export default function Levels() {
         <div className="row justify-content-end">
             <AddLevel/>
         </div>
-        <div className="row">
+        <div className="row flex-row-reverse g-5 mt-2">
             <Satapi/>
         </div>
 

@@ -5,7 +5,7 @@ function ShowAllTeachers() {
   return (
     <>
     <TeacherShow/>
-    <AddTeacher />
+    <AddTeacher/>
     </>
   )
 }

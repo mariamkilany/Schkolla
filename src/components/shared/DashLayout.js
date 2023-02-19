@@ -7,7 +7,7 @@ function DashLayout() {
     const { user } = useContext(AuthContext);
   return <>
   <SideBar/>
-  <div className='container mt-5'>
+  <div className='container pt-5 pb-5'>
     <Outlet/>
   </div>
   </>
