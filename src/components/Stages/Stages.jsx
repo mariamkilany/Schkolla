@@ -8,7 +8,7 @@ export default function Stages(props) {
 const level=props.level;
 const index=props.index;
   return <>
-    <div className="col-md-4" key={index}>
+    <div className="col-md-4 w3-center w3-animate-left" key={index} >
               <div className="stag-container p-3">
                   <div className={index%3===0?'stage stage-3 py-4 bg-white':(index%3===1)?'stage-2 py-4 bg-white stage':'stage-1 py-4 bg-white stage'}>
                     <div className={index%3===0?'green':(index%3===1)?'blue':'pink'}>
@@ -21,7 +21,7 @@ const index=props.index;
                       <img src={student} alt="" className='w-25' />
                       </div>
                       <div className="btm w-100">
-                      <DeletePopup name={`المرحلة ${level.name}`} id={level._id}/>
+                      <DeletePopup name={`المرحلة ${level.name}`} id={level._id} link={'grade/deleteGrade/'}/>
                       <UpdateLevel level={level} />
                       </div>
                       

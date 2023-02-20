@@ -6,25 +6,41 @@ import Modal from 'react-bootstrap/Modal';
 import './popup.css';
 import axios from 'axios';
 
-const AddTeacher = () => {
+const UpdateTeacher = () => {
     const [show, setShow] = useState(false);
     const [validated, setValidated] = useState(false);
-
+    const teacherId=localStorage.getItem('teacherId')
+    const [name,setName] = useState('');
+    const [password,setPassword] = useState('');
+    const [nationalId,setNationalId] = useState('');
+    const [dateOfBirth,setDateOfBirth] = useState('');
+    const [age,setAge] = useState('');
+    const [gender,setSelected] = useState('');
+    const [email,setEmail] = useState('');
+    const [phoneNumber,setPhoneNumber] = useState('');
+    const [address,setAddress] = useState('');
+    const [role,setRole] = useState('');
+    const [salary,setSalary]= useState('');
+    const [imgUrl,setImageUrl] =useState('')
     const accessToken = localStorage.getItem('accessToken')
     const id=localStorage.getItem('id')
+    useEffect(()=>{
+        axios.get(`teacher/getTeacher/${teacherId}`,
+        { params: { userId: id } , headers: {authorization: `Bearer ${accessToken}`} }).then((response)=>{
+            setName(response.data.name)
+            setEmail(response.data.email)
+            setAge(response.data.age)
+            setDateOfBirth(response.data.dateOfBirth)
+            setImageUrl(response.data.imgUrl)
+            setNationalId(response.data.nationalId)
+            setPassword(response.data.password)
+            setPhoneNumber(response.data.phoneNumber)
+            setAddress(response.data.address)
+            setSalary(response.data.salary)
+            setRole(response.data.role)
+        })
+    },[])
 
-    const name = useRef(null);
-    const password = useRef(null);
-    const nationalId = useRef(null);
-    const dateOfBirth = useRef(null);
-    const age = useRef(null);
-    const [gender,setSelected] = useState('ذكر');
-    const email = useRef(null);
-    const phoneNumber = useRef(null);
-    const address = useRef(null);
-    const role = useRef(null);
-    const salary = useRef(null);
-    const [imgUrl,setImageUrl] =useState('')
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
@@ -51,30 +67,15 @@ const AddTeacher = () => {
         event.stopPropagation();
     }
     setValidated(true);
-    await axios.post('teacher/addTeacher',{name:name.current.value,age:age.current.value,nationalId:nationalId.current.value,
-        dateOfBirth:dateOfBirth.current.value,gender:gender,email:email.current.value,phoneNumber:phoneNumber.current.value,
-        address:address.current.value,role:role.current.value,salary:salary.current.value,imgUrl:imgUrl,password:password.current.value},
-    { params: { userId: id } , headers: {authorization : `Bearer ${accessToken}`} }).then(()=>{
-        name.current.value=null;
-        email.current.value=null;
-        phoneNumber.current.value=null;
-        nationalId.current.value=null;
-        dateOfBirth.current.value=null;
-        age.current.value=null;
-        setSelected(null);
-        address.current.value=null;
-        role.current.value=null;
-        salary.current.value=null;
-        setImageUrl('');
-        handleClose();
-    })
+    await axios.patch(`teacher/updateTeacher/${teacherId}`,{name,age,nationalId,dateOfBirth,gender:gender,email,phoneNumber,address,role,salary,imgUrl,password},
+    { params: { userId: id } , headers: {authorization : `Bearer ${accessToken}`} }).then(()=>{handleClose();})
     };
     return (
         <>
-        <Button variant="primary" className='levelbtn mt-5' onClick={handleShow}>إضافة معلم جديد</Button>
+        <Button variant="primary" className='btn btn-warning btn-2 w-100' onClick={handleShow}>تعديل</Button>
         <Modal show={show} onHide={handleClose}>
             <Modal.Header closeButton>
-            <Modal.Title>معلومات المعلم الشخصية</Modal.Title>
+            <Modal.Title>تعديل معلومات المعلم الشخصية</Modal.Title>
             </Modal.Header>
             <Modal.Body>
             <Form noValidate validated={validated} onSubmit={handleSubmit}>
@@ -86,7 +87,8 @@ const AddTeacher = () => {
                     required
                     type="text"
                     autoFocus
-                    ref={name}
+                    value={name}
+                    onChange={(e)=>{setName(e.target.value)}}
                 />
                 </div>
                 <div className='widget-cont'controlId="validationCustom01">
@@ -102,7 +104,8 @@ const AddTeacher = () => {
                 <Form.Control
                     required
                     type="text"
-                    ref={nationalId}
+                    onChange={(e)=>{setNationalId(e.target.value)}}
+                    value={nationalId}
                 />
                 </Form.Group>
                 <Form.Group className="mb-3" controlId="validationCustom01" >
@@ -110,7 +113,8 @@ const AddTeacher = () => {
                 <Form.Control
                     required
                     type="date"
-                    ref={dateOfBirth}
+                    onChange={(e)=>{setDateOfBirth(e.target.value)}}
+                    value={dateOfBirth}
                 />
                 </Form.Group>
                 <Form.Group className="mb-3" controlId="validationCustom01" >
@@ -118,7 +122,8 @@ const AddTeacher = () => {
                 <Form.Control
                     required
                     type="number"
-                    ref={age}
+                    onChange={(e)=>{setAge(e.target.value)}}
+                    value={age}
                 />
                 </Form.Group>
                 <Form.Group className="mb-3" controlId="validationCustom01" >
@@ -132,7 +137,8 @@ const AddTeacher = () => {
                 <Form.Group className="mb-3" controlId="validationCustom01" >
                 <Form.Label>الإيميل</Form.Label>
                 <Form.Control
-                ref={email}
+                value={email}
+                onChange={(e)=>{setEmail(e.target.value)}}
                     required
                     type="email"
                 />
@@ -140,7 +146,8 @@ const AddTeacher = () => {
                 <Form.Group className="mb-3" controlId="validationCustom01" >
                 <Form.Label>رقم الهاتف</Form.Label>
                 <Form.Control
-                ref={phoneNumber}
+                value={phoneNumber}
+                onChange={(e)=>{setPhoneNumber(e.target.value)}}
                     required
                     type="text"
                 />
@@ -148,7 +155,8 @@ const AddTeacher = () => {
                 <Form.Group className="mb-3" controlId="validationCustom01" >
                 <Form.Label>كلمة المرور </Form.Label>
                 <Form.Control
-                ref={password}
+                value={password}
+                onChange={(e)=>{setPassword(e.target.value)}}
                     required
                     type="password"
                 />
@@ -156,7 +164,8 @@ const AddTeacher = () => {
                 <Form.Group className="mb-3" controlId="validationCustom01" >
                 <Form.Label>العنوان</Form.Label>
                 <Form.Control
-                ref={address}
+                value={address}
+                onChange={(e)=>{setAddress(e.target.value)}}
                     required
                     type="text"
                 />
@@ -164,7 +173,8 @@ const AddTeacher = () => {
                 <Form.Group className="mb-3" controlId="validationCustom01" >
                 <Form.Label>التخصص</Form.Label>
                 <Form.Control
-                ref={role}
+                value={role}
+                onChange={(e)=>{setRole(e.target.value)}}
                     required
                     type="text"
                 />
@@ -172,7 +182,8 @@ const AddTeacher = () => {
                 <Form.Group className="mb-3" controlId="validationCustom01" >
                 <Form.Label>المرتب</Form.Label>
                 <Form.Control
-                ref={salary}
+                value={salary}
+                onChange={(e)=>{setSalary(e.target.value)}}
                     required
                     type="number"
                 />
@@ -192,4 +203,4 @@ const AddTeacher = () => {
     );
 }
 
-export default AddTeacher
+export default UpdateTeacher
