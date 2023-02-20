@@ -9,6 +9,8 @@ export default function TeacherShow() {
     const teacherId=useRef('');
     const teacherName=useRef('')
     const [teachersDate,setTeachersData]=useState([]);
+    const regex1=new RegExp(`^${teacherId.current.value}`)
+    const regex2=new RegExp(`^${teacherName.current.value}`)
     const navigate = useNavigate()
     useEffect(()=>{
         axios.get(`teacher/getAllTeachers`,{ params: { userId: id } , headers: {authorization: `Bearer ${accessToken}`} }).then(
@@ -52,8 +54,9 @@ export default function TeacherShow() {
                         </tr>)
                     }):
                     teacherId.current.value!==''?
-                    teachersDate.map((data)=>
-                        <tr className={`teacherImg ${teacherId.current.value!==data.nationalId?'disapear':''} w3-center w3-animate-left`} 
+                    teachersDate.map((data)=>{
+                        return(
+                        <tr className={`teacherImg ${!regex1.test(data.nationalId)?'disapear':''} w3-center w3-animate-left`} 
                         onClick={()=>handleClick(data._id)}>
                             <td>{data.nationalId}</td>
                             <td><img src={data.imgUrl}alt={"name"} /></td>
@@ -63,12 +66,14 @@ export default function TeacherShow() {
                             <td>{data.phoneNumber}</td>
                             <td>{data.email}</td>
                         </tr>
+                        )
+                    }
                     )
                     :
                     teachersDate.map((data)=>{
                         console.log(data._id)
                         return(
-                        <tr className={`teacherImg ${!(teacherName.current.value).includes(data.name)?'disapear':''} w3-center w3-animate-left`} 
+                        <tr className={`teacherImg ${!regex2.test(data.name)?'disapear':''} w3-center w3-animate-left`} 
                         onClick={()=>handleClick(data._id)}>
                             <td>{data.nationalId}</td>
                             <td><img src={data.imgUrl}alt={"name"} /></td>

@@ -1,7 +1,6 @@
 import axios from 'axios';
 import React, { useContext, useEffect, useState } from 'react'
 import AddSubject from '../../components/popupComponents/AddSubject'
-import AuthContext from "../../components/shared/AuthContext";
 import Table from 'react-bootstrap/Table';
 import { Button } from 'react-bootstrap';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
