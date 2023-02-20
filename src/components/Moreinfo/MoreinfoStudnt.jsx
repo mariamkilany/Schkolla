@@ -28,10 +28,22 @@ export default function More() {
         };
         const events = [
             {
-              title: "The Title",
-              start: "2023-01-05T08:00:00",
-              end: "2023-01-05T09:00:00",
-            }]
+              title: "الحصه الاولى",
+              start: "2023-02-20T08:00:00",
+              end: "2023-02-20T09:00:00"
+            },
+            {
+                title: "الحصه الثانية",
+                start: "2023-02-20T09:00:00",
+                end: "2023-02-20T10:00:00",
+            
+              },
+              {
+                title: "الحثة الثالثه",
+                start: "2023-02-20T10:00:00",
+                end: "2023-02-20T11:00:00",
+            
+              }]
             
 return <>
         <div class="d-flex align-items-start">
@@ -41,7 +53,7 @@ return <>
     <button class="nav-link" id="v-pills-disabled-tab" data-bs-toggle="pill" data-bs-target="#v-pills-disabled" type="button" role="tab" aria-controls="v-pills-disabled" aria-selected="false">التقارير المدرسية</button>
     <button class="nav-link" id="v-pills-messages-tab" data-bs-toggle="pill" data-bs-target="#v-pills-messages" type="button" role="tab" aria-controls="v-pills-messages" aria-selected="false">عرض و طباعة الكود </button>
     </div>
-<div className='information-container'>
+<div className='information-container h-100'>
 <div class="tab-content" id="v-pills-tabContent">
     <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab" tabindex="0">
         <div className="personal-info">
@@ -67,7 +79,7 @@ return <>
             end:"dayGridMonth,dayGridWeek,dayGridDay"
         }
         }
-        height={"50vh"}
+        height={"350px"}
         weekends={false}
         events={events}
         eventDidMount={(info)=>{
@@ -77,7 +89,7 @@ return <>
                 trigger:"hover",
                 customClass:"popoverStyle",
                 content:
-                "<p>Please subscribe<strong>Bootstrap popover</strong>.</p>",
+                "<p> المادة<strong>لغة عربيه</strong>.</p>",
               html: true,
             })
         }}

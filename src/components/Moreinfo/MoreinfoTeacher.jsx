@@ -1,23 +1,10 @@
 import React, {useState } from 'react';
 import Select from 'react-select'
+import Calender from '../Calender/Calender'
 import './moreinfo.css'
 
 export default function MoreinfoTeacher(props) {
     const teacherData=props.props
-    const options = [
-        { value: 'January ', label: 'يناير ' },
-        { value: 'February', label: 'فبراير ' },
-        { value: 'March ', label: 'مارس' },
-        { value: 'April ', label: 'أبريل' },
-        { value: 'May', label: 'مايو' },
-        { value: 'June ', label: 'يونيو' },
-        { value: 'July ', label: 'يوليو' },
-        { value: 'August ', label: 'أغسطس' },
-        { value: 'September ', label: 'سبتمبر' },
-        { value: 'October ', label: 'أكتوبر' },
-        { value: 'November', label: 'نوفمبر' },
-        { value: 'December', label: 'ديسمبر' }
-    ]
 return <>
         <div class="nav nav-teacher flex-column nav-pills me-3 w-25 h-100" id="v-pills-tab" role="tablist" aria-orientation="vertical">
     <button class="nav-link active" id="v-pills-home-tab" data-bs-toggle="pill" data-bs-target="#v-pills-home" type="button" role="tab" aria-controls="v-pills-home" aria-selected="true">معلومات شخصية</button>
@@ -43,10 +30,7 @@ return <>
     </div>
     <div class="tab-pane fade" id="v-pills-disabled" role="tabpanel" aria-labelledby="v-pills-disabled-tab" tabindex="0">
         <div className="report">
-            <h3>اختر الشهر</h3>
-                <Select 
-                closeMenuOnSelect={false}
-                options={options} />
+            <Calender/>
             </div>
         </div>
     </div>
