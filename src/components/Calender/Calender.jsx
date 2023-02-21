@@ -15,7 +15,7 @@ import {
   DragDropProvider,
 } from '@devexpress/dx-react-scheduler-material-ui';
 
-import { appointments } from '../../../demo-data/appointments';
+import { appointments } from './demo-data/appointments';
 
 const PREFIX = 'Demo';
 // #FOLD_BLOCK
@@ -36,8 +36,8 @@ const StyledDiv = styled('div')(({ theme }) => ({
     fontSize: '1rem',
   },
 }));
-
-const currentDate = '2018-06-27';
+const date =new Date().toJSON().slice(0,10);
+const currentDate =date;
 const editingOptionsList = [
   { id: 'allowAdding', text: 'Adding' },
   { id: 'allowDeleting', text: 'Deleting' },
@@ -46,36 +46,36 @@ const editingOptionsList = [
   { id: 'allowDragging', text: 'Dragging' },
 ];
 
-const EditingOptionsSelector = ({
-  options, onOptionsChange,
-}) => (
-  <StyledDiv className={classes.container}>
-    <Typography className={classes.text}>
-      Enabled Options
-    </Typography>
-    <FormGroup row>
-      {editingOptionsList.map(({ id, text }) => (
-        <FormControlLabel
-          control={(
-            <Checkbox
-              checked={options[id]}
-              onChange={onOptionsChange}
-              value={id}
-              color="primary"
-            />
-          )}
-          classes={{ label: classes.formControlLabel }}
-          label={text}
-          key={id}
-          disabled={(id === 'allowDragging' || id === 'allowResizing') && !options.allowUpdating}
-        />
-      ))}
-    </FormGroup>
-  </StyledDiv>
-);
+// const EditingOptionsSelector = ({
+//   options, onOptionsChange,
+// }) => (
+//   <StyledDiv className={classes.container}>
+//     <Typography className={classes.text}>
+//       Enabled Options
+//     </Typography>
+//     <FormGroup row>
+//       {editingOptionsList.map(({ id, text }) => (
+//         <FormControlLabel
+//           control={(
+//             <Checkbox
+//               checked={options[id]}
+//               onChange={onOptionsChange}
+//               value={id}
+//               color="primary"
+//             />
+//           )}
+//           classes={{ label: classes.formControlLabel }}
+//           label={text}
+//           key={id}
+//           disabled={(id === 'allowDragging' || id === 'allowResizing') && !options.allowUpdating}
+//         />
+//       ))}
+//     </FormGroup>
+//   </StyledDiv>
+// );
 
 export default () => {
-  const [data, setData] = React.useState(appointments);
+  const [data, setData] = React.useState([]);
   const [editingOptions, setEditingOptions] = React.useState({
     allowAdding: true,
     allowDeleting: true,
@@ -142,14 +142,14 @@ export default () => {
 
   return (
     <React.Fragment>
-      <EditingOptionsSelector
+      {/* <EditingOptionsSelector
         options={editingOptions}
         onOptionsChange={handleEditingOptionsChange}
-      />
+      /> */}
       <Paper>
         <Scheduler
           data={data}
-          height={600}
+          height={900}
         >
           <ViewState
             currentDate={currentDate}
@@ -162,11 +162,10 @@ export default () => {
 
           <IntegratedEditing />
           <WeekView
-            startDayHour={9}
-            endDayHour={19}
+            startDayHour={7}
+            endDayHour={15}
             timeTableCellComponent={TimeTableCell}
           />
-
           <Appointments />
 
           <AppointmentTooltip
