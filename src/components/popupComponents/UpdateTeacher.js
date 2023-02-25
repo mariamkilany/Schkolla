@@ -72,7 +72,7 @@ const UpdateTeacher = () => {
     };
     return (
         <>
-        <Button variant="primary" className='btn btn-warning btn-2 w-100' onClick={handleShow}>تعديل</Button>
+        <button  className='btn btn-warning btn-2 w-100' onClick={handleShow}>تعديل</button>
         <Modal show={show} onHide={handleClose}>
             <Modal.Header closeButton>
             <Modal.Title>تعديل معلومات المعلم الشخصية</Modal.Title>

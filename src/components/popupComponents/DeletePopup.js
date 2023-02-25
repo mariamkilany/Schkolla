@@ -23,9 +23,9 @@ const handleDelete=async()=>{
 
     return (
         <>
-        <Button variant="primary" className={`btn delete-btn bttm ${props.link==='teacher/deleteTeacher/'?'pt-2 btn-danger btn-1 w-100':''}`} onClick={handleShow}>
+        <button className={`btn delete-btn bttm ${props.link==='teacher/deleteTeacher/'?'pt-2 btn-danger btn-1 w-100':''}`} onClick={handleShow}>
             حذف 
-        </Button>
+        </button>
         <Modal show={show} onHide={handleClose}>
             <Modal.Header closeButton>
             <Modal.Title>حذف {props.name}</Modal.Title>

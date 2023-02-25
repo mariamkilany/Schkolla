@@ -60,9 +60,9 @@ function UpdateLevel(props) {
     };
     return (
         <>
-        <Button variant="primary" className='btn updat-btn bttm mx-4 pt-2' onClick={handleShow}>
+        <button  className='btn updat-btn bttm mx-4 pt-2' onClick={handleShow}>
         <h5>تعديل</h5> 
-        </Button>
+        </button>
         <Modal show={show} onHide={handleClose}>
             <Modal.Header closeButton>
             <Modal.Title> تعديل بيانات المرحلة  {level.name} </Modal.Title>
