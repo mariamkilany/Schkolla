@@ -93,7 +93,7 @@ const UpdateTeacher = () => {
                 </div>
                 <div className='widget-cont'controlId="validationCustom01">
                     <Button onClick={()=>widgetRef.current.open()}>
-                        {imgUrl===''?<SlCloudUpload/> :<img src={imgUrl} alt="teacherimg"/>}
+                        {imgUrl===''?<SlCloudUpload/> :<img src={imgUrl} alt="teacherimg" style={{width:'100%'}}/>}
                     </Button>
                 </div>
                 </Form.Group>

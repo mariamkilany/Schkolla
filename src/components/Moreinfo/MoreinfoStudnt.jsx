@@ -1,12 +1,12 @@
 import React, {useState } from 'react';
 import Select from 'react-select'
-import FullCalendar from '@fullcalendar/react' 
-import dayGridPlugin from '@fullcalendar/daygrid'
-import * as bootstrap from "bootstrap";
-import "bootstrap/dist/css/bootstrap.min.css";
+// import FullCalendar from '@fullcalendar/react' 
+// import dayGridPlugin from '@fullcalendar/daygrid'
+// import * as bootstrap from "bootstrap";
+// import "bootstrap/dist/css/bootstrap.min.css";
 // import interactionPlugin from "@fullcalendar/interaction"
 import './moreinfo.css'
-import { height } from '@mui/system';
+// import { height } from '@mui/system';
 export default function More() {
     const options = [
         { value: 'January ', label: 'يناير ' },
@@ -28,22 +28,22 @@ export default function More() {
         };
         const events = [
             {
-              title: "الحصه الاولى",
-              start: "2023-02-20T08:00:00",
-              end: "2023-02-20T09:00:00"
-            },
-            {
-                title: "الحصه الثانية",
-                start: "2023-02-20T09:00:00",
-                end: "2023-02-20T10:00:00",
-            
-              },
-              {
-                title: "الحثة الثالثه",
-                start: "2023-02-20T10:00:00",
-                end: "2023-02-20T11:00:00",
-            
-              }]
+                title: "الحصه الاولى",
+                start: "2023-02-20T08:00:00",
+                end: "2023-02-20T09:00:00"
+                },
+                {
+                    title: "الحصه الثانية",
+                    start: "2023-02-20T09:00:00",
+                    end: "2023-02-20T10:00:00",
+                
+                },
+                {
+                    title: "الحثة الثالثه",
+                    start: "2023-02-20T10:00:00",
+                    end: "2023-02-20T11:00:00",
+                
+                }]
             
 return <>
         <div class="d-flex align-items-start">
@@ -70,30 +70,6 @@ return <>
         </div>
     <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab" tabindex="0">
         <div className="upsent m-3">
-        <FullCalendar
-        plugins={[ dayGridPlugin]}
-        initialView={"dayGridMonth"}
-        headerToolbar={{
-            start:"today,prev,next",
-            center:"title",
-            end:"dayGridMonth,dayGridWeek,dayGridDay"
-        }
-        }
-        height={"350px"}
-        weekends={false}
-        events={events}
-        eventDidMount={(info)=>{
-            return new bootstrap.Popover(info.el,{
-                title:info.event.title,
-                placement:"auto",
-                trigger:"hover",
-                customClass:"popoverStyle",
-                content:
-                "<p> المادة<strong>لغة عربيه</strong>.</p>",
-              html: true,
-            })
-        }}
-    />
         </div>
     </div>
     <div class="tab-pane fade" id="v-pills-disabled" role="tabpanel" aria-labelledby="v-pills-disabled-tab" tabindex="0">

@@ -1,6 +1,6 @@
 import React, {useState } from 'react';
-import Select from 'react-select'
-import Calender from '../Calender/Calender'
+// import Select from 'react-select'
+// import Calender from '../Calender/Calender'
 import './moreinfo.css'
 
 export default function MoreinfoTeacher(props) {
@@ -30,7 +30,7 @@ return <>
     </div>
     <div class="tab-pane fade" id="v-pills-disabled" role="tabpanel" aria-labelledby="v-pills-disabled-tab" tabindex="0">
         <div className="report">
-            <Calender/>
+            
             </div>
         </div>
     </div>
