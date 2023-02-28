@@ -31,8 +31,8 @@ function UpdateClass(props) {
         event.stopPropagation();
     }
     setValidated(true);
-    // await axios.post(`/class/addNewClassToGrade`,{gradeId,name:className,subjectToTeacher:pair}, 
-    //     {params: { userId: id } ,headers: {'Authorization': `Bearer ${accessToken}`, withCradintials : true}}).then(handleClose)
+    await axios.patch(`/class/updateClass/${classId}`,{name:className,subjectToTeacher:pair}, 
+        {params: { userId: id } ,headers: {'Authorization': `Bearer ${accessToken}`, withCradintials : true}}).then(handleClose)
     };
     useEffect(
         ()=>{
@@ -42,12 +42,6 @@ function UpdateClass(props) {
             setTeachers(res.data)
         }
         )
-        //     axios.get(`grade/getGradeSubjects/${gradeId}`, 
-        // {params: { userId: id } ,headers: {'Authorization': `Bearer ${accessToken}`, withCradintials : true}})
-        // .then((res)=>{
-        //     setSubjects(res.data.subjects)
-        // }
-        // )
             axios.get(`class/getClassById/${classId}`,
             {params: { userId: id } ,headers: {'Authorization': `Bearer ${accessToken}`, withCradintials : true}}).then(
                 (res)=>{
@@ -93,7 +87,7 @@ function UpdateClass(props) {
                         </thead>
                         <tbody>
             {subjects.map((sub,subindex)=>{
-                console.log(selectedTeachers[subindex]._id)
+                // console.log(selectedTeachers[subindex]._id)
                 return (
             <tr key={subindex}>
                 <td>

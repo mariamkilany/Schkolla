@@ -7,7 +7,7 @@ export default function Levels() {
             <AddLevel/>
         </div>
         <div className="row flex-row-reverse g-5 mt-2">
-            <Satapi/>
+            <Satapi link={`grade/getAllGrades`} type={'grade'}/>
         </div>
 
     </>

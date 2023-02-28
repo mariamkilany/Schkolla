@@ -19,6 +19,7 @@ import axios from 'axios';
 import { useContext, useEffect } from 'react';
 import ShowAllTeachers from './pages/Teachers/ShowAllTeachers';
 import ShowDataContext from './components/ShowData/ShowDataContext';
+import Showlevel from './pages/Levels/Showlevel'
 function App() {
   const {accessToken,setAccessToken}=useContext(AuthContext);
     useEffect(() => {
@@ -74,6 +75,7 @@ function App() {
                   >
                     <Route index element={<Home/>} />
                     <Route path='Levels' element={<Levels/>} />
+                    <Route path='Levels/showlevel' element={<Showlevel/>} />
                     <Route path='Students' element={<Students/>} />
                     <Route path='Teachers' element={<ShowAllTeachers />} />
                     <Route path='Teachers/teacherData' element={<Teacher/>} />

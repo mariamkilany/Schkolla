@@ -32,7 +32,7 @@ function AddClass(props) {
     setValidated(true);
     await axios.post(`/class/addNewClassToGrade`,{gradeId,name:className,subjectToTeacher:pair}, 
         {params: { userId: id } ,headers: {'Authorization': `Bearer ${accessToken}`, withCradintials : true}}).then( (res)=>{
-            console.log(res)
+            handleClose();
         }
         )
     };
