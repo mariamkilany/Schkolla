@@ -6,15 +6,16 @@ import Table from 'react-bootstrap/Table';
 import axios from 'axios';
 import './popup.css';
 
-function AddClass(props) {
+function UpdateClass(props) {
     const [show, setShow] = useState(false);
     const [validated, setValidated] = useState(false);
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
     const [className ,setClassName]=useState('');
     const [subjects,setSubjects]=useState([]);
-    const gradeId=props.gradeId;
+    const classId=props.classId;
     const [teachers,setTeachers]=useState([]);
+    const [selectedTeachers,setSelectedTeachers]=useState([])
     const [pair,setPairs]=useState([])
     const accessToken =localStorage.getItem('accessToken');
     const id=localStorage.getItem('id');
@@ -30,36 +31,45 @@ function AddClass(props) {
         event.stopPropagation();
     }
     setValidated(true);
-    await axios.post(`/class/addNewClassToGrade`,{gradeId,name:className,subjectToTeacher:pair}, 
-        {params: { userId: id } ,headers: {'Authorization': `Bearer ${accessToken}`, withCradintials : true}}).then( (res)=>{
-            console.log(res)
-        }
-        )
+    // await axios.post(`/class/addNewClassToGrade`,{gradeId,name:className,subjectToTeacher:pair}, 
+    //     {params: { userId: id } ,headers: {'Authorization': `Bearer ${accessToken}`, withCradintials : true}}).then(handleClose)
     };
     useEffect(
-        ()=>{axios.get('teacher/getAllTeacherNamesWithIds', 
+        ()=>{
+            axios.get('teacher/getAllTeacherNamesWithIds', 
         {params: { userId: id } ,headers: {'Authorization': `Bearer ${accessToken}`, withCradintials : true}})
         .then((res)=>{
             setTeachers(res.data)
         }
         )
-            axios.get(`grade/getGradeSubjects/${gradeId}`, 
-        {params: { userId: id } ,headers: {'Authorization': `Bearer ${accessToken}`, withCradintials : true}})
-        .then((res)=>{
-            setSubjects(res.data.subjects)
-        }
-        )
+        //     axios.get(`grade/getGradeSubjects/${gradeId}`, 
+        // {params: { userId: id } ,headers: {'Authorization': `Bearer ${accessToken}`, withCradintials : true}})
+        // .then((res)=>{
+        //     setSubjects(res.data.subjects)
+        // }
+        // )
+            axios.get(`class/getClassById/${classId}`,
+            {params: { userId: id } ,headers: {'Authorization': `Bearer ${accessToken}`, withCradintials : true}}).then(
+                (res)=>{
+                    setClassName(res.data.name)
+                    setPairs(res.data.subjectToTeacher)
+                    setSubjects(res.data.subjectToTeacher.map((obj)=>{
+                        return obj.subject;
+                    }))
+                    setSelectedTeachers(res.data.subjectToTeacher.map((obj)=>{
+                        return obj.teacher;
+                    }))
+                }
+            )
     }
         ,[])
     return (
         <>
-        <Button variant="primary" className='levelbtn' onClick={handleShow}>
-        إضافة فصل جديد
-        </Button>
+        <Button variant="primary" className='levelbtn' onClick={handleShow}>تعديل</Button>
 
         <Modal show={show} onHide={handleClose}>
             <Modal.Header closeButton>
-            <Modal.Title>إضافة فصل جديد</Modal.Title>
+            <Modal.Title>تعديل بيانات الفصل</Modal.Title>
             </Modal.Header>
             <Modal.Body>
             <Form noValidate validated={validated} onSubmit={handleSubmit}>
@@ -82,21 +92,22 @@ function AddClass(props) {
                             </tr>
                         </thead>
                         <tbody>
-            {subjects.map((sub,index)=>{
+            {subjects.map((sub,subindex)=>{
+                console.log(selectedTeachers[subindex]._id)
                 return (
-            <tr key={index}>
+            <tr key={subindex}>
                 <td>
                     <Form.Group
                 className="mb-3"
                 controlId="exampleForm.ControlTextarea1"
                 >
-                    <Form.Select  required onChange={(e)=>{
+                    <Form.Select  required  onChange={(e)=>{
                         handleAddPair(e,sub)
                     }}>
                         <option value=''>اختر معلم المادة</option>
                         {teachers.map((teacher,index)=>{
                             return(
-                                <option value={teacher._id} key={index}>{teacher.name}</option>
+                                <option selected={teacher._id===selectedTeachers[subindex]._id} value={teacher._id} key={index}>{teacher.name}</option>
                             )
                             })}
                     </Form.Select>
@@ -123,4 +134,4 @@ function AddClass(props) {
     );
 }
 
-export default AddClass;
+export default UpdateClass;
