@@ -1,40 +1,29 @@
-:root{
-    --pink:#FDBAB1;
-    --blue:#254C71;
-    --green:#63D0B4;
+:root {
+    --pink: #FDBAB1;
+    --blue: #254C71;
+    --green: #63D0B4;
 }
-.stage{
+
+.stage {
     position: relative;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25), 0px 4px 4px rgba(0, 0, 0, 0.25);
     border-radius: 5px;
+    cursor: pointer;
 }
-.stage-1{
+
+.stage-1 {
     border-top: 5px solid #FDBAB1;
 }
-.stage-2{
+
+.stage-2 {
     border-top: 5px solid var(--blue);
 }
-.stage-3{
+
+.stage-3 {
     border-top: 5px solid var(--green);
 }
-/* .title{
-    background-color: #FDBAB1;
-    color: #fff;
-    border-radius: 8px;
-    transform: skew(0deg,0deg);
-    border-bottom-left-radius: 0;
-    position: absolute;
-    right: -18px;
-    -webkit-border-radius: 8px;
-    -moz-border-radius: 8px;
-    -ms-border-radius: 8px;
-    -o-border-radius: 8px;
-    -webkit-transform: skew(0deg,0deg);
-    -moz-transform: skew(0deg,0deg);
-    -ms-transform: skew(0deg,0deg);
-    -o-transform: skew(0deg,0deg);
-} */
-.btm{
+
+.btm {
     position: absolute;
     bottom: -27px;
     left: 26px;
@@ -42,7 +31,8 @@
     align-items: center;
     text-align: center;
 }
-.bttm{
+
+.bttm {
     color: #fff !important;
     border: none;
     /* padding: 30px 10px; */
@@ -50,42 +40,47 @@
     border-radius: 7px;
     width: 40%;
 }
-.updat-btn{
-   background-color: #FBC968 !important;
+
+.updat-btn {
+    background-color: #FBC968 !important;
 }
-.delete-btn{
+
+.delete-btn {
     background-color: #FF6565 !important;
 }
-  a {
+
+a {
     color: white;
-  }
-  .pink:after {
-      content: " ";
-      position: absolute;
-      display: block;
-      width: 100%;
-      height: 100%;
-      top: 0;
-      left: 0;
-      z-index: -1;
-      background: var(--pink);
-      transform-origin: bottom left;
-      -ms-transform: skew(30deg, 0deg);
-      -webkit-transform: skew(30deg, 0deg);
-      transform: skew(30deg, 0deg);
-      -moz-transform: skew(30deg, 0deg);
-      -o-transform: skew(30deg, 0deg);
-      border-radius: 8px;
-      -webkit-border-radius: 8px;
-      -moz-border-radius: 8px;
-      -ms-border-radius: 8px;
-      -o-border-radius: 8px;
-}     
-.pink{
+}
+
+.pink:after {
+    content: " ";
+    position: absolute;
+    display: block;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    background: var(--pink);
+    transform-origin: bottom left;
+    -ms-transform: skew(30deg, 0deg);
+    -webkit-transform: skew(30deg, 0deg);
+    transform: skew(30deg, 0deg);
+    -moz-transform: skew(30deg, 0deg);
+    -o-transform: skew(30deg, 0deg);
+    border-radius: 8px;
+    -webkit-border-radius: 8px;
+    -moz-border-radius: 8px;
+    -ms-border-radius: 8px;
+    -o-border-radius: 8px;
+}
+
+.pink {
     background-color: var(--pink);
     color: #fff;
     border-radius: 8px;
-    transform: skew(0deg,0deg);
+    transform: skew(0deg, 0deg);
     border-bottom-left-radius: 0;
     position: absolute;
     right: -18px;
@@ -93,16 +88,17 @@
     -moz-border-radius: 8px;
     -ms-border-radius: 8px;
     -o-border-radius: 8px;
-    -webkit-transform: skew(0deg,0deg);
-    -moz-transform: skew(0deg,0deg);
-    -ms-transform: skew(0deg,0deg);
-    -o-transform: skew(0deg,0deg);
+    -webkit-transform: skew(0deg, 0deg);
+    -moz-transform: skew(0deg, 0deg);
+    -ms-transform: skew(0deg, 0deg);
+    -o-transform: skew(0deg, 0deg);
 }
-.green{
+
+.green {
     background-color: var(--green);
     color: #fff;
     border-radius: 8px;
-    transform: skew(0deg,0deg);
+    transform: skew(0deg, 0deg);
     border-bottom-left-radius: 0;
     position: absolute;
     right: -18px;
@@ -110,11 +106,12 @@
     -moz-border-radius: 8px;
     -ms-border-radius: 8px;
     -o-border-radius: 8px;
-    -webkit-transform: skew(0deg,0deg);
-    -moz-transform: skew(0deg,0deg);
-    -ms-transform: skew(0deg,0deg);
-    -o-transform: skew(0deg,0deg);
+    -webkit-transform: skew(0deg, 0deg);
+    -moz-transform: skew(0deg, 0deg);
+    -ms-transform: skew(0deg, 0deg);
+    -o-transform: skew(0deg, 0deg);
 }
+
 .green:after {
     content: " ";
     position: absolute;
@@ -136,12 +133,13 @@
     -moz-border-radius: 8px;
     -ms-border-radius: 8px;
     -o-border-radius: 8px;
-}  
-.blue{
+}
+
+.blue {
     background-color: var(--blue);
     color: #fff;
     border-radius: 8px;
-    transform: skew(0deg,0deg);
+    transform: skew(0deg, 0deg);
     border-bottom-left-radius: 0;
     position: absolute;
     right: -18px;
@@ -149,11 +147,12 @@
     -moz-border-radius: 8px;
     -ms-border-radius: 8px;
     -o-border-radius: 8px;
-    -webkit-transform: skew(0deg,0deg);
-    -moz-transform: skew(0deg,0deg);
-    -ms-transform: skew(0deg,0deg);
-    -o-transform: skew(0deg,0deg);
+    -webkit-transform: skew(0deg, 0deg);
+    -moz-transform: skew(0deg, 0deg);
+    -ms-transform: skew(0deg, 0deg);
+    -o-transform: skew(0deg, 0deg);
 }
+
 .blue:after {
     content: " ";
     position: absolute;
@@ -175,4 +174,4 @@
     -moz-border-radius: 8px;
     -ms-border-radius: 8px;
     -o-border-radius: 8px;
-}  
+}

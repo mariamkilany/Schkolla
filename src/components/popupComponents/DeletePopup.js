@@ -18,15 +18,19 @@ const handleDelete=async()=>{
     })
 }
 
-    const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
+    const handleClose = (e) => {
+        if(e && e.stopPropagation) e.stopPropagation()
+        setShow(false)};
+    const handleShow = (e) => {
+        if(e && e.stopPropagation) e.stopPropagation()
+        setShow(true)};
 
     return (
         <>
         <button className={`btn delete-btn bttm ${props.link==='teacher/deleteTeacher/'?'pt-2 btn-danger btn-1 w-100':''}`} onClick={handleShow}>
             حذف 
         </button>
-        <Modal show={show} onHide={handleClose}>
+        <Modal show={show} onHide={handleClose} onClick={(e)=>{if(e && e.stopPropagation) e.stopPropagation();}}>
             <Modal.Header closeButton>
             <Modal.Title>حذف {props.name}</Modal.Title>
             </Modal.Header>

@@ -10,7 +10,7 @@ const level=props.level;
 const index=props.index;
  const navigate=useNavigate();
 const color =index%3===0?'green':(index%3===1)?'blue':'pink'
-const handleClick=(e)=>{
+const handleClick=()=>{
 localStorage.setItem('stageId',level._id)
 localStorage.setItem('stagecolor',color);
 navigate('showlevel')

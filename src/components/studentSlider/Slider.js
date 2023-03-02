@@ -1,7 +1,6 @@
 import './slider.css';
 
-import Button from 'react-bootstrap/Button';
-import Card from 'react-bootstrap/Card';
+import {Button,Card} from 'react-bootstrap';
 
 import React, { useRef, useState } from "react";
 // Import Swiper React components

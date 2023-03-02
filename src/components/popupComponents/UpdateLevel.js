@@ -44,8 +44,12 @@ function UpdateLevel(props) {
         }
     }
 
-    const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
+    const handleClose = (e) => {
+        if(e && e.stopPropagation) e.stopPropagation();
+        setShow(false)};
+    const handleShow = (e) => {
+        if(e && e.stopPropagation) e.stopPropagation();
+        setShow(true)};
 
     const handleSubmit = async(event) => {
     const form = event.currentTarget;
@@ -63,7 +67,7 @@ function UpdateLevel(props) {
         <button  className='btn updat-btn bttm mx-4 pt-2' onClick={handleShow}>
         <h5>تعديل</h5> 
         </button>
-        <Modal show={show} onHide={handleClose}>
+        <Modal show={show} onHide={handleClose} onClick={(e)=>{if(e && e.stopPropagation) e.stopPropagation();}}>
             <Modal.Header closeButton>
             <Modal.Title> تعديل بيانات المرحلة  {level.name} </Modal.Title>
             </Modal.Header>

@@ -59,7 +59,9 @@ function UpdateClass(props) {
         ,[])
     return (
         <>
-        <Button variant="primary" className='levelbtn' onClick={handleShow}>تعديل</Button>
+        <button className='btn updat-btn bttm mx-4 pt-2' onClick={handleShow}>
+        <h5>تعديل</h5>
+        </button>
 
         <Modal show={show} onHide={handleClose}>
             <Modal.Header closeButton>
