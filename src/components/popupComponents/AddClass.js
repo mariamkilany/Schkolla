@@ -21,6 +21,8 @@ function AddClass(props) {
 
     const handleAddPair=(e,sub)=>{
         const cleanPairs = pair.filter((p)=>p.subject!==sub._id)
+        console.log(e)
+        console.log(sub)
         setPairs([...cleanPairs,{subject:sub._id,teacher:e.target.value}])
     } 
     const handleSubmit = async (event) => {

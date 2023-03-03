@@ -3,12 +3,18 @@ import './stages.css'
 import student from '../../imge/students.png'
 import DeletePopup from '../popupComponents/DeletePopup'
 import UpdateClass from '../popupComponents/UpdateClass'
+import { useNavigate } from 'react-router-dom'
 export default function Class(props) {
 const classes=props.classes;
 const index=props.index;
 const color =localStorage.getItem('stagecolor')
+const navigate=useNavigate();
+const handleClick=()=>{
+localStorage.setItem('classId',classes._id)
+navigate('class')
+}
   return <>
-      <div className="col-md-4 w3-center w3-animate-left" key={index}>
+      <div className="col-md-4 w3-center w3-animate-left" key={index} onClick={handleClick} >
               <div className="stag-container p-3">
                   <div className={color==='green'?'stage stage-3 py-4 bg-white':color==='blue'?'stage-2 py-4 bg-white stage':'stage-1 py-4 bg-white stage'}>
                     <div className={color}>

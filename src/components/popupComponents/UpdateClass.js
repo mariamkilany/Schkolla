@@ -45,6 +45,7 @@ function UpdateClass(props) {
             axios.get(`class/getClassById/${classId}`,
             {params: { userId: id } ,headers: {'Authorization': `Bearer ${accessToken}`, withCradintials : true}}).then(
                 (res)=>{
+                    console.log(res)
                     setClassName(res.data.name)
                     setPairs(res.data.subjectToTeacher)
                     setSubjects(res.data.subjectToTeacher.map((obj)=>{
