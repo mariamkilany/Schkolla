@@ -77,7 +77,7 @@ function App() {
                     <Route index element={<Home/>} />
                     <Route path='Levels' element={<Levels/>} />
                     <Route path='Levels/showlevel' element={<Showlevel/>} />
-                    <Route path='Levels/showlevel/class' element={<ShowClass/>}/>
+                    <Route path='Levels/showlevel/class' element={<ShowClass/>} />
                     <Route path='Students' element={<Students/>} />
                     <Route path='Teachers' element={<ShowAllTeachers />} />
                     <Route path='Teachers/teacherData' element={<Teacher/>} />

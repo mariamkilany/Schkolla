@@ -1,19 +1,44 @@
 import { useState } from "react";
 import "./tabs.css"
 import StudentShow from"../ShowData/Student";
-import Subj from "../ShowData/Subjects";
+import { useEffect } from "react";
+import { color } from "@mui/system";
+import axios from 'axios';
+import Table from 'react-bootstrap/Table';
 function Tabs() {
   const [toggleState, setToggleState] = useState(1);
+  const [pair,setPairs]=useState([]);
+  const accessToken =localStorage.getItem('accessToken');
+  const id=localStorage.getItem('id');
+  const classId= localStorage.getItem('classId')
 
   const toggleTab = (index) => {
     setToggleState(index);
   };
-
+  let color =localStorage.getItem('stagecolor');
+useEffect(()=>{
+  axios.get(`class/getClassById/${classId}`,
+  {params: { userId: id } ,headers: {'Authorization': `Bearer ${accessToken}`, withCradintials : true}}).then(
+      (res)=>{
+          setPairs(res.data.subjectToTeacher)
+          console.log(res);
+      }
+  )
+  color =localStorage.getItem('stagecolor');
+}
+,[])
+if(color==='green'){
+  color='#63D0B4';
+}else if(color==='pink'){
+  color='#FDBAB1';
+}else if(color==='blue'){
+  color='#254C71';
+}
   return (
     <div className="container">
       <div className="bloc-tabs">
        
-        <button
+        <button style={{backgroundColor:toggleState===1? color:''}}
           className={toggleState === 1 ? "tabs active-tabs" : "tabs"}
           onClick={() => toggleTab(1)}
         >
@@ -21,7 +46,7 @@ function Tabs() {
         </button>
        
         
-        <button
+        <button style={{backgroundColor:toggleState===2? color:''}}
           className={toggleState === 2 ? "tabs active-tabs" : "tabs"}
           onClick={() => toggleTab(2)}
         >
@@ -29,7 +54,7 @@ function Tabs() {
         </button>
        
        
-        <button
+        <button style={{backgroundColor:toggleState===3? color:''}}
           className={toggleState === 3 ? "tabs active-tabs" : "tabs"}
           onClick={() => toggleTab(3)}
         >
@@ -42,7 +67,24 @@ function Tabs() {
          style={{margin:'20px auto',width:'70%'}}
           className={toggleState === 1 ? "content  active-content" : "content"}
         >
-          <Subj/>
+        <Table striped  hover>
+          <thead style={{borderBottom:`${color} solid`}}>
+          <th>اسم المعلم </th>
+          <th> المادة </th>
+          </thead>
+          <tbody>
+          {
+            pair.map(({subject,teacher},index)=>{
+            return(
+              <tr key={index}>
+              <td>{subject.name}</td>
+              <td>{teacher.name}</td>
+            </tr>
+            )
+            })
+          }
+          </tbody>
+     </Table>
         </div>
 
         <div

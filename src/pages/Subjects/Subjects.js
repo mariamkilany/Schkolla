@@ -6,6 +6,7 @@ import { Button } from 'react-bootstrap';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import './subjects.css'
 import { PopupsContext } from '../../components/popupComponents/PopupContext';
+import useAxios from '../../Hooks/useAxios';
 function Subjects() {
     const{subjects,setSubjects}=useContext(PopupsContext)
     const accessToken =localStorage.getItem('accessToken');
@@ -15,12 +16,16 @@ function Subjects() {
         await axios.delete(`subject/deleteSubject/${subjectId}`
         ,{ params: { userId: id } , headers: {authorization : `Bearer ${accessToken}`} })
     }
-    useEffect(() => {
-    axios.get(`subject/getAllSubjects`
-    ,{ params: { userId: id } , headers: {authorization: `Bearer ${accessToken}`} })
-    .then((response) =>{
-        console.log(response)
-        setSubjects(response.data)});}, [subjects,setSubjects,id,accessToken]);
+    // useEffect(() => {
+    // axios.get(`subject/getAllSubjects`
+    // ,{ params: { userId: id } , headers: {authorization: `Bearer ${accessToken}`} })
+    // .then((response) =>{
+    //     console.log(response)
+    //     setSubjects(response.data)});}, [subjects,setSubjects,id,accessToken]);
+    // useEffect(()=>{
+    //       console.log(useAxios('get',`subject/getAllSubjects`)) ;
+    // },[])
+    console.log(useAxios('get',`subject/getAllSubjects`))
     return (
         <>
         <div className="row sub-cont">
