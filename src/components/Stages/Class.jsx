@@ -8,6 +8,11 @@ export default function Class(props) {
 const classes=props.classes;
 const index=props.index;
 const color =localStorage.getItem('stagecolor')
+const navigate=useNavigate();
+const handleClick=()=>{
+localStorage.setItem('classId',classes._id)
+navigate('class')
+}
   return <>
       <div className="col-md-4 w3-center w3-animate-left" key={index} onClick={handleClick} >
               <div className="stag-container p-3">
