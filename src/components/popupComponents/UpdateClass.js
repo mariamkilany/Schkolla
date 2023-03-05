@@ -9,8 +9,12 @@ import './popup.css';
 function UpdateClass(props) {
     const [show, setShow] = useState(false);
     const [validated, setValidated] = useState(false);
-    const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
+    const handleClose = (e) => {
+        if(e && e.stopPropagation) e.stopPropagation();
+        setShow(false)};
+    const handleShow = (e) => {
+        if(e && e.stopPropagation) e.stopPropagation();
+        setShow(true)};
     const [className ,setClassName]=useState('');
     const [subjects,setSubjects]=useState([]);
     const classId=props.classId;
@@ -64,7 +68,7 @@ function UpdateClass(props) {
         <h5>تعديل</h5>
         </button>
 
-        <Modal show={show} onHide={handleClose}>
+        <Modal show={show} onHide={handleClose} onClick={(e)=>{if(e && e.stopPropagation) e.stopPropagation();}}>
             <Modal.Header closeButton>
             <Modal.Title>تعديل بيانات الفصل</Modal.Title>
             </Modal.Header>

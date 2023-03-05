@@ -1,4 +1,5 @@
 import './App.css';
+import './css/bootstrap.css'
 import LoginPage from './pages/login/Login'
 import { Routes, Route } from 'react-router-dom';
 import Notfound from'./pages/notFound/Notfound'
@@ -15,12 +16,12 @@ import PopupContext from './components/popupComponents/PopupContext';
 import ProtectedRoute from './components/shared/ProtectedRout';
 import Base from './pages/Base/Base';
 import Subjects from './pages/Subjects/Subjects';
-import axios from 'axios';
 import { useContext, useEffect } from 'react';
 import ShowAllTeachers from './pages/Teachers/ShowAllTeachers';
 import ShowDataContext from './components/ShowData/ShowDataContext';
 import Showlevel from './pages/Levels/Showlevel'
 import ShowClass from './pages/Levels/ShowClass'
+import axios from 'axios';
 function App() {
   const {accessToken,setAccessToken}=useContext(AuthContext);
     useEffect(() => {
@@ -35,6 +36,9 @@ function App() {
           });
           setAccessToken(res1.data.accessToken)
           localStorage.setItem('accessToken',res1.data.accessToken)
+          const id=localStorage.getItem('id');
+          axios.defaults.headers.common['Authorization'] = `Bearer ${res1.data.accessToken}`;
+          axios.defaults.params={ userId: id }
         } catch (err) {
           localStorage.removeItem("firstLogin");
           console.log(err)
@@ -51,6 +55,8 @@ function App() {
     }
     return () => clearInterval(intervalId);
   }, [accessToken,setAccessToken]);
+axios.defaults.baseURL='http://localhost:4000/v1/';
+axios.defaults.withCredentials=true;
   return (
     <div className="App">
         <PopupContext>

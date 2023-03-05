@@ -4,6 +4,7 @@ import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
 import './popup.css';
 import axios from 'axios';
+import useAxios from '../../hooks/useAxios';
 
 function AddSubject() {
     const [show, setShow] = useState(false);
@@ -22,9 +23,9 @@ function AddSubject() {
         event.stopPropagation();
     }
     setValidated(true);
-    await axios.post('subject/addSubject',{name:subject.current.value},
-    {params: { userId: id } ,headers: {'Authorization': `Bearer ${accessToken}`, withCradintials : true}})
+    await axios.post('subject/addSubject',{name:subject.current.value})
     .then(handleClose)
+    // const { response, error, loading } = useAxios({method:'post',url:'subject/addSubject',body:{name:subject.current.value}})
     };
     return (
         <>

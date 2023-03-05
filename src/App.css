@@ -52,3 +52,6 @@
 #root{
   height: 100%;
 }
+.size{
+  width:calc(100% - 240px) !important;
+}

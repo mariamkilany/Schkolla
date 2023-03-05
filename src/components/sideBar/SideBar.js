@@ -19,10 +19,10 @@ import admin from '../../imge/admin.jpg'
 
 function SideBar() {
 
-    const [isVisible,setIsVisible]=useState(false);
+    // const [isVisible,setIsVisible]=useState(false);
     const navigate = useNavigate();
     const location = useLocation();
-    const {logout,user } = useContext(AuthContext);
+    const {logout,isVisible,setIsVisible} = useContext(AuthContext);
         return (
         <SideNav expanded={isVisible}>
             <SideNav.Toggle

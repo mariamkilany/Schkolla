@@ -22,6 +22,7 @@ export const AuthContextProvider = ({ children }) => {
     // });
     const [id,setId]=useState(null);
     const [accessToken,setAccessToken]=useState(null)
+    const [isVisible,setIsVisible]=useState(false);
     //Initialized the navigation variable.
     const navigate = useNavigate();
     //In 'logn' method we invoke API calls like 'user login API call', 
@@ -65,7 +66,7 @@ export const AuthContextProvider = ({ children }) => {
     return (
         //In the 'AuthContext.Provider' element, we configure the 'value' attribute to which we pass our 'login'(method), 'user'(variable) because these properties have to be accessed by any component in our application.
         <> 
-        <AuthContext.Provider value={{ id,accessToken,setAccessToken, login , logout }}>
+        <AuthContext.Provider value={{ id,accessToken,setAccessToken, login , logout ,isVisible,setIsVisible}}>
             {children}
         </AuthContext.Provider>
         </>

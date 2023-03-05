@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom'
 export default function Stages(props) {
 const level=props.level;
 const index=props.index;
- const navigate=useNavigate();
+const navigate=useNavigate();
 const color =index%3===0?'green':(index%3===1)?'blue':'pink'
 const handleClick=()=>{
 localStorage.setItem('stageId',level._id)

@@ -2,7 +2,6 @@ import { useState } from "react";
 import "./tabs.css"
 import StudentShow from"../ShowData/Student";
 import { useEffect } from "react";
-import { color } from "@mui/system";
 import axios from 'axios';
 import Table from 'react-bootstrap/Table';
 function Tabs() {

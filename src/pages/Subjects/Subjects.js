@@ -1,31 +1,23 @@
 import axios from 'axios';
-import React, { useContext, useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import AddSubject from '../../components/popupComponents/AddSubject'
-import Table from 'react-bootstrap/Table';
-import { Button } from 'react-bootstrap';
+import { Button ,Table } from 'react-bootstrap';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
+import Loading from '../Loading/Loading'
 import './subjects.css'
-import { PopupsContext } from '../../components/popupComponents/PopupContext';
-import useAxios from '../../Hooks/useAxios';
+import useAxios from '../../hooks/useAxios';
 function Subjects() {
-    const{subjects,setSubjects}=useContext(PopupsContext)
-    const accessToken =localStorage.getItem('accessToken');
-    const id=localStorage.getItem('id');
-    
-    const handleDelete=async (subjectId)=>{
-        await axios.delete(`subject/deleteSubject/${subjectId}`
-        ,{ params: { userId: id } , headers: {authorization : `Bearer ${accessToken}`} })
+    // const handleDelete=async (subjectId)=>await axios.delete(`subject/deleteSubject/${subjectId}`)
+    const handleDelete=(subjectId)=>{
+        fetchData('delete',`subject/deleteSubject/${subjectId}`)
     }
-    // useEffect(() => {
-    // axios.get(`subject/getAllSubjects`
-    // ,{ params: { userId: id } , headers: {authorization: `Bearer ${accessToken}`} })
-    // .then((response) =>{
-    //     console.log(response)
-    //     setSubjects(response.data)});}, [subjects,setSubjects,id,accessToken]);
-    // useEffect(()=>{
-    //       console.log(useAxios('get',`subject/getAllSubjects`)) ;
-    // },[])
-    console.log(useAxios('get',`subject/getAllSubjects`))
+    const { fetchData,data:subjects , loading} = useAxios()
+    // console.log(data , 'subjects')
+    useEffect(() => {
+    fetchData('get','subject/getAllSubjects')
+    }
+    ,[]);
+    if(loading) <Loading/>
     return (
         <>
         <div className="row sub-cont">
@@ -39,9 +31,9 @@ function Subjects() {
                 </tr>
             </thead>
             <TransitionGroup component="tbody">
-                {subjects.map((subject,index)=><CSSTransition key={subject.id} timeout={700} classNames="sub">
+                {subjects&&subjects?.map((subject,index)=><CSSTransition key={subject.id} timeout={700} classNames="sub">
                     <tr key={index} className={`w3-center w3-animate-left`}>
-                    <td><Button variant="danger" onClick={()=>handleDelete(subject._id)}>حذف</Button></td>
+                    <td><Button variant="danger" onClick={()=>{handleDelete(subject._id)}}>حذف</Button></td>
                     <td>{subject.name}</td>
                     </tr>
                 </CSSTransition>)}

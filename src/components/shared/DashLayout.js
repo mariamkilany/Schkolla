@@ -4,10 +4,10 @@ import {Outlet} from 'react-router-dom'
 import AuthContext from "./AuthContext";
 function DashLayout() {
   //Read the 'user' information from the 'AuthContext'.
-    const { user } = useContext(AuthContext);
+    const { isVisible } = useContext(AuthContext);
   return <>
   <SideBar/>
-  <div className='container pt-5 pb-5'>
+  <div className={`container pt-5 pb-5 ${isVisible?'size':''}`} >
     <Outlet/>
   </div>
   </>
