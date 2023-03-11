@@ -1,34 +1,35 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import axios from 'axios';
-axios.defaults.baseURL='http://localhost:4000/v1/';
-axios.defaults.withCredentials=true;
+// axios.defaults.baseURL='http://localhost:4000/v1/';
+// axios.defaults.withCredentials=true;
 
 const useAxios = () => {
-    // console.log(method)
-    // console.log(url)
-    // console.log(body)
     const [data,setData] = useState(null)
-    // const [response, setResponse] = useState(null);
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(false);
-    const accessToken =localStorage.getItem('accessToken');
-    const id=localStorage.getItem('id');
-    const fetchData = async (method,url,body) => {
+    const id=localStorage.getItem('id')
+    const accessToken=localStorage.getItem('accessToken');
+    
+    const fetchData = async (method,url,body,action) => {
         setLoading(true);
+        console.log('method',method)
         try {
-        const res = await axios[method](url,body,{ params: { userId: id } , headers: {authorization: `Bearer ${accessToken}`} });
-        setData(res.data);
-        console.log(res.data , 'useAxios')
+        const res = await axios[method](url,body)
+            // .then((res)=>{setData(res?.data)});
+            console.log("res",res)
+            if(method==='get'){
+                setData(res.data)
+            }
         setError(null);
+        if(action)
+        action();
         } catch (err) {
+            console.log(err)
         setError(err);
         } finally {
         setLoading(false);
         }
     };
-    // useEffect(() => {
-    //     fetchData();
-    // }, []);
     return {fetchData,data , loading ,error}
 };
 export default useAxios;

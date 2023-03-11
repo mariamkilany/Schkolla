@@ -54,9 +54,8 @@ function App() {
       }, 1000);
     }
     return () => clearInterval(intervalId);
-  }, [accessToken,setAccessToken]);
-axios.defaults.baseURL='http://localhost:4000/v1/';
-axios.defaults.withCredentials=true;
+  }, []);
+
   return (
     <div className="App">
         <PopupContext>

@@ -7,16 +7,22 @@ import Loading from '../Loading/Loading'
 import './subjects.css'
 import useAxios from '../../hooks/useAxios';
 function Subjects() {
-    // const handleDelete=async (subjectId)=>await axios.delete(`subject/deleteSubject/${subjectId}`)
-    const handleDelete=(subjectId)=>{
+    const accessToken = localStorage.getItem('accessToken')
+    const id=localStorage.getItem('id')
+    // const [subjects,setSubjects] = useState([])
+    const handleDelete=async(subjectId)=>{
         fetchData('delete',`subject/deleteSubject/${subjectId}`)
+        // await axios.delete(`subject/deleteSubject/${subjectId}`,{ params: { userId: id } , headers: {authorization : `Bearer ${accessToken}`} })
     }
     const { fetchData,data:subjects , loading} = useAxios()
-    // console.log(data , 'subjects')
+    console.log("subjects:",subjects)
     useEffect(() => {
     fetchData('get','subject/getAllSubjects')
+    // axios.get('subject/getAllSubjects',{ params: { userId: id } , headers: {authorization : `Bearer ${accessToken}`} }).then((res)=>{
+    //     setSubjects(res.data)
+    // })
     }
-    ,[]);
+    ,[handleDelete]);
     if(loading) <Loading/>
     return (
         <>

@@ -1,26 +1,26 @@
-.sub-cont{
-    display: flex;
-    justify-content: flex-end;
+.sub-cont {
+  display: flex;
+  justify-content: flex-end;
 }
+
 .sub-exit-active {
-    /* opacity: 0;
-    transition: opacity 700ms ease-out; */
-    animation: fallAway forwards 1s ease-out 1;
+  animation: fallAway forwards 1s ease-out 1;
 }
+
 @keyframes fallAway {
-    0% {
-        transform: rotateZ(0deg);
-        top: 0;
-        opacity: 1;
-    }
-
-    25% {
-        transform: rotateZ(-15deg);
-    }
-
-    100% {
-        top: 300px;
-        transform: rotateZ(-5deg);
-        opacity: 0;
-    }
+  0% {
+    transform: rotateZ(0deg);
+    top: 0;
+    opacity: 1;
+  }
+  25% {
+    transform: rotateZ(-15deg);
+  }
+  100% {
+    top: 300px;
+    transform: rotateZ(-5deg);
+    opacity: 0;
+  }
 }
+
+/*# sourceMappingURL=subjects.css.map */

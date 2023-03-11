@@ -5,8 +5,12 @@ import reportWebVitals from './reportWebVitals';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle'
 import App from './App';
+import axios from 'axios'
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { AuthContextProvider } from './components/shared/AuthContext';
+  // import ThemeProvider from '@mui/material/styles'
+axios.defaults.baseURL='http://localhost:4000/v1/';
+axios.defaults.withCredentials=true;
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>

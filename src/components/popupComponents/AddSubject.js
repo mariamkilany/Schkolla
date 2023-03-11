@@ -15,7 +15,7 @@ function AddSubject() {
     const id=localStorage.getItem('id')
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
-
+    // const { fetchData,data:subjects , loading} = useAxios()
     const handleSubmit =async (event) => {
     const form = event.currentTarget;
     if (form.checkValidity() === false) {
@@ -25,6 +25,8 @@ function AddSubject() {
     setValidated(true);
     await axios.post('subject/addSubject',{name:subject.current.value})
     .then(handleClose)
+    // fetchData('post','subject/addSubject',{name:subject.current.value},handleClose)
+
     // const { response, error, loading } = useAxios({method:'post',url:'subject/addSubject',body:{name:subject.current.value}})
     };
     return (

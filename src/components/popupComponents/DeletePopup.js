@@ -10,13 +10,6 @@ function DeletePopup(props) {
     const accessToken = localStorage.getItem('accessToken');
     const id=localStorage.getItem('id');
     const navigate = useNavigate()
-const handleDelete=async()=>{
-    await axios.delete(`${props.link}${props.id}`,
-    { params: { userId: id } , headers: {authorization: `Bearer ${accessToken}`} }).then(()=>{
-        if(props.link==='teacher/deleteTeacher/')
-        navigate(-1)
-    })
-}
 
     const handleClose = (e) => {
         if(e && e.stopPropagation) e.stopPropagation()
@@ -25,6 +18,14 @@ const handleDelete=async()=>{
         if(e && e.stopPropagation) e.stopPropagation()
         setShow(true)};
 
+const handleDelete=async()=>{
+    await axios.delete(`${props.link}${props.id}`,
+    { params: { userId: id } , headers: {authorization: `Bearer ${accessToken}`} }).then(()=>{
+        handleClose()
+        if(props.link==='teacher/deleteTeacher/')
+        navigate(-1)
+    })
+}
     return (
         <>
         <button className={`btn delete-btn bttm ${props.link==='teacher/deleteTeacher/'?'pt-2 btn-danger btn-1 w-100':''}`} onClick={handleShow}>
