@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState  ,useCallback} from 'react'
 import AddSubject from '../../components/popupComponents/AddSubject'
 import { Button ,Table } from 'react-bootstrap';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
@@ -10,12 +10,13 @@ function Subjects() {
     const accessToken = localStorage.getItem('accessToken')
     const id=localStorage.getItem('id')
     // const [subjects,setSubjects] = useState([])
-    const handleDelete=async(subjectId)=>{
+    const handleDelete=useCallback( async(subjectId)=>{
         fetchData('delete',`subject/deleteSubject/${subjectId}`)
         // await axios.delete(`subject/deleteSubject/${subjectId}`,{ params: { userId: id } , headers: {authorization : `Bearer ${accessToken}`} })
-    }
+    } 
+    , []);
     const { fetchData,data:subjects , loading} = useAxios()
-    console.log("subjects:",subjects)
+    // console.log("subjects:",subjects)
     useEffect(() => {
     fetchData('get','subject/getAllSubjects')
     // axios.get('subject/getAllSubjects',{ params: { userId: id } , headers: {authorization : `Bearer ${accessToken}`} }).then((res)=>{

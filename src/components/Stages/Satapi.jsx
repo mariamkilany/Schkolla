@@ -19,9 +19,10 @@ export default function Satapi(props) {
         }
       )
     },[id,accessToken,data,setData])
+    console.log("levels data", data)
   return <>
         {
-          data!==undefined?
+        data!==undefined?
         data.map((item,index)=>
         type==='grade'?
         <Stages level={item} index={index} key={index}/>

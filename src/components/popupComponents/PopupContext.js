@@ -11,6 +11,8 @@ const handleSelectedSubjects=(state,action)=>{
             return(action.newSubject!==''&& !state.includes(action.newSubject))?[...state,action.newSubject]:state
         case 'DELETE SUBJECT':
             return state.filter((subject)=> subject!==action.deletedSubject)
+        case 'CLEAR':
+            return [];
         default:
             return new Error()
     }

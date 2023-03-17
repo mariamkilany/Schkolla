@@ -5,7 +5,6 @@ import Modal from 'react-bootstrap/Modal';
 import Table from 'react-bootstrap/Table';
 import './popup.css';
 import axios from 'axios'
-
 function UpdateLevel(props) {
     const level =props.level
     const [show, setShow] = useState(false);
@@ -17,7 +16,6 @@ function UpdateLevel(props) {
     const [name,setName]=useState(level.name)
     const accessToken =localStorage.getItem('accessToken');
     const id=localStorage.getItem('id');
-
     useEffect(()=>{
         axios.get(`subject/getAllSubjects`
     ,{ params: { userId: id } , headers: {authorization: `Bearer ${accessToken}`} })

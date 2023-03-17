@@ -23,8 +23,12 @@ export const AuthContextProvider = ({ children }) => {
     const [id,setId]=useState(null);
     const [accessToken,setAccessToken]=useState(null)
     const [isVisible,setIsVisible]=useState(false);
+    const [stageId,setStageId]=useState('');
     //Initialized the navigation variable.
     const navigate = useNavigate();
+    // const handleStageId=(id)=>{
+    //     setStageId(id);
+    // }
     //In 'logn' method we invoke API calls like 'user login API call', 
     //The 'login' API call for user authentication on the success of the login API sends us an HTTPonly cookie. 
     //Here for every API call, we have to pass configuration to API call like 'withCredentials' with 'true' because our client application and 
@@ -66,7 +70,7 @@ export const AuthContextProvider = ({ children }) => {
     return (
         //In the 'AuthContext.Provider' element, we configure the 'value' attribute to which we pass our 'login'(method), 'user'(variable) because these properties have to be accessed by any component in our application.
         <> 
-        <AuthContext.Provider value={{ id,accessToken,setAccessToken, login , logout ,isVisible,setIsVisible}}>
+        <AuthContext.Provider value={{ id,accessToken,setAccessToken, login , logout ,isVisible,setIsVisible,stageId,setStageId}}>
             {children}
         </AuthContext.Provider>
         </>
