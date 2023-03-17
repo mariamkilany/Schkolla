@@ -4,19 +4,21 @@ import StudentShow from"../ShowData/Student";
 import { useEffect } from "react";
 import axios from 'axios';
 import Table from 'react-bootstrap/Table';
+import {useParams} from 'react-router-dom';
 function Tabs() {
   const [toggleState, setToggleState] = useState(1);
   const [pair,setPairs]=useState([]);
   const accessToken =localStorage.getItem('accessToken');
   const id=localStorage.getItem('id');
-  const classId= localStorage.getItem('classId')
-
+  // const classId= localStorage.getItem('classId')
+  const params =useParams();
+  // console.log(params.classId)
   const toggleTab = (index) => {
     setToggleState(index);
   };
   let color =localStorage.getItem('stagecolor');
 useEffect(()=>{
-  axios.get(`class/getClassById/${classId}`,
+  axios.get(`class/getClassById/${params.classId}`,
   {params: { userId: id } ,headers: {'Authorization': `Bearer ${accessToken}`, withCradintials : true}}).then(
       (res)=>{
           setPairs(res.data.subjectToTeacher)
@@ -97,7 +99,7 @@ if(color==='green'){
         <div
           className={toggleState === 3 ? "content  active-content" : "content"}
         >
-          <StudentShow/>
+          <StudentShow link={`student/getClassStudents/${params.classId}`}/>
           
         </div>
       </div>

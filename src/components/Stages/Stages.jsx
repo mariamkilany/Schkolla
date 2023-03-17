@@ -12,14 +12,13 @@ const navigate=useNavigate();
 const color =index%3===0?'green':(index%3===1)?'blue':'pink'
 // const {setStageId}=useContext(AuthContext);
 const handleClick=()=>{
-localStorage.setItem('stageId',level._id)
+// localStorage.setItem('stageId',level._id)
 // setStageId(level._id);
 localStorage.setItem('stagecolor', color);
-navigate('showlevel')
+navigate(level._id);
 }
   return <>
-  <a href={level._id}>
-     <div className="col-md-4 w3-center w3-animate-left" key={index} onClick={handleClick} >
+    <div className="col-md-4 w3-center w3-animate-left" key={index} onClick={handleClick} >
               <div className="stag-container p-3">
                   <div className={index%3===0?'stage stage-3 py-4 bg-white':(index%3===1)?'stage-2 py-4 bg-white stage':'stage-1 py-4 bg-white stage'}>
                     <div className={color}>
@@ -39,7 +38,6 @@ navigate('showlevel')
                   </div>
               </div>
     </div>
-  </a> 
   </>
   
 }

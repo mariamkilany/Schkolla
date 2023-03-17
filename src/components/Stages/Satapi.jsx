@@ -19,7 +19,7 @@ export default function Satapi(props) {
         }
       )
     },[id,accessToken,data,setData])
-    console.log("levels data", data)
+    // console.log("levels data", data)
   return <>
         {
         data!==undefined?

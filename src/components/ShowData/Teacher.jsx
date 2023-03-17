@@ -2,7 +2,7 @@ import Table from 'react-bootstrap/Table';
 import"./style.css"
 import { useEffect, useRef, useState } from "react";
 import axios from "axios";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate} from 'react-router-dom';
 export default function TeacherShow() {
     const accessToken = localStorage.getItem('accessToken');
     const id=localStorage.getItem('id');

@@ -3,15 +3,16 @@ import './stages.css'
 import student from '../../imge/students.png'
 import DeletePopup from '../popupComponents/DeletePopup'
 import UpdateClass from '../popupComponents/UpdateClass'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate ,useParams } from 'react-router-dom'
 export default function Class(props) {
 const classes=props.classes;
 const index=props.index;
 const color =localStorage.getItem('stagecolor')
 const navigate=useNavigate();
+const param=useParams();
 const handleClick=()=>{
-localStorage.setItem('classId',classes._id)
-navigate('class')
+// localStorage.setItem('classId',classes._id)
+navigate(classes._id)
 }
   return <>
       <div className="col-md-4 w3-center w3-animate-left" key={index} onClick={handleClick} >
@@ -27,8 +28,8 @@ navigate('class')
                       <img src={student} alt="" className='w-25' />
                       </div>
                       <div className="btm w-100">
-                      <DeletePopup name={`الفصل ${classes.name}`} id={classes._id} link={'class/deleteClass/'}/>
-                      <UpdateClass classId={classes._id} />
+                      <DeletePopup name={`الفصل ${classes.name}`} id={param.classId} link={'class/deleteClass/'}/>
+                      <UpdateClass classId={param.classId} />
                       </div>
                       
                   </div>
