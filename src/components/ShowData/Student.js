@@ -7,6 +7,7 @@ export default function StudentShow(props)
 {
     const accessToken = localStorage.getItem('accessToken');
     const id=localStorage.getItem('id');
+    const link = props.link;
     const studentId=useRef('');
     const studentName=useRef('')
     const [studentsDate,setstudentsData]=useState([]);
@@ -15,7 +16,7 @@ export default function StudentShow(props)
     const navigate = useNavigate()
     const params =useParams();
     useEffect(()=>{
-        axios.get(`student/getClassStudents/${params.classId}`,{ params: { userId: id } , headers: {authorization: `Bearer ${accessToken}`} }).then(
+        axios.get('student/getAllStudents',{ params: { userId: id } , headers: {authorization: `Bearer ${accessToken}`} }).then(
         (response)=>{
             setstudentsData(response.data)
             console.log(response)
@@ -23,8 +24,8 @@ export default function StudentShow(props)
         )
     },[studentsDate,setstudentsData,id,accessToken])
     const handleClick=(id)=>{
-        localStorage.setItem('studentId',id)
-        navigate('studentData')
+        // localStorage.setItem('studentId',id)
+        navigate(id)
     }
   return<>
         <div className="input-cont row mb-5">
@@ -39,31 +40,36 @@ export default function StudentShow(props)
                     <th>النوع </th>
                     <th> اسم ولى الأمر </th>
                     <th> رقم ولى الأمر </th>
+                    <th>صلة القرابة</th>
                     <th> الايميل </th>
                 </thead>
                 <tbody>
                     { studentId.current.value===''&&studentName.current.value===''? studentsDate.map((data)=>{
                             return(
-                        <tr className={`studentImg w3-center w3-animate-left`} 
+                        <tr className={`image w3-center w3-animate-left`} 
                         onClick={()=>handleClick(data._id)}>
                             <td>{data.nationalId}</td>
                             <td><img src={data.imgUrl}alt={"name"} /></td>
                             <td>{data.name}</td>
                             <td>{data.gender}</td>
-                            <td>{data.elWasy}</td>
+                            <td>{data.elWasy[0].relationName}</td>
+                            <td>{data.elWasy[0].phoneNumber}</td>
+                            <td>{data.elWasy[0].relation}</td>
                             <td>{data.email}</td>
                         </tr>)
                     }):
                     studentId.current.value!==''?
                     studentsDate.map((data)=>{
                         return(
-                        <tr className={`studentImg ${!regex1.test(data.nationalId)?'disapear':''} w3-center w3-animate-left`} 
+                        <tr className={`image ${!regex1.test(data.nationalId)?'disapear':''} w3-center w3-animate-left`} 
                         onClick={()=>handleClick(data._id)}>
                             <td>{data.nationalId}</td>
                             <td><img src={data.imgUrl}alt={"name"} /></td>
                             <td>{data.name}</td>
                             <td>{data.gender}</td>
-                            <td>{data.elWasy}</td>
+                            <td>{data.elWasy[0].relationName}</td>
+                            <td>{data.elWasy[0].phoneNumber}</td>
+                            <td>{data.elWasy[0].relation}</td>
                             <td>{data.email}</td>
                         </tr>
                         )
@@ -73,13 +79,15 @@ export default function StudentShow(props)
                     studentsDate.map((data)=>{
                         console.log(data._id)
                         return(
-                        <tr className={`teacherImg ${!regex2.test(data.name)?'disapear':''} w3-center w3-animate-left`} 
+                        <tr className={`image ${!regex2.test(data.name)?'disapear':''} w3-center w3-animate-left`} 
                         onClick={()=>handleClick(data._id)}>
                             <td>{data.nationalId}</td>
                             <td><img src={data.imgUrl}alt={"name"} /></td>
                             <td>{data.name}</td>
                             <td>{data.gender}</td>
-                            <td>{data.elWasy}</td>
+                            <td>{data.elWasy[0].relationName}</td>
+                            <td>{data.elWasy[0].phoneNumber}</td>
+                            <td>{data.elWasy[0].relation}</td>
                             <td>{data.email}</td>
                         </tr>
                         )

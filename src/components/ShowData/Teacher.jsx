@@ -42,7 +42,7 @@ export default function TeacherShow() {
                 <tbody>
                     { teacherId.current.value===''&&teacherName.current.value===''? teachersDate.map((data)=>{
                             return(
-                        <tr className={`teacherImg w3-center w3-animate-left`} 
+                        <tr className={`image w3-center w3-animate-left`} 
                         onClick={()=>handleClick(data._id)}>
                             <td>{data.nationalId}</td>
                             <td><img src={data.imgUrl}alt={"name"} /></td>
@@ -56,7 +56,7 @@ export default function TeacherShow() {
                     teacherId.current.value!==''?
                     teachersDate.map((data)=>{
                         return(
-                        <tr className={`teacherImg ${!regex1.test(data.nationalId)?'disapear':''} w3-center w3-animate-left`} 
+                        <tr className={`image ${!regex1.test(data.nationalId)?'disapear':''} w3-center w3-animate-left`} 
                         onClick={()=>handleClick(data._id)}>
                             <td>{data.nationalId}</td>
                             <td><img src={data.imgUrl}alt={"name"} /></td>
@@ -73,7 +73,7 @@ export default function TeacherShow() {
                     teachersDate.map((data)=>{
                         console.log(data._id)
                         return(
-                        <tr className={`teacherImg ${!regex2.test(data.name)?'disapear':''} w3-center w3-animate-left`} 
+                        <tr className={`image ${!regex2.test(data.name)?'disapear':''} w3-center w3-animate-left`} 
                         onClick={()=>handleClick(data._id)}>
                             <td>{data.nationalId}</td>
                             <td><img src={data.imgUrl}alt={"name"} /></td>

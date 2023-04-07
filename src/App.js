@@ -11,6 +11,7 @@ import Employee from './pages/Empolyee/Empolyee';
 import Home from './pages/Home/Home';
 import Layout from './components/shared/Layout';
 import DashLayout from './components/shared/DashLayout';
+import ShowStudent from './pages/Students/ShowStudent'
 import AuthContext, { AuthContextProvider } from "./components/shared/AuthContext";
 import PopupContext from './components/popupComponents/PopupContext';
 import ProtectedRoute from './components/shared/ProtectedRout';
@@ -23,38 +24,38 @@ import Showlevel from './pages/Levels/Showlevel'
 import ShowClass from './pages/Levels/ShowClass'
 import axios from 'axios';
 function App() {
-  const {accessToken,setAccessToken}=useContext(AuthContext);
-    useEffect(() => {
-    let currentTime = new Date().getTime();
-    const firstLogin = localStorage.getItem("firstLogin");
-    let intervalId;
-    if (firstLogin) {
-      const refreshToken = async () => {
-        try {
-          const res1 = await axios.get("admin/refreshToken", {
-            withCredentials: true
-          });
-          setAccessToken(res1.data.accessToken)
-          localStorage.setItem('accessToken',res1.data.accessToken)
-          const id=localStorage.getItem('id');
-          axios.defaults.headers.common['Authorization'] = `Bearer ${res1.data.accessToken}`;
-          axios.defaults.params={ userId: id }
-        } catch (err) {
-          localStorage.removeItem("firstLogin");
-          console.log(err)
-          window.location.href = "/login";
-        }
-      };
-      refreshToken();
-      intervalId = setInterval(() => {
-        if (new Date().getTime() - currentTime >= 9 * 60 * 1000) {
-          currentTime = new Date().getTime();
-          refreshToken();
-        }
-      }, 1000);
-    }
-    return () => clearInterval(intervalId);
-  }, []);
+  // const {accessToken,setAccessToken}=useContext(AuthContext);
+  //   useEffect(() => {
+  //   let currentTime = new Date().getTime();
+  //   const firstLogin = localStorage.getItem("firstLogin");
+  //   let intervalId;
+  //   if (firstLogin) {
+  //     const refreshToken = async () => {
+  //       try {
+  //         const res1 = await axios.get("admin/refreshToken", {
+  //           withCredentials: true
+  //         });
+  //         setAccessToken(res1.data.accessToken)
+  //         localStorage.setItem('accessToken',res1.data.accessToken)
+  //         const id=localStorage.getItem('id');
+  //         axios.defaults.headers.common['Authorization'] = `Bearer ${res1.data.accessToken}`;
+  //         axios.defaults.params={ userId: id }
+  //       } catch (err) {
+  //         localStorage.removeItem("firstLogin");
+  //         console.log(err)
+  //         window.location.href = "/login";
+  //       }
+  //     };
+  //     refreshToken();
+  //     intervalId = setInterval(() => {
+  //       if (new Date().getTime() - currentTime >= 9 * 60 * 1000) {
+  //         currentTime = new Date().getTime();
+  //         refreshToken();
+  //       }
+  //     }, 1000);
+  //   }
+  //   return () => clearInterval(intervalId);
+  // }, []);
   return (
     <div className="App">
         <PopupContext>
@@ -83,6 +84,7 @@ function App() {
                     <Route path={`Levels/:stageId`} element={<Showlevel/>} />
                     <Route path='Levels/:stageId/:classId' element={<ShowClass/>} />
                     <Route path='Students' element={<Students/>} />
+                    <Route path='Students/:stuId' element={<ShowStudent/>} />
                     <Route path='Teachers' element={<ShowAllTeachers />} />
                     <Route path='Teachers/teacherData' element={<Teacher/>} />
                     <Route path='Subjects' element={<Subjects/>} />

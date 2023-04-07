@@ -22,8 +22,10 @@ const AddStudent = () => {
     const [gender,setSelected] = useState('ذكر');
     const email = useRef(null);
     const address = useRef(null);
-    const stage = useRef(null);
-    const clss = useRef(null);
+    const [stage,setStage] = useState('');
+    const [stages,setStages] = useState([]);
+    const [clss,setClss] = useState('');
+    const [classes,setClasses] = useState([]);
     // const relation = useRef(null)
     // const relationName = useRef(null)
     // const phoneNumber = useRef(null)
@@ -38,6 +40,14 @@ const AddStudent = () => {
     const handleChange=(e)=> {
     setSelected(e.target.value );
 }
+const handleStageChange=async(e)=>{
+    setStage(e.target.value)
+    await axios.get(`grade/getGradeClasses/${e.target.value}`,{params: { userId: id } ,headers: {'Authorization': `Bearer ${accessToken}`}}).then(
+        (res)=>{
+            setClasses(res.data.classes)
+            console.log(res)
+        })
+}
     const cloudinaryRef = useRef();
     const widgetRef = useRef();
     useEffect(()=>{
@@ -49,6 +59,11 @@ const AddStudent = () => {
     if (!error && result && result.event === "success") { 
         setImageUrl(result.info.secure_url)
     }})
+    axios.get('grade/getAllGrades',{params: { userId: id } ,headers: {'Authorization': `Bearer ${accessToken}`}}).then(
+        (res)=>{
+            setStages(res.data)
+        }
+    )
     },[])
     const AddContact = ()=>{
         if(relation!==''&&phoneNumber!==''&&relationName!==''){
@@ -66,9 +81,10 @@ const AddStudent = () => {
     }
     setValidated(true);
     console.log({name:name.current.value,age:age.current.value,nationalId:nationalId.current.value,
-        dateOfBirth:dateOfBirth.current.value,gender:gender,email:email.current.value,address:address.current.value,stage:stage.current.value,class:clss.current.value,imgUrl:imgUrl,password:password.current.value})
-    await axios.post('student/addStudent',{name:name.current.value,age:age.current.value,nationalId:nationalId.current.value,
-        dateOfBirth:dateOfBirth.current.value,gender:gender,email:email.current.value,address:address.current.value,stage:stage.current.value,class:clss.current.value,imgUrl:imgUrl,password:password.current.value,elWasy:contacts,meanOfTransport:''}).then(()=>{
+        dateOfBirth:'',gender:gender,email:email.current.value,address:address.current.value,stage:stage,class:clss,imgUrl:imgUrl,password:password.current.value})
+    await axios.post('student/addStudent',{
+        name:name.current.value,age:age.current.value,nationalId:nationalId.current.value,
+        dateOfBirth:' ',gender:gender,email:email.current.value,address:address.current.value,stage:stage,class:clss,imgUrl:imgUrl,password:password.current.value,elWasy:contacts,meanOfTransport:''}).then(()=>{
         name.current.value=null;
         email.current.value=null;
         nationalId.current.value=null;
@@ -76,8 +92,8 @@ const AddStudent = () => {
         age.current.value=null;
         setSelected(null);
         address.current.value=null;
-        stage.current.value=null;
-        clss.current.value=null;
+        setStage('')
+        setClss('')
         setImageUrl('');
         handleClose();
     })
@@ -166,19 +182,30 @@ const AddStudent = () => {
                 </Form.Group>
                 <Form.Group className="mb-3" controlId="validationCustom01" >
                 <Form.Label>المرحلة</Form.Label>
-                <Form.Control
-                ref={stage}
-                    required
-                    type="text"
-                />
+                <Form.Select required  value={stage} onChange={handleStageChange}>
+                    <option value={''} disabled>أختر</option>
+                    {
+                    stages.map((stage)=>{
+                        return(
+                            <option value={stage._id}>{stage.name}</option>
+                        )
+                    }
+                        )
+                    }
+                </Form.Select>
                 </Form.Group>
                 <Form.Group className="mb-3" controlId="validationCustom01" >
                 <Form.Label>الفصل</Form.Label>
-                <Form.Control
-                ref={clss}
-                    required
-                    type="text"
-                />
+                <Form.Select required  value={clss} onChange={(e)=>setClss(e.target.value)}>
+                    <option value={''} disabled>أختر</option>
+                    {
+                        classes.map((clss)=>{
+                            return(
+                                <option value={clss._id}>{clss.name}</option>
+                            )
+                        })
+                    }
+                </Form.Select>
                 </Form.Group>
                 <div className='d-flex mb-5 justify-content-between' style={{height:"50px"}}>
                 <Form.Group className="mb-3" controlId="validationCustom01" >

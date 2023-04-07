@@ -25,6 +25,8 @@ function SideBar() {
     const navigate = useNavigate();
     const location = useLocation();
     const {logout,isVisible,setIsVisible} = useContext(AuthContext);
+    if(isSm)
+    setIsVisible(false)
         return (
         <SideNav expanded={isVisible}>
             <SideNav.Toggle
