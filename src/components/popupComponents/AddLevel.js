@@ -35,7 +35,12 @@ function AddLevel() {
     }
     await axios.post('grade/addGrade',{name:name.current.value,subjects:subjectsIds},
     {params: { userId: id } ,headers: {'Authorization': `Bearer ${accessToken}`}})
-    .then(handleClose)
+    .then(()=>{
+        handleClose();
+        setSubjects([]);
+        setSubjectsIds([]);
+        selectdSubjectsDispatch({action:'CLEAR'})
+    })
     setValidated(true);
     };
     return (
