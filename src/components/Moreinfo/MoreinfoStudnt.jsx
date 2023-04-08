@@ -1,5 +1,6 @@
 import React, {useState } from 'react';
 import Select from 'react-select'
+import QRCode from 'react-qr-code';
 // import FullCalendar from '@fullcalendar/react' 
 // import dayGridPlugin from '@fullcalendar/daygrid'
 // import * as bootstrap from "bootstrap";
@@ -7,7 +8,8 @@ import Select from 'react-select'
 // import interactionPlugin from "@fullcalendar/interaction"
 import './moreinfo.css'
 // import { height } from '@mui/system';
-export default function More() {
+export default function More({props}) {
+    console.log(props)
     const options = [
         { value: 'January ', label: 'يناير ' },
         { value: 'February', label: 'فبراير ' },
@@ -22,7 +24,7 @@ export default function More() {
         { value: 'November', label: 'نوفمبر' },
         { value: 'December', label: 'ديسمبر' }
     ]
-
+    const [value, setValue] = useState();
         const handleUpload =() => {
     alert("File uploaded")
         };
@@ -57,12 +59,15 @@ return <>
 <div class="tab-content" id="v-pills-tabContent">
     <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab" tabindex="0">
         <div className="personal-info">
-            <h3>تاريخ الميلاد : 2010 - 01 - 12</h3>
-            <h3>الجنس : ذكر</h3>
+            <h3>تاريخ الميلاد : </h3>
+            <h3>الجنس : {props.gender}</h3>
             <h3><span className='mx-5'>المرحلة:    الأولى</span>الفصل: أ</h3>
-            <h3> saliem@gmail.com :<span>الإيميل</span></h3>
-            <h3>اسم الاب : عبدالسلام جعفر ممدوح</h3>
-            <h3>اسم الأم:    ناهد محمد المنصوري</h3>
+            <h3> {props.email} :<span>الإيميل</span></h3>
+            {
+                props.elwasy.map((e)=>{
+                    
+                })
+            }
             <h3>رقم هاتف 1: 0104849370</h3>
             <h3>العنوان : طنطا شارع الفاتح تفرع عمر بن عبد العزيز</h3>
             <h3>وسيلة التنقل : سيارة خاصة</h3>
@@ -89,7 +94,14 @@ return <>
             </div>
         </div>
     </div>
-    <div class="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab" tabindex="0">...</div>
+    <div class="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab" tabindex="0">
+    {value && (
+            <QRCode
+                title="studentQR"
+                value={value}
+            />
+        )}
+    </div>
     </div>
 </div>
 </div>
