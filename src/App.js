@@ -25,37 +25,37 @@ import ShowClass from './pages/Levels/ShowClass'
 import axios from 'axios';
 function App() {
   // const {accessToken,setAccessToken}=useContext(AuthContext);
-  //   useEffect(() => {
-  //   let currentTime = new Date().getTime();
-  //   const firstLogin = localStorage.getItem("firstLogin");
-  //   let intervalId;
-  //   if (firstLogin) {
-  //     const refreshToken = async () => {
-  //       try {
-  //         const res1 = await axios.get("admin/refreshToken", {
-  //           withCredentials: true
-  //         });
-  //         setAccessToken(res1.data.accessToken)
-  //         localStorage.setItem('accessToken',res1.data.accessToken)
-  //         const id=localStorage.getItem('id');
-  //         axios.defaults.headers.common['Authorization'] = `Bearer ${res1.data.accessToken}`;
-  //         axios.defaults.params={ userId: id }
-  //       } catch (err) {
-  //         localStorage.removeItem("firstLogin");
-  //         console.log(err)
-  //         window.location.href = "/login";
-  //       }
-  //     };
-  //     refreshToken();
-  //     intervalId = setInterval(() => {
-  //       if (new Date().getTime() - currentTime >= 9 * 60 * 1000) {
-  //         currentTime = new Date().getTime();
-  //         refreshToken();
-  //       }
-  //     }, 1000);
-  //   }
-  //   return () => clearInterval(intervalId);
-  // }, []);
+    useEffect(() => {
+    // let currentTime = new Date().getTime();
+    const firstLogin = localStorage.getItem("firstLogin");
+    // let intervalId;
+    if (firstLogin) {
+      const refreshToken = async () => {
+        try {
+          const res1 = await axios.get("admin/refreshToken", {
+            withCredentials: true
+          });
+          // setAccessToken(res1.data.accessToken)
+          localStorage.setItem('accessToken',res1.data.accessToken)
+          const id=localStorage.getItem('id');
+          axios.defaults.headers.common['Authorization'] = `Bearer ${res1.data.accessToken}`;
+          axios.defaults.params={ userId: id }
+        } catch (err) {
+          localStorage.removeItem("firstLogin");
+          console.log(err)
+          window.location.href = "/login";
+        }
+      };
+      refreshToken();
+      // intervalId = setInterval(() => {
+      //   if (new Date().getTime() - currentTime >= 9 * 60 * 1000) {
+      //     currentTime = new Date().getTime();
+      //     refreshToken();
+      //   }
+      // }, 1000);
+    }
+    // return () => clearInterval(intervalId);
+  }, []);
   return (
     <div className="App">
         <PopupContext>

@@ -1,5 +1,5 @@
 import axios from "axios";
-import { createContext, useState } from "react";
+import { createContext, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import jwt_decode from "jwt-decode";
 
@@ -24,6 +24,7 @@ export const AuthContextProvider = ({ children }) => {
     const [accessToken,setAccessToken]=useState(null)
     const [isVisible,setIsVisible]=useState(false);
     const [stageId,setStageId]=useState('');
+    const [refresh,setref] = useState(true)
     //Initialized the navigation variable.
     const navigate = useNavigate();
     // const handleStageId=(id)=>{
@@ -70,7 +71,7 @@ export const AuthContextProvider = ({ children }) => {
     return (
         //In the 'AuthContext.Provider' element, we configure the 'value' attribute to which we pass our 'login'(method), 'user'(variable) because these properties have to be accessed by any component in our application.
         <> 
-        <AuthContext.Provider value={{ id,accessToken,setAccessToken, login , logout ,isVisible,setIsVisible,stageId,setStageId}}>
+        <AuthContext.Provider value={{ id,accessToken,setAccessToken, login , logout ,isVisible,setIsVisible,stageId,setStageId , refresh , setref}}>
             {children}
         </AuthContext.Provider>
         </>

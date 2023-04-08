@@ -5,11 +5,15 @@ import { useEffect } from "react";
 import axios from 'axios';
 import Table from 'react-bootstrap/Table';
 import {useParams} from 'react-router-dom';
+import Loading from "../../pages/Loading/Loading";
+import useAxios from '../../hooks/useAxios';
+import AuthContext from '../../components/shared/AuthContext';
 function Tabs() {
   const [toggleState, setToggleState] = useState(1);
   const [pair,setPairs]=useState([]);
   const accessToken =localStorage.getItem('accessToken');
   const id=localStorage.getItem('id');
+  const { fetchData,data, loading} = useAxios()
   // const classId= localStorage.getItem('classId')
   const params =useParams();
   // console.log(params.classId)
@@ -17,14 +21,16 @@ function Tabs() {
     setToggleState(index);
   };
   let color =localStorage.getItem('stagecolor');
+
 useEffect(()=>{
-  axios.get(`class/getClassById/${params.classId}`,
-  {params: { userId: id } ,headers: {'Authorization': `Bearer ${accessToken}`, withCradintials : true}}).then(
-      (res)=>{
-          setPairs(res.data.subjectToTeacher)
-          console.log(res);
-      }
-  )
+  // axios.get(`class/getClassById/${params.classId}`,
+  // {params: { userId: id } ,headers: {'Authorization': `Bearer ${accessToken}`, withCradintials : true}}).then(
+  //     (res)=>{
+  //         setPairs(res.data.subjectToTeacher)
+  //         console.log(res);
+  //     }
+  // )
+  fetchData('get',`class/getClassById/${params.classId}`)
   color =localStorage.getItem('stagecolor');
 }
 ,[])
@@ -35,26 +41,23 @@ if(color==='green'){
 }else if(color==='blue'){
   color='#254C71';
 }
+if(loading)
+return <Loading/>
   return (
     <div className="container">
       <div className="bloc-tabs">
-       
         <button style={{backgroundColor:toggleState===1? color:''}}
           className={toggleState === 1 ? "tabs active-tabs" : "tabs"}
           onClick={() => toggleTab(1)}
         >
           المواد الدراسية
         </button>
-       
-        
         <button style={{backgroundColor:toggleState===2? color:''}}
           className={toggleState === 2 ? "tabs active-tabs" : "tabs"}
           onClick={() => toggleTab(2)}
         >
           الجداول الدراسية
         </button>
-       
-       
         <button style={{backgroundColor:toggleState===3? color:''}}
           className={toggleState === 3 ? "tabs active-tabs" : "tabs"}
           onClick={() => toggleTab(3)}
@@ -65,7 +68,7 @@ if(color==='green'){
         </div>
       <div className="content-tabs">
         <div
-         style={{margin:'20px auto',width:'70%'}}
+          style={{margin:'20px auto',width:'70%'}}
           className={toggleState === 1 ? "content  active-content" : "content"}
         >
         <Table striped  hover>
@@ -75,12 +78,13 @@ if(color==='green'){
           </thead>
           <tbody>
           {
-            pair.map(({subject,teacher},index)=>{
+            data?.subjectToTeacher.map(({subject,teacher},index)=>{
             return(
-              <tr key={index}>
-              <td>{subject.name}</td>
+            subject&&teacher?
+            <tr key={index}>
               <td>{teacher.name}</td>
-            </tr>
+              <td>{subject.name}</td>
+            </tr>:''
             )
             })
           }

@@ -1,30 +1,27 @@
 import axios from 'axios';
-import React, { useEffect, useState  ,useCallback} from 'react'
+import React, { useEffect, useState  ,useCallback, useRef, useContext} from 'react'
 import AddSubject from '../../components/popupComponents/AddSubject'
 import { Button ,Table } from 'react-bootstrap';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import Loading from '../Loading/Loading'
-import './subjects.css'
 import useAxios from '../../hooks/useAxios';
+import AuthContext from '../../components/shared/AuthContext';
+import './subjects.css'
 function Subjects() {
-    const accessToken = localStorage.getItem('accessToken')
-    const id=localStorage.getItem('id')
-    // const [subjects,setSubjects] = useState([])
-    const handleDelete=useCallback( async(subjectId)=>{
-        fetchData('delete',`subject/deleteSubject/${subjectId}`)
-        // await axios.delete(`subject/deleteSubject/${subjectId}`,{ params: { userId: id } , headers: {authorization : `Bearer ${accessToken}`} })
-    } 
-    , []);
+    
+    const handleDelete=async(subjectId)=>{
+        fetchData('delete',`subject/deleteSubject/${subjectId}`).then(
+        ()=> {
+            setref(!refresh)
+        })};
     const { fetchData,data:subjects , loading} = useAxios()
-    // console.log("subjects:",subjects)
+    const {refresh , setref} = useContext(AuthContext)
     useEffect(() => {
-    fetchData('get','subject/getAllSubjects')
-    // axios.get('subject/getAllSubjects',{ params: { userId: id } , headers: {authorization : `Bearer ${accessToken}`} }).then((res)=>{
-    //     setSubjects(res.data)
-    // })
+        fetchData('get','subject/getAllSubjects')
     }
-    ,[handleDelete]);
-    if(loading) <Loading/>
+    ,[refresh]);
+    if(loading) 
+    return <Loading/>
     return (
         <>
         <div className="row sub-cont">

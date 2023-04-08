@@ -23,7 +23,7 @@ export default function ShowStudent() {
         <div className="container">
             <div className="row mb-4 teacher-row1 gy-4">
             <div className="col-sm-3 btn-container ">
-                    <DeletePopup name={` المعلم / ة ${studentData.name}`} id={studentData._id} link={'teacher/deleteTeacher/'} />
+                    <DeletePopup name={` الطالب / ة ${studentData.name}`} id={studentData._id} link={'student/deleteStudent/'} />
                     <UpdateTeacher teacher={studentData} />
             </div>
                 <div className="col-sm-6 d-flex justify-content-center flex-column align-items-end presonal">

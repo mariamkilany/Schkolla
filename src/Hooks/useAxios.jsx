@@ -1,5 +1,6 @@
-import { useState } from 'react';
+import { useState , useCallback } from 'react';
 import axios from 'axios';
+import jwtInterceoptor from '../helpers/jwtInterceptor';
 // axios.defaults.baseURL='http://localhost:4000/v1/';
 // axios.defaults.withCredentials=true;
 
@@ -10,11 +11,12 @@ const useAxios = () => {
     const id=localStorage.getItem('id')
     const accessToken=localStorage.getItem('accessToken');
     
-    const fetchData = async (method,url,body,action) => {
+    const fetchData =async (method,url,body,action) => {
         setLoading(true);
         console.log('method',method)
         try {
-        const res = await axios[method](url,body)
+        // const res = await axios[method](url,body)
+        const res = await jwtInterceoptor[method](url,body)
             // .then((res)=>{setData(res?.data)});
             console.log("res",res)
             if(method==='get'){

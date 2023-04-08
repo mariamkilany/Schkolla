@@ -1,10 +1,11 @@
-import React, { useState ,useRef } from 'react';
+import React, { useState ,useRef , useContext } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
 import './popup.css';
 import axios from 'axios';
-import useAxios from '../../hooks/useAxios';
+import useAxios from '../../hooks/useAxios'; 
+import AuthContext from '../shared/AuthContext';
 
 function AddSubject() {
     const [show, setShow] = useState(false);
@@ -13,9 +14,10 @@ function AddSubject() {
     const subject=useRef();
     const accessToken =localStorage.getItem('accessToken');
     const id=localStorage.getItem('id')
+    const {refresh , setref} = useContext(AuthContext)
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
-    // const { fetchData,data:subjects , loading} = useAxios()
+    const { fetchData,data:subjects , loading} = useAxios()
     const handleSubmit =async (event) => {
     const form = event.currentTarget;
     if (form.checkValidity() === false) {
@@ -23,9 +25,13 @@ function AddSubject() {
         event.stopPropagation();
     }
     setValidated(true);
-    await axios.post('subject/addSubject',{name:subject.current.value})
-    .then(handleClose)
-    // fetchData('post','subject/addSubject',{name:subject.current.value},handleClose)
+    // await axios.post('subject/addSubject',{name:subject.current.value})
+    // .then(handleClose)
+    fetchData('post','subject/addSubject',{name:subject.current.value},handleClose).then(
+        ()=>{
+            setref(!refresh)
+        }
+    )
 
     // const { response, error, loading } = useAxios({method:'post',url:'subject/addSubject',body:{name:subject.current.value}})
     };
