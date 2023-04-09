@@ -81,10 +81,10 @@ const handleStageChange=async(e)=>{
     }
     setValidated(true);
     console.log({name:name.current.value,age:age.current.value,nationalId:nationalId.current.value,
-        dateOfBirth:'',gender:gender,email:email.current.value,address:address.current.value,stage:stage,class:clss,imgUrl:imgUrl,password:password.current.value})
+        dateOfBirth:'',gender:gender,email:email.current.value,address:address.current.value,stage:stage,classId:clss,imgUrl:imgUrl,password:password.current.value})
     await axios.post('student/addStudent',{
         name:name.current.value,age:age.current.value,nationalId:nationalId.current.value,
-        dateOfBirth:' ',gender:gender,email:email.current.value,address:address.current.value,stage:stage,class:clss,imgUrl:imgUrl,password:password.current.value,elWasy:contacts,meanOfTransport:''}).then(()=>{
+        dateOfBirth:dateOfBirth.current.value,gender:gender,email:email.current.value,address:address.current.value,grade:stage,classId:clss,imgUrl:imgUrl,password:password.current.value,elWasy:contacts,meanOfTransport:''}).then(()=>{
         name.current.value=null;
         email.current.value=null;
         nationalId.current.value=null;

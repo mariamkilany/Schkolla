@@ -10,7 +10,7 @@ import {RiLogoutCircleFill} from 'react-icons/ri';
 import {TbBooks} from 'react-icons/tb'
 import { useNavigate ,useLocation} from 'react-router-dom';
 import AuthContext from "../shared/AuthContext";
-import {useMediaQuery , useTheme} from '@mui/material'
+// import {useMediaQuery , useTheme} from '@mui/material'
     import SideNav, {
     NavItem,
     NavIcon,
@@ -18,15 +18,15 @@ import {useMediaQuery , useTheme} from '@mui/material'
     } from "@trendmicro/react-sidenav";
 import admin from '../../imge/admin.jpg'
 function SideBar() {
-    const theme = useTheme();
-    const isSm=useMediaQuery(theme.breakpoints.down("md"));
+    // const theme = useTheme();
+    // const isSm=useMediaQuery(theme.breakpoints.down("md"));
 
     // const [isVisible,setIsVisible]=useState(false);
     const navigate = useNavigate();
     const location = useLocation();
     const {logout,isVisible,setIsVisible} = useContext(AuthContext);
-    if(isSm)
-    setIsVisible(false)
+    // if(isSm)
+    // setIsVisible(false)
         return (
         <SideNav expanded={isVisible}>
             <SideNav.Toggle

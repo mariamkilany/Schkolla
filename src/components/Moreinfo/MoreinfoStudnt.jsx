@@ -1,6 +1,8 @@
 import React, {useState } from 'react';
 import Select from 'react-select'
 import QRCode from 'react-qr-code';
+import { QRCodeCanvas } from "qrcode.react";
+import html2canvas from 'html2canvas';
 // import FullCalendar from '@fullcalendar/react' 
 // import dayGridPlugin from '@fullcalendar/daygrid'
 // import * as bootstrap from "bootstrap";
@@ -9,7 +11,27 @@ import QRCode from 'react-qr-code';
 import './moreinfo.css'
 // import { height } from '@mui/system';
 export default function More({props}) {
-    console.log(props)
+    // console.log(props)
+    const [value, setValue] = useState(props._id);
+    const printRef = React.useRef();
+      const handleDownloadImage = async () => {
+    const element = printRef.current;
+    const canvas = await html2canvas(element);
+
+    const data = canvas.toDataURL('image/jpg');
+    const link = document.createElement('a');
+
+    if (typeof link.download === 'string') {
+      link.href = data;
+      link.download = 'image.jpg';
+
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    } else {
+      window.open(data);
+    }
+  };
     const options = [
         { value: 'January ', label: 'يناير ' },
         { value: 'February', label: 'فبراير ' },
@@ -24,7 +46,6 @@ export default function More({props}) {
         { value: 'November', label: 'نوفمبر' },
         { value: 'December', label: 'ديسمبر' }
     ]
-    const [value, setValue] = useState();
         const handleUpload =() => {
     alert("File uploaded")
         };
@@ -59,18 +80,25 @@ return <>
 <div class="tab-content" id="v-pills-tabContent">
     <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab" tabindex="0">
         <div className="personal-info">
-            <h3>تاريخ الميلاد : </h3>
             <h3>الجنس : {props.gender}</h3>
-            <h3><span className='mx-5'>المرحلة:    الأولى</span>الفصل: أ</h3>
+            <h3>المرحلة: {props.grade?.name}</h3>
+            <h3>الفصل: {props.classId?.name}</h3>
             <h3> {props.email} :<span>الإيميل</span></h3>
-            {
-                props.elwasy.map((e)=>{
+            {props.elWasy?.map((contact,index)=>{
+                return(
+                    <div className='d-flex justify-content-between'>
+                    <h3>الاسم:{contact.relationName}</h3>
+                    <h3>صلة القرابة:{contact.relation}</h3>
+                    <h3> رقم الهاتف:{contact.phoneNumber}</h3>
+                    </div>
                     
-                })
+                    
+                )
             }
-            <h3>رقم هاتف 1: 0104849370</h3>
+            )}
+
             <h3>العنوان : طنطا شارع الفاتح تفرع عمر بن عبد العزيز</h3>
-            <h3>وسيلة التنقل : سيارة خاصة</h3>
+            <h3>وسيلة التنقل : {props.meanOfTransport}</h3>
         </div>
         </div>
     <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab" tabindex="0">
@@ -95,12 +123,19 @@ return <>
         </div>
     </div>
     <div class="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab" tabindex="0">
-    {value && (
-            <QRCode
-                title="studentQR"
-                value={value}
-            />
-        )}
+    <div ref={printRef}>
+        <QRCodeCanvas 
+    className='my-4'
+        id="qrCode"     
+        value={props._id}  
+        size={300}   
+        bgColor={"#ffffff"}  
+        level={"H"}  
+    />
+    </div>
+    <div className='my-3'>
+        <button onClick={handleDownloadImage} className="btn btn-primary px-5" >تحميل </button>
+    </div>
     </div>
     </div>
 </div>
