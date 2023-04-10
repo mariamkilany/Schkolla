@@ -8,6 +8,7 @@ import {useParams} from 'react-router-dom';
 import Loading from "../../pages/Loading/Loading";
 import useAxios from '../../hooks/useAxios';
 import AuthContext from '../../components/shared/AuthContext';
+import TimeTable from "../TimeTable/TimeTable";
 function Tabs() {
   const [toggleState, setToggleState] = useState(1);
   const [pair,setPairs]=useState([]);
@@ -95,9 +96,7 @@ return <Loading/>
         <div
           className={toggleState === 2 ? "content  active-content" : "content"}
         >
-          <h2>الجداول</h2>
-         
-          
+          <TimeTable/>
         </div>
 
         <div

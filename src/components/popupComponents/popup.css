@@ -56,3 +56,6 @@ input{
     background-color: transparent !important;
     border: none !important; 
 }
+.timeInpt{
+    height: 40px !important;
+}

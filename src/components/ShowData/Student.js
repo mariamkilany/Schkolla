@@ -16,7 +16,7 @@ export default function StudentShow(props)
     const navigate = useNavigate()
     const params =useParams();
     useEffect(()=>{
-        axios.get('student/getAllStudents',{ params: { userId: id } , headers: {authorization: `Bearer ${accessToken}`} }).then(
+        axios.get(link,{ params: { userId: id } , headers: {authorization: `Bearer ${accessToken}`} }).then(
         (response)=>{
             setstudentsData(response.data)
             console.log(response)

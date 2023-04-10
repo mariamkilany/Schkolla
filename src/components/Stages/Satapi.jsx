@@ -36,7 +36,7 @@ export default function Satapi(props) {
         <Stages level={item} index={index} key={index}/>)
         :
         data?.classes?.map((item,index)=>
-        <Stages level={item} index={index} key={index}/>)
+        <Class classes={item} index={index} key={index}/>)
       }
   </>
     
