@@ -85,8 +85,9 @@ function App() {
                     <Route path='Levels/:stageId/:classId' element={<ShowClass/>} />
                     <Route path='Students' element={<Students/>} />
                     <Route path='Students/:stuId' element={<ShowStudent/>} />
+                    <Route path='Levels/:stageId/:classId/:stuId' element={<ShowStudent/>} />
                     <Route path='Teachers' element={<ShowAllTeachers />} />
-                    <Route path='Teachers/teacherData' element={<Teacher/>} />
+                    <Route path='Teachers/:teacherId' element={<Teacher/>} />
                     <Route path='Subjects' element={<Subjects/>} />
                     <Route path='Employee' element={<Employee/>} />
                     <Route path='QA' element={<QA/>} />

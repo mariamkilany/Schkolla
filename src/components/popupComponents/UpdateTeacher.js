@@ -1,15 +1,17 @@
-import React, { useState ,useRef ,useEffect } from 'react';
+import React, { useState ,useRef ,useEffect, useContext } from 'react';
 import Button from 'react-bootstrap/Button';
 import {SlCloudUpload} from 'react-icons/sl'
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
 import './popup.css';
-import axios from 'axios';
+import useAxios from '../../hooks/useAxios';
+import { useParams } from 'react-router-dom';
+import AuthContext from '../shared/AuthContext';
 
-const UpdateTeacher = () => {
+const UpdateTeacher = ({teacherData}) => {
     const [show, setShow] = useState(false);
     const [validated, setValidated] = useState(false);
-    const teacherId=localStorage.getItem('teacherId')
+    const teacherId = useParams().teacherId;
     const [name,setName] = useState('');
     const [password,setPassword] = useState('');
     const [nationalId,setNationalId] = useState('');
@@ -22,23 +24,20 @@ const UpdateTeacher = () => {
     const [role,setRole] = useState('');
     const [salary,setSalary]= useState('');
     const [imgUrl,setImageUrl] =useState('')
-    const accessToken = localStorage.getItem('accessToken')
-    const id=localStorage.getItem('id')
+    const { refresh , setref}=useContext(AuthContext)
+    const { fetchData,data , loading} = useAxios()
     useEffect(()=>{
-        axios.get(`teacher/getTeacher/${teacherId}`,
-        { params: { userId: id } , headers: {authorization: `Bearer ${accessToken}`} }).then((response)=>{
-            setName(response.data.name)
-            setEmail(response.data.email)
-            setAge(response.data.age)
-            setDateOfBirth(response.data.dateOfBirth)
-            setImageUrl(response.data.imgUrl)
-            setNationalId(response.data.nationalId)
-            setPassword(response.data.password)
-            setPhoneNumber(response.data.phoneNumber)
-            setAddress(response.data.address)
-            setSalary(response.data.salary)
-            setRole(response.data.role)
-        })
+            setName(teacherData?.name)
+            setEmail(teacherData?.email)
+            setAge(teacherData?.age)
+            setDateOfBirth(teacherData?.dateOfBirth)
+            setImageUrl(teacherData?.imgUrl)
+            setNationalId(teacherData?.nationalId)
+            setPassword(teacherData?.password)
+            setPhoneNumber(teacherData?.phoneNumber)
+            setAddress(teacherData?.address)
+            setSalary(teacherData?.salary)
+            setRole(teacherData?.role)
     },[])
 
     const handleClose = () => setShow(false);
@@ -67,8 +66,10 @@ const UpdateTeacher = () => {
         event.stopPropagation();
     }
     setValidated(true);
-    await axios.patch(`teacher/updateTeacher/${teacherId}`,{name,age,nationalId,dateOfBirth,gender:gender,email,phoneNumber,address,role,salary,imgUrl,password},
-    { params: { userId: id } , headers: {authorization : `Bearer ${accessToken}`} }).then(()=>{handleClose();})
+    fetchData('patch',`teacher/updateTeacher/${teacherId}`,{name,age,nationalId,dateOfBirth,gender:gender,email,phoneNumber,address,role,salary,imgUrl,password},handleClose)
+    .then(
+        ()=>setref(!refresh)
+    )
     };
     return (
         <>

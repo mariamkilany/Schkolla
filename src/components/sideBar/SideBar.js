@@ -45,7 +45,7 @@ function SideBar() {
             </NavItem>
                 <NavItem onClick={()=>{
                     navigate('Levels')
-                    }}className={location.pathname.toLowerCase()==='/dashboard/levels'?'sidenav---selected---1EK3y sidenav---highlighted---oUx9u':''}
+                    }}className={location.pathname.toLowerCase().includes('levels')?'sidenav---selected---1EK3y sidenav---highlighted---oUx9u':''}
                     >
                 <NavIcon>
                     <GiStairsGoal className="nav-icon"/>
@@ -55,7 +55,7 @@ function SideBar() {
             <NavItem onClick={()=>{
                 navigate('Students')
                 }}
-                className={location.pathname.toLowerCase()==='/dashboard/students'?'sidenav---selected---1EK3y sidenav---highlighted---oUx9u':''}
+                className={location.pathname.toLowerCase().includes('students')?'sidenav---selected---1EK3y sidenav---highlighted---oUx9u':''}
                 >
                 <NavIcon>
                     <MdOutlinePeopleAlt className="nav-icon"/>
@@ -65,7 +65,7 @@ function SideBar() {
             <NavItem onClick={()=>{
                 navigate('Teachers')
                 }}
-                className={location.pathname.toLowerCase()==='/dashboard/teachers'?'sidenav---selected---1EK3y sidenav---highlighted---oUx9u':''}
+                className={location.pathname.toLowerCase().includes('teachers')?'sidenav---selected---1EK3y sidenav---highlighted---oUx9u':''}
                 >
                 <NavIcon>
                     <GiTeacher className="nav-icon"/>
@@ -75,7 +75,7 @@ function SideBar() {
             <NavItem onClick={()=>{
                 navigate('Employee')
                 }}
-                className={location.pathname.toLowerCase()==='/dashboard/employee'?'sidenav---selected---1EK3y sidenav---highlighted---oUx9u':''}
+                className={location.pathname.toLowerCase().includes('employee')?'sidenav---selected---1EK3y sidenav---highlighted---oUx9u':''}
                 >
                 <NavIcon>
                     <SlPeople className="nav-icon"/>
@@ -85,7 +85,7 @@ function SideBar() {
             <NavItem onClick={()=>{
                 navigate('Subjects')
                 }}
-                className={location.pathname.toLowerCase()==='/dashboard/subjects'?'sidenav---selected---1EK3y sidenav---highlighted---oUx9u':''}
+                className={location.pathname.toLowerCase().includes('subjects')?'sidenav---selected---1EK3y sidenav---highlighted---oUx9u':''}
                 >
                 <NavIcon>
                     <TbBooks className="nav-icon"/>
@@ -95,7 +95,7 @@ function SideBar() {
             <NavItem onClick={()=>{
                 navigate('QA')
                 }}
-                className={location.pathname.toLowerCase()==='/dashboard/qa'?'sidenav---selected---1EK3y sidenav---highlighted---oUx9u':''}
+                className={location.pathname.toLowerCase().includes('qa')?'sidenav---selected---1EK3y sidenav---highlighted---oUx9u':''}
                 >
                 <NavIcon>
                     <IoChatbubblesOutline className="nav-icon"/>
