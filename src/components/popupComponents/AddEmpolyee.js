@@ -1,18 +1,17 @@
-import React, { useState ,useRef ,useEffect } from 'react';
-import Button from 'react-bootstrap/Button';
-import {SlCloudUpload} from 'react-icons/sl'
+import React , {useContext, useRef,useState , useEffect} from 'react'
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
+import Button from 'react-bootstrap/Button';
+import {SlCloudUpload} from 'react-icons/sl'
 import './popup.css';
-import axios from 'axios';
-import { Table } from 'react-bootstrap';
 import useAxios from '../../hooks/useAxios';
-import { useContext } from 'react';
 import AuthContext from '../shared/AuthContext';
 
-const AddStudent = () => {
+function AddEmpolyee() {
     const [show, setShow] = useState(false);
     const [validated, setValidated] = useState(false);
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
 
     const name = useRef(null);
     const password = useRef(null);
@@ -21,31 +20,14 @@ const AddStudent = () => {
     const age = useRef(null);
     const [gender,setSelected] = useState('ذكر');
     const email = useRef(null);
+    const phoneNumber = useRef(null);
     const address = useRef(null);
-    const [stage,setStage] = useState('');
-    const [stages,setStages] = useState([]);
-    const [clss,setClss] = useState('');
-    const [classes,setClasses] = useState([]);
-    const [relation,setRelation]=useState('')
-    const [relationName,setRelationName]=useState('')
-    const [phoneNumber,setPhoneNumber]=useState('')
-    const [contacts,setContacts] = useState([])
+    const job = useRef(null);
+    const salary = useRef(null);
     const [imgUrl,setImageUrl] =useState('')
     const {fetchData,data,loading}=useAxios()
     const{refresh,setref}=useContext(AuthContext)
 
-    const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
-
-    const handleChange=(e)=> {
-    setSelected(e.target.value );
-}
-const handleStageChange=async(e)=>{
-    setStage(e.target.value)
-    fetchData('get',`grade/getGradeClasses/${e.target.value}`).then((res)=>{
-        setClasses(res.classes)
-    })
-}
     const cloudinaryRef = useRef();
     const widgetRef = useRef();
     useEffect(()=>{
@@ -57,19 +39,13 @@ const handleStageChange=async(e)=>{
     if (!error && result && result.event === "success") { 
         setImageUrl(result.info.secure_url)
     }})
-
-    fetchData('get','grade/getAllGrades').then((res)=>{
-        setStages(res)
-    })
     },[])
-    const AddContact = ()=>{
-        if(relation!==''&&phoneNumber!==''&&relationName!==''){
-            setContacts([...contacts,{relation,phoneNumber,relationName}])
-            setRelation('');
-            setRelationName('');
-            setPhoneNumber('');
-        }
+
+    const handleChange=(e)=> {
+    setSelected(e.target.value );
     }
+    
+
     const handleSubmit = async(event) => {
     const form = event.currentTarget;
     if (form.checkValidity() === false) {
@@ -77,28 +53,20 @@ const handleStageChange=async(e)=>{
         event.stopPropagation();
     }
     setValidated(true);
-    fetchData('post','student/addStudent',{name:name.current.value,age:age.current.value,nationalId:nationalId.current.value,
-        dateOfBirth:dateOfBirth.current.value,gender:gender,email:email.current.value,address:address.current.value,grade:stage,
-        classId:clss,imgUrl:imgUrl,password:password.current.value,elWasy:contacts,meanOfTransport:''},handleClose).then(()=>{
-        setref(!refresh)
-        name.current.value=null;
-        email.current.value=null;
-        nationalId.current.value=null;
-        dateOfBirth.current.value=null;
-        age.current.value=null;
-        setSelected(null);
-        address.current.value=null;
-        setStage('')
-        setClss('')
-        setImageUrl('');
+    fetchData('post','securityRouter/addSecurityMember',
+    {name:name.current.value,age:age.current.value,nationalId:nationalId.current.value,dateOfBirth:dateOfBirth.current.value,
+    gender:gender,email:email.current.value,phoneNumber:phoneNumber.current.value,address:address.current.value,job:job.current.value,
+    salary:salary.current.value,imgUrl:imgUrl,password:password.current.value},handleClose)
+        .then(()=>{
+            setref(!refresh)
         })
     };
     return (
-        <>
-        <Button variant="primary" className='levelbtn mt-5' onClick={handleShow}>إضافة طالب جديد</Button>
+<>
+        <Button variant="primary" className='levelbtn mt-5' onClick={handleShow}>إضافة موظف جديد</Button>
         <Modal show={show} onHide={handleClose}>
             <Modal.Header closeButton>
-            <Modal.Title>معلومات الطالب الشخصية</Modal.Title>
+            <Modal.Title>معلومات الموظف الشخصية</Modal.Title>
             </Modal.Header>
             <Modal.Body>
             <Form noValidate validated={validated} onSubmit={handleSubmit}>
@@ -160,6 +128,14 @@ const handleStageChange=async(e)=>{
                 />
                 </Form.Group>
                 <Form.Group className="mb-3" controlId="validationCustom01" >
+                <Form.Label>رقم الهاتف</Form.Label>
+                <Form.Control
+                ref={phoneNumber}
+                    required
+                    type="text"
+                />
+                </Form.Group>
+                <Form.Group className="mb-3" controlId="validationCustom01" >
                 <Form.Label>كلمة المرور </Form.Label>
                 <Form.Control
                 ref={password}
@@ -176,87 +152,22 @@ const handleStageChange=async(e)=>{
                 />
                 </Form.Group>
                 <Form.Group className="mb-3" controlId="validationCustom01" >
-                <Form.Label>المرحلة</Form.Label>
-                <Form.Select required  value={stage} onChange={handleStageChange}>
-                    <option value={''} disabled>أختر</option>
-                    {
-                    stages.map((stage)=>{
-                        return(
-                            <option value={stage._id}>{stage.name}</option>
-                        )
-                    }
-                        )
-                    }
-                </Form.Select>
-                </Form.Group>
-                <Form.Group className="mb-3" controlId="validationCustom01" >
-                <Form.Label>الفصل</Form.Label>
-                <Form.Select required  value={clss} onChange={(e)=>setClss(e.target.value)}>
-                    <option value={''} disabled>أختر</option>
-                    {
-                        classes.map((clss)=>{
-                            return(
-                                <option value={clss._id}>{clss.name}</option>
-                            )
-                        })
-                    }
-                </Form.Select>
-                </Form.Group>
-                <div className='d-flex mb-5 justify-content-between' style={{height:"50px"}}>
-                <Form.Group className="mb-3" controlId="validationCustom01" >
-                <Form.Label>صلة القرابة</Form.Label>
+                <Form.Label>التخصص</Form.Label>
                 <Form.Control
-                onChange={(e)=>setRelation(e.target.value)}
+                ref={job}
                     required
-                    value={relation}
                     type="text"
                 />
                 </Form.Group>
                 <Form.Group className="mb-3" controlId="validationCustom01" >
-                <Form.Label>رقم الموبايل</Form.Label>
+                <Form.Label>المرتب</Form.Label>
                 <Form.Control
-                    onChange={(e)=>setPhoneNumber(e.target.value)}
+                ref={salary}
                     required
-                    value={phoneNumber}
-                    type="text"
+                    type="number"
                 />
                 </Form.Group>
-                <Form.Group className="mb-3" controlId="validationCustom01" >
-                <Form.Label>الاسم </Form.Label>
-                <Form.Control
-                    onChange={(e)=>setRelationName(e.target.value)}
-                    required
-                    value={relationName}
-                    type="text"
-                />
-                </Form.Group>
-                </div>
-                <Button variant='primary' onClick={AddContact} className='mb-5'>
-                أضافة جهة اتصال
-                </Button>
             </Form>
-            <Table striped bordered hover>
-        <thead>
-            <tr>
-            <th>حذف</th>
-            <th>صلة القرابة</th>
-            <th>رقم الموبايل</th>
-            <th>الإسم</th>
-            </tr>
-        </thead>
-        <tbody>
-        {contacts.map(({phoneNumber,relationName,relation})=>{
-            return(
-                <tr>
-                    <td><Button variant='danger'>حذف</Button></td>
-                    <td>{relation}</td>
-                    <td>{phoneNumber}</td>
-                    <td>{relationName}</td>
-                </tr>
-            )
-        })}
-        </tbody>
-        </Table>
             </Modal.Body>
             <Modal.Footer>
             <Button variant="secondary" onClick={handleClose}>
@@ -268,7 +179,7 @@ const handleStageChange=async(e)=>{
             </Modal.Footer>
         </Modal>
         </>
-    );
+    )
 }
 
-export default AddStudent
+export default AddEmpolyee

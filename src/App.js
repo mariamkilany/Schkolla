@@ -23,6 +23,7 @@ import ShowDataContext from './components/ShowData/ShowDataContext';
 import Showlevel from './pages/Levels/Showlevel'
 import ShowClass from './pages/Levels/ShowClass'
 import axios from 'axios';
+import StuffProfile from './pages/Empolyee/StuffProfile';
 function App() {
   // const {accessToken,setAccessToken}=useContext(AuthContext);
     useEffect(() => {
@@ -90,6 +91,7 @@ function App() {
                     <Route path='Teachers/:teacherId' element={<Teacher/>} />
                     <Route path='Subjects' element={<Subjects/>} />
                     <Route path='Employee' element={<Employee/>} />
+                    <Route path='Employee/:empolyeeId' element={<StuffProfile/>}/>
                     <Route path='QA' element={<QA/>} />
                   </Route>
                   <Route path='*' element={<Notfound/>} />

@@ -1,50 +1,72 @@
-import React, { useState ,useRef ,useEffect } from 'react';
+import React, { useState ,useRef ,useEffect, useContext } from 'react';
 import Button from 'react-bootstrap/Button';
 import {SlCloudUpload} from 'react-icons/sl'
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
 import './popup.css';
-import axios from 'axios';
-import { Table } from 'react-bootstrap';
 import useAxios from '../../hooks/useAxios';
-import { useContext } from 'react';
+import { useParams } from 'react-router-dom';
 import AuthContext from '../shared/AuthContext';
+import { Table } from 'react-bootstrap';
 
-const AddStudent = () => {
+const UpdateStudent = (props) => {
     const [show, setShow] = useState(false);
     const [validated, setValidated] = useState(false);
-
-    const name = useRef(null);
-    const password = useRef(null);
-    const nationalId = useRef(null);
-    const dateOfBirth = useRef(null);
-    const age = useRef(null);
-    const [gender,setSelected] = useState('ذكر');
-    const email = useRef(null);
-    const address = useRef(null);
-    const [stage,setStage] = useState('');
-    const [stages,setStages] = useState([]);
+    const [name,setName] = useState('');
+    const [password,setPassword] = useState('');
+    const [nationalId,setNationalId] = useState('');
+    const [dateOfBirth,setDateOfBirth] = useState('');
+    const [age,setAge] = useState('');
+    const [gender,setSelected] = useState('');
+    const [email,setEmail] = useState('');
+    const [phoneNumber,setPhoneNumber] = useState('');
+    const [address,setAddress] = useState('');
     const [clss,setClss] = useState('');
     const [classes,setClasses] = useState([]);
     const [relation,setRelation]=useState('')
     const [relationName,setRelationName]=useState('')
-    const [phoneNumber,setPhoneNumber]=useState('')
     const [contacts,setContacts] = useState([])
     const [imgUrl,setImageUrl] =useState('')
-    const {fetchData,data,loading}=useAxios()
-    const{refresh,setref}=useContext(AuthContext)
+    const [stage,setStage] = useState('');
+    const [stages,setStages] = useState([]);
+    
+    const { refresh , setref}=useContext(AuthContext)
+    const { fetchData,data , loading} = useAxios()
+    const params = useParams()
+    useEffect(()=>{
+        fetchData('get',`student/getStudentById/${params.stuId}`).then((studentData)=>{
+            console.log(studentData)
+            setName(studentData?.name)
+            setEmail(studentData?.email)
+            setAge(studentData?.age)
+            setDateOfBirth(studentData?.dateOfBirth)
+            setImageUrl(studentData?.imgUrl)
+            setNationalId(studentData?.nationalId)
+            setPassword(studentData?.password)
+            setAddress(studentData?.address)
+            setSelected(studentData?.gender)
+            setContacts(studentData?.elWasy)
+            console.log(studentData.grade._id)
+            setStage(studentData?.grade._id)
+            setClss(studentData?.classId._id)
+            handleStageChange(studentData?.grade._id)
+        }).then(
+            ()=>{
+                fetchData('get','grade/getAllGrades').then((res)=>{
+                    setStages(res)
+                    // console.log(stage)
+                    // handleStageChange(stage)
+            }
+        )
+    })
+            
+    },[])
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
     const handleChange=(e)=> {
     setSelected(e.target.value );
-}
-const handleStageChange=async(e)=>{
-    setStage(e.target.value)
-    fetchData('get',`grade/getGradeClasses/${e.target.value}`).then((res)=>{
-        setClasses(res.classes)
-    })
 }
     const cloudinaryRef = useRef();
     const widgetRef = useRef();
@@ -57,11 +79,27 @@ const handleStageChange=async(e)=>{
     if (!error && result && result.event === "success") { 
         setImageUrl(result.info.secure_url)
     }})
-
-    fetchData('get','grade/getAllGrades').then((res)=>{
-        setStages(res)
-    })
     },[])
+
+    const handleSubmit = async(event) => {
+    const form = event.currentTarget;
+    if (form.checkValidity() === false) {
+        event.preventDefault();
+        event.stopPropagation();
+    }
+    setValidated(true);
+    fetchData('patch',`student/updateStudent/${params.stuId}`,{name,age,nationalId,dateOfBirth,gender:gender,email,phoneNumber,address,imgUrl,password}
+    ,handleClose)
+    .then(
+        ()=>setref(!refresh)
+    )
+    };
+    const handleStageChange=async(value)=>{
+    setStage(value)
+    fetchData('get',`grade/getGradeClasses/${value}`).then((res)=>{
+        setClasses(res.classes)
+    })
+}
     const AddContact = ()=>{
         if(relation!==''&&phoneNumber!==''&&relationName!==''){
             setContacts([...contacts,{relation,phoneNumber,relationName}])
@@ -70,32 +108,9 @@ const handleStageChange=async(e)=>{
             setPhoneNumber('');
         }
     }
-    const handleSubmit = async(event) => {
-    const form = event.currentTarget;
-    if (form.checkValidity() === false) {
-        event.preventDefault();
-        event.stopPropagation();
-    }
-    setValidated(true);
-    fetchData('post','student/addStudent',{name:name.current.value,age:age.current.value,nationalId:nationalId.current.value,
-        dateOfBirth:dateOfBirth.current.value,gender:gender,email:email.current.value,address:address.current.value,grade:stage,
-        classId:clss,imgUrl:imgUrl,password:password.current.value,elWasy:contacts,meanOfTransport:''},handleClose).then(()=>{
-        setref(!refresh)
-        name.current.value=null;
-        email.current.value=null;
-        nationalId.current.value=null;
-        dateOfBirth.current.value=null;
-        age.current.value=null;
-        setSelected(null);
-        address.current.value=null;
-        setStage('')
-        setClss('')
-        setImageUrl('');
-        })
-    };
     return (
         <>
-        <Button variant="primary" className='levelbtn mt-5' onClick={handleShow}>إضافة طالب جديد</Button>
+        <Button variant="primary" className='btn btn-warning btn-2 w-100' onClick={handleShow}>تعديل الطالب </Button>
         <Modal show={show} onHide={handleClose}>
             <Modal.Header closeButton>
             <Modal.Title>معلومات الطالب الشخصية</Modal.Title>
@@ -110,12 +125,13 @@ const handleStageChange=async(e)=>{
                     required
                     type="text"
                     autoFocus
-                    ref={name}
+                    value={name}
+                    onChange={(e)=>setName(e.target.value)}
                 />
                 </div>
                 <div className='widget-cont'controlId="validationCustom01">
                     <Button onClick={()=>widgetRef.current.open()}>
-                        {imgUrl===''?<SlCloudUpload/> :<img src={imgUrl} alt="teacherimg" style={{width:'100%'}}/>}
+                        {imgUrl===''?<SlCloudUpload/> :<img src={imgUrl} alt="studentimg" style={{width:'100%'}}/>}
                     </Button>
                 </div>
                 </Form.Group>
@@ -124,7 +140,8 @@ const handleStageChange=async(e)=>{
                 <Form.Control
                     required
                     type="text"
-                    ref={nationalId}
+                    value={nationalId}
+                    onChange={(e)=>setNationalId(e.target.value)}
                 />
                 </Form.Group>
                 <Form.Group className="mb-3" controlId="validationCustom01" >
@@ -132,7 +149,9 @@ const handleStageChange=async(e)=>{
                 <Form.Control
                     required
                     type="date"
-                    ref={dateOfBirth}
+                    value={dateOfBirth}
+                    onChange={(e)=>setDateOfBirth(e.target.value)
+                    }
                 />
                 </Form.Group>
                 <Form.Group className="mb-3" controlId="validationCustom01" >
@@ -140,7 +159,8 @@ const handleStageChange=async(e)=>{
                 <Form.Control
                     required
                     type="number"
-                    ref={age}
+                    value={age}
+                    onChange={(e)=>setAge(e.target.value)}
                 />
                 </Form.Group>
                 <Form.Group className="mb-3" controlId="validationCustom01" >
@@ -154,7 +174,8 @@ const handleStageChange=async(e)=>{
                 <Form.Group className="mb-3" controlId="validationCustom01" >
                 <Form.Label>الإيميل</Form.Label>
                 <Form.Control
-                ref={email}
+                value={email}
+                    onChange={(e)=>setEmail(e.target.value)}
                     required
                     type="email"
                 />
@@ -162,7 +183,8 @@ const handleStageChange=async(e)=>{
                 <Form.Group className="mb-3" controlId="validationCustom01" >
                 <Form.Label>كلمة المرور </Form.Label>
                 <Form.Control
-                ref={password}
+                    value={password}
+                    onChange={(e)=>setPassword(e.target.value)}
                     required
                     type="password"
                 />
@@ -170,14 +192,15 @@ const handleStageChange=async(e)=>{
                 <Form.Group className="mb-3" controlId="validationCustom01" >
                 <Form.Label>العنوان</Form.Label>
                 <Form.Control
-                ref={address}
+                    value={address}
+                    onChange={(e)=>setAddress(e.target.value)}
                     required
                     type="text"
                 />
                 </Form.Group>
                 <Form.Group className="mb-3" controlId="validationCustom01" >
                 <Form.Label>المرحلة</Form.Label>
-                <Form.Select required  value={stage} onChange={handleStageChange}>
+                <Form.Select required  value={stage} onChange={(e)=>handleStageChange(e.target.value)}>
                     <option value={''} disabled>أختر</option>
                     {
                     stages.map((stage)=>{
@@ -271,4 +294,4 @@ const handleStageChange=async(e)=>{
     );
 }
 
-export default AddStudent
+export default UpdateStudent

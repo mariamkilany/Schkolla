@@ -21,10 +21,17 @@ jwtInterceoptor.interceptors.response.use(
     async (error) => {
         // console.log(error)
     if (error.response.status === 401) {
+        try{
         let apiResponse = await axios.get("http://localhost:4000/v1/admin/refreshToken",{withCredentials:true})
         localStorage.setItem("accessToken", apiResponse.data.accessToken);
         error.config.headers["Authorization"] = `Bearer ${apiResponse.data.accessToken}`;
         return axios(error.config);
+        }
+        catch(err){
+            localStorage.removeItem("firstLogin");
+            console.log(err)
+            window.location.href = "/login";
+        }
     } else {
         return Promise.reject(error);
     }

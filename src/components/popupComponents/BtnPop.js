@@ -23,7 +23,7 @@ function BtnPop() {
     };
     return (
     <>
-    <Button variant="warning" className='text-secondary  text-decoration-underline' style={{backgroundColor: "transparent",border: "none"}} onClick={handleShow}>تعديل الحصة</Button>
+    <Button variant="warning" className='text-secondary  text-decoration-underline  table-pop' style={{backgroundColor: "transparent",border: "none"}} onClick={handleShow}>تعديل الحصة</Button>
         <Modal show={show} onHide={handleClose}>
             <Modal.Header closeButton>
             <Modal.Title> تعديل الحصة </Modal.Title>

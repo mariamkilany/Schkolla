@@ -11,26 +11,14 @@ import AuthContext from '../../components/shared/AuthContext';
 import TimeTable from "../TimeTable/TimeTable";
 function Tabs() {
   const [toggleState, setToggleState] = useState(1);
-  const [pair,setPairs]=useState([]);
-  const accessToken =localStorage.getItem('accessToken');
-  const id=localStorage.getItem('id');
   const { fetchData,data, loading} = useAxios()
-  // const classId= localStorage.getItem('classId')
   const params =useParams();
-  // console.log(params.classId)
   const toggleTab = (index) => {
     setToggleState(index);
   };
   let color =localStorage.getItem('stagecolor');
 
 useEffect(()=>{
-  // axios.get(`class/getClassById/${params.classId}`,
-  // {params: { userId: id } ,headers: {'Authorization': `Bearer ${accessToken}`, withCradintials : true}}).then(
-  //     (res)=>{
-  //         setPairs(res.data.subjectToTeacher)
-  //         console.log(res);
-  //     }
-  // )
   fetchData('get',`class/getClassById/${params.classId}`)
   color =localStorage.getItem('stagecolor');
 }
@@ -90,7 +78,7 @@ return <Loading/>
             })
           }
           </tbody>
-     </Table>
+    </Table>
         </div>
 
         <div

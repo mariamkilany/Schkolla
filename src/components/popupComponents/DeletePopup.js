@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom';
 function DeletePopup(props) {
     const [show, setShow] = useState(false);
     const navigate = useNavigate()
-
+    console.log(props)
     const { fetchData,data , loading} = useAxios()
 
     const handleClose = (e) => {
@@ -16,18 +16,21 @@ function DeletePopup(props) {
         setShow(false)};
     const handleShow = (e) => {
         if(e && e.stopPropagation) e.stopPropagation()
-        setShow(true)};
+        setShow(true)
+    };
 
 const handleDelete=async()=>{
     fetchData('delete',`${props.link}${props.id}`,{},handleClose).then(()=>{
-        if(props.link==='teacher/deleteTeacher/'||props.link==='student/deleteStudent/')
+        if(props.link==='teacher/deleteTeacher/'
+        ||props.link==='student/deleteStudent/'
+        ||props.link==='securityRouter/deleteSecurityMember/')
         navigate(-1)
     })
 }
 
     return (
         <>
-        <button className={`btn delete-btn bttm ${props.link==='teacher/deleteTeacher/'||props.link==='student/deleteStudent/'?'pt-2 btn-danger btn-1 w-100':''}`} onClick={handleShow}>
+        <button className={`btn delete-btn bttm ${props.link==='teacher/deleteTeacher/'||props.link==='student/deleteStudent/'||props.link==='securityRouter/deleteSecurityMember/'?'pt-2 btn-danger btn-1 w-100':''}`} onClick={handleShow}>
             حذف 
         </button>
         <Modal show={show} onHide={handleClose} onClick={(e)=>{if(e && e.stopPropagation) e.stopPropagation();}}>

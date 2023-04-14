@@ -1,7 +1,9 @@
 import React from 'react'
 import './notfound.css'
+import { useNavigate} from 'react-router-dom'
 
 export default function Notfound() {   
+  const navigate = useNavigate()
     return<>
         <div className='anm-container'>
         <div className="center">
@@ -27,7 +29,8 @@ export default function Notfound() {
   </div>
 
   <div className="text">عفوا! هذه الصفحة غير متاحه حاليا</div>
-  <a className="button" href="#"> الصفحة الرئسية</a>
+    <a className="button" onClick={()=>navigate('dashboard')}> الصفحة الرئسية</a>
+  
 </div>
         </div>
     </>

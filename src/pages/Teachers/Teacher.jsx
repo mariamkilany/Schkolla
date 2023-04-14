@@ -12,6 +12,7 @@ export default function Teacher() {
     const { refresh }=useContext(AuthContext)
     const { fetchData,data:teacherData , loading} = useAxios()
     const param=useParams()
+
     useEffect(() => {
     fetchData('get',`teacher/getTeacher/${param.teacherId}`)
     },[refresh])

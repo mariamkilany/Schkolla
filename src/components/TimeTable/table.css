@@ -124,3 +124,8 @@
     vertical-align: top;
     border-top: 1px solid #dee2e6;
 }
+.table-sub{
+    font-size :13px !important;
+    padding-top: 2px !important;
+    padding-bottom: 2px !important;
+}

@@ -1,33 +1,35 @@
 import Table from 'react-bootstrap/Table';
 import"./style.css"
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import axios from "axios";
+import useAxios from '../../hooks/useAxios';
 import { useNavigate} from 'react-router-dom';
+import AuthContext from '../shared/AuthContext';
 export default function Employee() {
     const accessToken = localStorage.getItem('accessToken');
     const id=localStorage.getItem('id');
-    const stuffId=useRef('');
-    const stuffName=useRef('')
+    const {fetchData,data,loading}=useAxios()
+    const {refresh}=useContext(AuthContext)
+    const [stuffId,setStuffId]=useState('')
+    const [stuffName,setStuffName]=useState('')
     const [stuffsDate,setStuffsData]=useState([]);
-    const regex1=new RegExp(`^${stuffId.current.value}`)
-    const regex2=new RegExp(`^${stuffName.current.value}`)
+    const regex1=new RegExp(`^${stuffId}`)
+    const regex2=new RegExp(`^${stuffName}`)
     const navigate = useNavigate()
+
     useEffect(()=>{
-        axios.get(`security_man/getAllMembers`,{ params: { userId: id } , headers: {authorization: `Bearer ${accessToken}`} }).then(
-        (response)=>{
-            setStuffsData(response.data)
-        }
-        )
-    },[stuffsDate,setStuffsData,id,accessToken])
+        fetchData('get',`securityRouter/getAllMembers`).then((res)=>setStuffsData(res))
+    },[refresh])
+
     const handleClick=(id)=>{
-        localStorage.setItem('stuffId',id)
-        navigate('stuffData')
+        // localStorage.setItem('stuffId',id)
+        navigate(id)
     }
     return (
         <>
         <div className="input-cont row mb-5">
-        <input className="col-md-4 search-input" disabled={stuffId.current.value!==''?true:false} ref={stuffName}  type="search1"  placeholder="البحث بالاسم"/>
-        <input  className="col-md-4 search-input"disabled={stuffName.current.value!==''?true:false} type="search2" placeholder="البحث بالرقم القومي" ref={stuffId} />
+        <input className="col-md-4 search-input" disabled={stuffId!==''?true:false} value={stuffName} onChange={(e)=>setStuffName(e.target.value)}  type="search1"  placeholder="البحث بالاسم"/>
+        <input  className="col-md-4 search-input" disabled={stuffName!==''?true:false} type="search2" placeholder="البحث بالرقم القومي" onChange={(e)=>setStuffId(e.target.value)} value={stuffId} />
         </div>
         <Table striped  hover>
                 <thead className="line">
@@ -40,7 +42,9 @@ export default function Employee() {
                     <th> الايميل </th>
                 </thead>
                 <tbody>
-                    { stuffId.current.value===''&&stuffName.current.value===''? stuffsDate.map((data)=>{
+                    { stuffId===''&&stuffName===''? 
+                    stuffsDate?.map((data)=>{
+                        console.log(data)
                             return(
                         <tr className={`image w3-center w3-animate-left`} 
                         onClick={()=>handleClick(data._id)}>
@@ -53,8 +57,8 @@ export default function Employee() {
                             <td>{data.email}</td>
                         </tr>)
                     }):
-                    stuffId.current.value!==''?
-                    stuffsDate.map((data)=>{
+                    stuffId!==''?
+                    stuffsDate?.map((data)=>{
                         return(
                         <tr className={`image ${!regex1.test(data.nationalId)?'disapear':''} w3-center w3-animate-left`} 
                         onClick={()=>handleClick(data._id)}>
@@ -70,7 +74,7 @@ export default function Employee() {
                     }
                     )
                     :
-                    stuffsDate.map((data)=>{
+                    stuffsDate?.map((data)=>{
                         console.log(data._id)
                         return(
                         <tr className={`image ${!regex2.test(data.name)?'disapear':''} w3-center w3-animate-left`} 
