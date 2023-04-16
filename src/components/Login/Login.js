@@ -40,6 +40,7 @@ export default function Login() {
       <div className="input-cont py-4">
       <Form.Group className="mb-5" controlId="validationCustom01" >
                 <Form.Control
+                    className="loginInpt"
                     required
                     type="text"
                     placeholder="البريد الالكترونى"
@@ -57,6 +58,7 @@ export default function Login() {
                 </Form.Group>
                 <Form.Group className="mb-1" controlId="validationCustom01" >
                 <Form.Control
+                    className="loginInpt"
                     required
                     type="password"
                     placeholder="كلمة المرور"

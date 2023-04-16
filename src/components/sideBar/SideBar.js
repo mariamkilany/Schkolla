@@ -93,9 +93,9 @@ function SideBar() {
                 <NavText>المواد الدراسية</NavText>
             </NavItem>
             <NavItem onClick={()=>{
-                navigate('QA')
+                navigate('Massenger')
                 }}
-                className={location.pathname.toLowerCase().includes('qa')?'sidenav---selected---1EK3y sidenav---highlighted---oUx9u':''}
+                className={location.pathname.toLowerCase().includes('massenger')?'sidenav---selected---1EK3y sidenav---highlighted---oUx9u':''}
                 >
                 <NavIcon>
                     <IoChatbubblesOutline className="nav-icon"/>

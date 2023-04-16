@@ -5,6 +5,8 @@ import axios from "axios";
 import useAxios from '../../hooks/useAxios';
 import { useNavigate} from 'react-router-dom';
 import AuthContext from '../shared/AuthContext';
+import Loading from '../../pages/Loading/Loading'
+
 export default function Employee() {
     const accessToken = localStorage.getItem('accessToken');
     const id=localStorage.getItem('id');
@@ -25,6 +27,8 @@ export default function Employee() {
         // localStorage.setItem('stuffId',id)
         navigate(id)
     }
+    if(loading)
+    return <Loading/>
     return (
         <>
         <div className="input-cont row mb-5">

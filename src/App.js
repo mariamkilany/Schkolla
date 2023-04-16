@@ -6,7 +6,7 @@ import Notfound from'./pages/notFound/Notfound'
 import Students from './pages/Students/Students';
 import Levels from './pages/Levels/Levels';
 import Teacher from './pages/Teachers/Teacher';
-import QA from './pages/Q&A/QA';
+import Massenger from './pages/Massenger/Massenger';
 import Employee from './pages/Empolyee/Empolyee';
 import Home from './pages/Home/Home';
 import Layout from './components/shared/Layout';
@@ -92,7 +92,7 @@ function App() {
                     <Route path='Subjects' element={<Subjects/>} />
                     <Route path='Employee' element={<Employee/>} />
                     <Route path='Employee/:empolyeeId' element={<StuffProfile/>}/>
-                    <Route path='QA' element={<QA/>} />
+                    <Route path='Massenger' element={<Massenger/>} />
                   </Route>
                   <Route path='*' element={<Notfound/>} />
               </Routes>
