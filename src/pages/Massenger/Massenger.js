@@ -1,6 +1,7 @@
 import './massenger.css';
 import Conversation from '../../components/Conversations/Conversation'
 import Message from '../../components/Message/Message'
+import ChatHeader from '../../components/ChatHeader/ChatHeader'
 import {BiSend} from 'react-icons/bi'
 
 export default function Massenger() {
@@ -22,6 +23,7 @@ export default function Massenger() {
             </div>
         </div>
         <div className="chatBox">
+            <ChatHeader/>
             <div className="chatBoxWrapper">
                 <div className="chatBoxTop">
                     <Message/>
