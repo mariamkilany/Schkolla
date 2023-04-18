@@ -21,11 +21,11 @@ a {
   text-decoration: none;
 }
 .anm-container{
-    transform: translateY(50%);
-    -webkit-transform: translateY(50%);
-    -moz-transform: translateY(50%);
-    -ms-transform: translateY(50%);
-    -o-transform: translateY(50%);
+    transform: translateY(25%);
+    -webkit-transform: translateY(25%);
+    -moz-transform: translateY(25%);
+    -ms-transform: translateY(25%);
+    -o-transform: translateY(25%);
 }
 .center {
   height: 100%;
@@ -44,7 +44,7 @@ a {
 
 .number {
   font-weight: 900;
-  font-size: 15rem;
+  font-size: 15rem !important;
   line-height: 1;
 }
 
@@ -176,12 +176,12 @@ a {
 .text {
   margin-top: 5rem;
   font-weight: 500;
-  font-size: 20px;
+  font-size: 20px !important;
   color: #293b49;
 }
 
 .button {
-  margin-top: 4rem;
+  margin-top: 2rem;
   padding: 1.2rem 3rem;
   color: white;
   text-decoration: none;
@@ -189,11 +189,7 @@ a {
   font-weight: 600;
   border-radius: 20px;
   background-color:#254C71;
-  transition: all 1s 0.2s ease-in;
-  -webkit-transition: all 1s 0.2s ease-in;
-  -moz-transition: all 1s 0.2s ease-in;
-  -ms-transition: all 1s 0.2s ease-in;
-  -o-transition: all 1s 0.2s ease-in;
+  cursor: pointer;
   -webkit-border-radius: 20px;
   -moz-border-radius: 20px;
   -ms-border-radius: 20px;

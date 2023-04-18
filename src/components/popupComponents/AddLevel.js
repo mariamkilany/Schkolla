@@ -6,22 +6,24 @@ import Table from 'react-bootstrap/Table';
 import { PopupsContext } from './PopupContext';
 import './popup.css';
 import axios from 'axios'
+import AuthContext from '../shared/AuthContext';
+import useAxios from '../../hooks/useAxios';
 
 function AddLevel() {
     const [show, setShow] = useState(false);
     const [validated, setValidated] = useState(false);
-    // const[selectdSubjects,setSelectedSubjects]=useState([]);
     const{selectdSubjects,selectdSubjectsDispatch}=useContext(PopupsContext)
     const[subject,setSubject]=useState('');
     const [subjects,setSubjects]=useState([]);
     const [subjectsIds,setSubjectsIds]=useState([])
     const name=useRef(null);
-    const accessToken =localStorage.getItem('accessToken');
-    const id=localStorage.getItem('id');
+    const {refresh,setref}=useContext(AuthContext)
+    const {fetchData,data,loading}=useAxios()
+
     useEffect(()=>{
-        axios.get(`subject/getAllSubjects`
-    ,{ params: { userId: id } , headers: {authorization: `Bearer ${accessToken}`} })
-    .then((response) =>setSubjects(response.data))
+        fetchData('get',`subject/getAllSubjects`).then((res)=>{
+            setSubjects(res)
+        })
     },[])
 
     const handleClose = () => setShow(false);
@@ -33,13 +35,11 @@ function AddLevel() {
         event.preventDefault();
         event.stopPropagation();
     }
-    await axios.post('grade/addGrade',{name:name.current.value,subjects:subjectsIds},
-    {params: { userId: id } ,headers: {'Authorization': `Bearer ${accessToken}`}})
-    .then(()=>{
-        handleClose();
+    fetchData('post','grade/addGrade',{name:name.current.value,subjects:subjectsIds},handleClose).then(()=>{
         setSubjects([]);
         setSubjectsIds([]);
         selectdSubjectsDispatch({action:'CLEAR'})
+        setref(!refresh)
     })
     setValidated(true);
     };

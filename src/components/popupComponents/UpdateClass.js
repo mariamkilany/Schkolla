@@ -96,7 +96,7 @@ function UpdateClass(props) {
             {subjects.map((sub,subindex)=>{
                 // console.log(selectedTeachers[subindex]._id)
                 return (
-            <tr key={subindex}>
+                sub?<tr key={subindex}>
                 <td>
                     <Form.Group
                 className="mb-3"
@@ -116,6 +116,7 @@ function UpdateClass(props) {
                 </td>
                 <td>{sub.name}</td>
             </tr>
+            :''
             )
             })}
         </tbody>

@@ -5,7 +5,7 @@ import BtnPop from '../popupComponents/BtnPop'
 function TimeTable() {
     const config = {
         duration : "00:45",
-        lessonNum:3,
+        lessonNum:5,
         daysNum:5,
         startTime : "07:00",
         endTime : "12:00",
@@ -136,7 +136,7 @@ return (
                     <table className="table table-bordered text-center">
                         <thead>
                             <tr className="bg-light-gray">
-                                <th className="text-uppercase">Time
+                                <th className="text-uppercase">الوقت
                                 </th>
                                 {
                                     days.map((day,index)=>{
@@ -149,10 +149,6 @@ return (
                         <tbody>
                         {
                             Array.from({length:config.lessonNum},(_,index1)=>{
-                                // if(index>0)
-                                //setTime(time+duration)
-
-                                // const showTime = timeReconverter(time)
                                 return(
                                     <tr>
                                     <td className="align-middle">{timeReconverter(timeArr[index1])}</td>
@@ -161,7 +157,7 @@ return (
                                         
                                         return (
                                             <td >
-                                            <span className="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">{data[index2][index1]?.subject}</span>
+                                            <span className="bg-green table-sub padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">{data[index2][index1]?.subject}</span>
                                             <div className="margin-10px-top font-size14"> 
                                             {timeReconverter(timeArr[index1]) }-{timeReconverter(timeArr[index1]+duration)} </div>
                                             <div className="font-size13 text-light-gray">{data[index2][index1]?.teacherName}</div>

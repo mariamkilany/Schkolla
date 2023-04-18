@@ -6,13 +6,13 @@ import Modal from 'react-bootstrap/Modal';
 import './popup.css';
 import axios from 'axios';
 import { Table } from 'react-bootstrap';
+import useAxios from '../../hooks/useAxios';
+import { useContext } from 'react';
+import AuthContext from '../shared/AuthContext';
 
 const AddStudent = () => {
     const [show, setShow] = useState(false);
     const [validated, setValidated] = useState(false);
-
-    const accessToken = localStorage.getItem('accessToken')
-    const id=localStorage.getItem('id')
 
     const name = useRef(null);
     const password = useRef(null);
@@ -26,14 +26,14 @@ const AddStudent = () => {
     const [stages,setStages] = useState([]);
     const [clss,setClss] = useState('');
     const [classes,setClasses] = useState([]);
-    // const relation = useRef(null)
-    // const relationName = useRef(null)
-    // const phoneNumber = useRef(null)
     const [relation,setRelation]=useState('')
     const [relationName,setRelationName]=useState('')
     const [phoneNumber,setPhoneNumber]=useState('')
     const [contacts,setContacts] = useState([])
     const [imgUrl,setImageUrl] =useState('')
+    const {fetchData,data,loading}=useAxios()
+    const{refresh,setref}=useContext(AuthContext)
+
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
@@ -42,11 +42,9 @@ const AddStudent = () => {
 }
 const handleStageChange=async(e)=>{
     setStage(e.target.value)
-    await axios.get(`grade/getGradeClasses/${e.target.value}`,{params: { userId: id } ,headers: {'Authorization': `Bearer ${accessToken}`}}).then(
-        (res)=>{
-            setClasses(res.data.classes)
-            console.log(res)
-        })
+    fetchData('get',`grade/getGradeClasses/${e.target.value}`).then((res)=>{
+        setClasses(res.classes)
+    })
 }
     const cloudinaryRef = useRef();
     const widgetRef = useRef();
@@ -59,11 +57,10 @@ const handleStageChange=async(e)=>{
     if (!error && result && result.event === "success") { 
         setImageUrl(result.info.secure_url)
     }})
-    axios.get('grade/getAllGrades',{params: { userId: id } ,headers: {'Authorization': `Bearer ${accessToken}`}}).then(
-        (res)=>{
-            setStages(res.data)
-        }
-    )
+
+    fetchData('get','grade/getAllGrades').then((res)=>{
+        setStages(res)
+    })
     },[])
     const AddContact = ()=>{
         if(relation!==''&&phoneNumber!==''&&relationName!==''){
@@ -80,11 +77,10 @@ const handleStageChange=async(e)=>{
         event.stopPropagation();
     }
     setValidated(true);
-    console.log({name:name.current.value,age:age.current.value,nationalId:nationalId.current.value,
-        dateOfBirth:'',gender:gender,email:email.current.value,address:address.current.value,stage:stage,classId:clss,imgUrl:imgUrl,password:password.current.value})
-    await axios.post('student/addStudent',{
-        name:name.current.value,age:age.current.value,nationalId:nationalId.current.value,
-        dateOfBirth:dateOfBirth.current.value,gender:gender,email:email.current.value,address:address.current.value,grade:stage,classId:clss,imgUrl:imgUrl,password:password.current.value,elWasy:contacts,meanOfTransport:''}).then(()=>{
+    fetchData('post','student/addStudent',{name:name.current.value,age:age.current.value,nationalId:nationalId.current.value,
+        dateOfBirth:dateOfBirth.current.value,gender:gender,email:email.current.value,address:address.current.value,grade:stage,
+        classId:clss,imgUrl:imgUrl,password:password.current.value,elWasy:contacts,meanOfTransport:''},handleClose).then(()=>{
+        setref(!refresh)
         name.current.value=null;
         email.current.value=null;
         nationalId.current.value=null;
@@ -95,8 +91,7 @@ const handleStageChange=async(e)=>{
         setStage('')
         setClss('')
         setImageUrl('');
-        handleClose();
-    })
+        })
     };
     return (
         <>

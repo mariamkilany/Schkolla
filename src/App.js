@@ -6,7 +6,7 @@ import Notfound from'./pages/notFound/Notfound'
 import Students from './pages/Students/Students';
 import Levels from './pages/Levels/Levels';
 import Teacher from './pages/Teachers/Teacher';
-import QA from './pages/Q&A/QA';
+import Massenger from './pages/Massenger/Massenger';
 import Employee from './pages/Empolyee/Empolyee';
 import Home from './pages/Home/Home';
 import Layout from './components/shared/Layout';
@@ -23,6 +23,7 @@ import ShowDataContext from './components/ShowData/ShowDataContext';
 import Showlevel from './pages/Levels/Showlevel'
 import ShowClass from './pages/Levels/ShowClass'
 import axios from 'axios';
+import StuffProfile from './pages/Empolyee/StuffProfile';
 function App() {
   // const {accessToken,setAccessToken}=useContext(AuthContext);
     useEffect(() => {
@@ -85,11 +86,13 @@ function App() {
                     <Route path='Levels/:stageId/:classId' element={<ShowClass/>} />
                     <Route path='Students' element={<Students/>} />
                     <Route path='Students/:stuId' element={<ShowStudent/>} />
+                    <Route path='Levels/:stageId/:classId/:stuId' element={<ShowStudent/>} />
                     <Route path='Teachers' element={<ShowAllTeachers />} />
-                    <Route path='Teachers/teacherData' element={<Teacher/>} />
+                    <Route path='Teachers/:teacherId' element={<Teacher/>} />
                     <Route path='Subjects' element={<Subjects/>} />
                     <Route path='Employee' element={<Employee/>} />
-                    <Route path='QA' element={<QA/>} />
+                    <Route path='Employee/:empolyeeId' element={<StuffProfile/>}/>
+                    <Route path='Massenger' element={<Massenger/>} />
                   </Route>
                   <Route path='*' element={<Notfound/>} />
               </Routes>

@@ -6,12 +6,12 @@ import UpdateClass from '../popupComponents/UpdateClass'
 import { useNavigate ,useParams } from 'react-router-dom'
 export default function Class(props) {
 const classes=props.classes;
+console.log(classes)
 const index=props.index;
 const color =localStorage.getItem('stagecolor')
 const navigate=useNavigate();
 const param=useParams();
 const handleClick=()=>{
-// localStorage.setItem('classId',classes._id)
 navigate(classes._id)
 }
   return <>
@@ -29,7 +29,7 @@ navigate(classes._id)
                       </div>
                       <div className="btm w-100">
                       <DeletePopup name={`الفصل ${classes.name}`} id={param.classId} link={'class/deleteClass/'}/>
-                      <UpdateClass classId={param.classId} />
+                      <UpdateClass classId={classes._id} />
                       </div>
                       
                   </div>

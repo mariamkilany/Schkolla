@@ -1,17 +1,17 @@
-import React, { useState ,useRef ,useEffect } from 'react';
+import React, { useState ,useRef ,useEffect , useContext} from 'react';
 import Button from 'react-bootstrap/Button';
 import {SlCloudUpload} from 'react-icons/sl'
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
 import './popup.css';
-import axios from 'axios';
+import useAxios from '../../hooks/useAxios';
+import AuthContext from '../../components/shared/AuthContext';
 
 const AddTeacher = () => {
     const [show, setShow] = useState(false);
     const [validated, setValidated] = useState(false);
-
-    const accessToken = localStorage.getItem('accessToken')
-    const id=localStorage.getItem('id')
+    const { fetchData,data , loading} = useAxios()
+    const { refresh , setref }=useContext(AuthContext)
 
     const name = useRef(null);
     const password = useRef(null);
@@ -51,23 +51,12 @@ const AddTeacher = () => {
         event.stopPropagation();
     }
     setValidated(true);
-    await axios.post('teacher/addTeacher',{name:name.current.value,age:age.current.value,nationalId:nationalId.current.value,
+    fetchData('post','teacher/addTeacher',{name:name.current.value,age:age.current.value,nationalId:nationalId.current.value,
         dateOfBirth:dateOfBirth.current.value,gender:gender,email:email.current.value,phoneNumber:phoneNumber.current.value,
-        address:address.current.value,role:role.current.value,salary:salary.current.value,imgUrl:imgUrl,password:password.current.value},
-    { params: { userId: id } , headers: {authorization : `Bearer ${accessToken}`} }).then(()=>{
-        name.current.value=null;
-        email.current.value=null;
-        phoneNumber.current.value=null;
-        nationalId.current.value=null;
-        dateOfBirth.current.value=null;
-        age.current.value=null;
-        setSelected(null);
-        address.current.value=null;
-        role.current.value=null;
-        salary.current.value=null;
-        setImageUrl('');
-        handleClose();
-    })
+        address:address.current.value,role:role.current.value,salary:salary.current.value,imgUrl:imgUrl,password:password.current.value},handleClose)
+        .then(()=>{
+            setref(!refresh)
+        })
     };
     return (
         <>

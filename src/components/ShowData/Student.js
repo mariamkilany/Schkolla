@@ -1,36 +1,40 @@
 import Table from 'react-bootstrap/Table';
 import"./style.css"
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import axios from "axios";
+import useAxios from '../../hooks/useAxios';
 import { useNavigate ,useParams } from 'react-router-dom';
+import Loading from '../../pages/Loading/Loading';
+import AuthContext from '../shared/AuthContext';
 export default function StudentShow(props)
 {
     const accessToken = localStorage.getItem('accessToken');
     const id=localStorage.getItem('id');
     const link = props.link;
-    const studentId=useRef('');
-    const studentName=useRef('')
-    const [studentsDate,setstudentsData]=useState([]);
-    const regex1=new RegExp(`^${studentId.current.value}`)
-    const regex2=new RegExp(`^${studentName.current.value}`)
+    const [studentId,setStudentId]=useState('')
+    const [studentName,setStudentName]=useState('')
+    const regex1=new RegExp(`^${studentId}`)
+    const regex2=new RegExp(`^${studentName}`)
     const navigate = useNavigate()
     const params =useParams();
+
+    const {fetchData,data:studentsDate,loading} = useAxios()
+    const {refresh} = useContext(AuthContext)
+
     useEffect(()=>{
-        axios.get(link,{ params: { userId: id } , headers: {authorization: `Bearer ${accessToken}`} }).then(
-        (response)=>{
-            setstudentsData(response.data)
-            console.log(response)
-        }
-        )
-    },[studentsDate,setstudentsData,id,accessToken])
+        fetchData('get',link)
+    },[refresh])
+
     const handleClick=(id)=>{
-        // localStorage.setItem('studentId',id)
         navigate(id)
     }
+
+    if(loading)
+    return <Loading/>
   return<>
         <div className="input-cont row mb-5">
-        <input className="col-md-4 search-input" disabled={studentId.current.value!==''?true:false} ref={studentName}  type="search1"  placeholder="البحث بالاسم"/>
-        <input  className="col-md-4 search-input"disabled={studentName.current.value!==''?true:false} type="search2" placeholder="البحث بالرقم القومي" ref={studentId} />
+        <input className="col-md-4 search-input" disabled={studentId!==''?true:false} value={studentName} onChange={(e)=>setStudentName(e.target.value)}  type="search1"  placeholder="البحث بالاسم"/>
+        <input  className="col-md-4 search-input" disabled={studentName!==''?true:false} value={studentId} onChange={(e)=>setStudentId(e.target.value)} type="search2" placeholder="البحث بالرقم القومي"  />
         </div>
         <Table striped  hover>
                 <thead className="line">
@@ -44,7 +48,7 @@ export default function StudentShow(props)
                     <th> الايميل </th>
                 </thead>
                 <tbody>
-                    { studentId.current.value===''&&studentName.current.value===''? studentsDate.map((data)=>{
+                    { studentId===''&&studentName===''? studentsDate?.map((data)=>{
                             return(
                         <tr className={`image w3-center w3-animate-left`} 
                         onClick={()=>handleClick(data._id)}>
@@ -58,8 +62,8 @@ export default function StudentShow(props)
                             <td>{data.email}</td>
                         </tr>)
                     }):
-                    studentId.current.value!==''?
-                    studentsDate.map((data)=>{
+                    studentId!==''?
+                    studentsDate?.map((data)=>{
                         return(
                         <tr className={`image ${!regex1.test(data.nationalId)?'disapear':''} w3-center w3-animate-left`} 
                         onClick={()=>handleClick(data._id)}>
@@ -76,8 +80,7 @@ export default function StudentShow(props)
                     }
                     )
                     :
-                    studentsDate.map((data)=>{
-                        console.log(data._id)
+                    studentsDate?.map((data)=>{
                         return(
                         <tr className={`image ${!regex2.test(data.name)?'disapear':''} w3-center w3-animate-left`} 
                         onClick={()=>handleClick(data._id)}>
