@@ -1,17 +1,30 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState,useContext } from 'react'
 import './table.css'
 import TableSetting from '../popupComponents/TableSetting'
 import BtnPop from '../popupComponents/BtnPop'
+import AuthContext from '../shared/AuthContext';
+import useAxios from '../../hooks/useAxios';
+import { useParams } from 'react-router-dom';
+import Loading from '../../pages/Loading/Loading'
 function TimeTable() {
-    const config = {
-        duration : "00:45",
-        lessonNum:5,
-        daysNum:5,
-        startTime : "07:00",
-        endTime : "12:00",
-        firstDay:1,
-        lastDay:5
-    }
+    // const config = {
+    //     duration : "00:45",
+    //     lessonNum:5,
+    //     daysNum:5,
+    //     startTime : "07:00",
+    //     endTime : "12:00",
+    //     firstDay:1,
+    //     lastDay:5
+    // }
+    const{refresh}=useContext(AuthContext)
+    const {fetchData,data:config,loading}=useAxios()
+    const params=useParams()
+    useEffect(()=>{
+        fetchData('get',`tableCellRouter/getAllWeekTables`)
+    .then((res)=>{
+        console.log(res)
+    })}
+        ,[refresh])
     const timeConverter = (time) =>{
         return parseInt(time.split(':')[0]*60)+parseInt(time.split(':')[1])
     }
@@ -21,17 +34,17 @@ function TimeTable() {
         const min = time - (hours*60);
         return `${hours}:${min}`
     } 
-    var time=timeConverter(config.startTime)
-    const [duration , setDuration ] = useState(timeConverter(config.duration))
+    // var time=timeConverter(config?.startTime)
+    const [duration , setDuration ] = useState(0)
     var timeArr = []
-    for(let i = 0 ; i<config.lessonNum;i++){
-        if(i===0)
-        timeArr[i]=time
-        else{
-        timeArr[i]=time+duration;
-        time+=duration
-        }
-    }
+    // for(let i = 0 ; i<config?.lessonNum;i++){
+    //     if(i===0)
+    //     timeArr[i]=time
+    //     else{
+    //     timeArr[i]=time+duration;
+    //     time+=duration
+    //     }
+    // }
 
     const data = [
         [
@@ -121,60 +134,61 @@ function TimeTable() {
         ]
     ]
 
-    console.log(duration)
-    console.log( timeReconverter(time))
+    // console.log(duration)
+    // console.log( timeReconverter(time))
     // console.log(parseInt(config.startTime.split(':')[0]*60)+parseInt(config.startTime.split(':')[1]))
     const days = ['السبت','الأحد' ,'الإثنين' ,'الثلاثاء','الأربعاء','الخميس','الجمعة']
-    console.log(config.duration)
-return (
-<div className="container">
-        <TableSetting/>
-                <div className="timetable-img text-center">
-                    <img src="img/content/timetable.png" alt="" />
-                </div>
-                <div className="table-responsive">
-                    <table className="table table-bordered text-center">
-                        <thead>
-                            <tr className="bg-light-gray">
-                                <th className="text-uppercase">الوقت
-                                </th>
-                                {
-                                    days.map((day,index)=>{
-                                        if(index>=config.firstDay && index<=config.lastDay)
-                                        return  <th className="text-uppercase">{day}</th>
-                                    })
-                                }
-                            </tr>
-                        </thead>
-                        <tbody>
-                        {
-                            Array.from({length:config.lessonNum},(_,index1)=>{
-                                return(
-                                    <tr>
-                                    <td className="align-middle">{timeReconverter(timeArr[index1])}</td>
-                                {
-                                    Array.from({length:(config.lastDay - config.firstDay +1)},(_,index2)=>{
+    if(loading)
+    return <Loading/>
+// return (
+// <div className="container">
+//         <TableSetting/>
+//                 <div className="timetable-img text-center">
+//                     <img src="img/content/timetable.png" alt="" />
+//                 </div>
+//                 <div className="table-responsive">
+//                     <table className="table table-bordered text-center">
+//                         <thead>
+//                             <tr className="bg-light-gray">
+//                                 <th className="text-uppercase">الوقت
+//                                 </th>
+//                                 {
+//                                     days.map((day,index)=>{
+//                                         if(index>=config.firstDay && index<=config.lastDay)
+//                                         return  <th className="text-uppercase">{day}</th>
+//                                     })
+//                                 }
+//                             </tr>
+//                         </thead>
+//                         <tbody>
+//                         {
+//                             Array.from({length:config.lessonNum},(_,index1)=>{
+//                                 return(
+//                                     <tr>
+//                                     <td className="align-middle">{timeReconverter(timeArr[index1])}</td>
+//                                 {
+//                                     Array.from({length:(config.lastDay - config.firstDay +1)},(_,index2)=>{
                                         
-                                        return (
-                                            <td >
-                                            <span className="bg-green table-sub padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">{data[index2][index1]?.subject}</span>
-                                            <div className="margin-10px-top font-size14"> 
-                                            {timeReconverter(timeArr[index1]) }-{timeReconverter(timeArr[index1]+duration)} </div>
-                                            <div className="font-size13 text-light-gray">{data[index2][index1]?.teacherName}</div>
-                                            <BtnPop/>
-                                            </td>
-                                        )
-                                    })
-                                }
-                                    </tr>
-                                )
-                            })
-                        }
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-  )
+//                                         return (
+//                                             <td >
+//                                             <span className="bg-green table-sub padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">{data[index2][index1]?.subject}</span>
+//                                             <div className="margin-10px-top font-size14"> 
+//                                             {timeReconverter(timeArr[index1]) }-{timeReconverter(timeArr[index1]+duration)} </div>
+//                                             <div className="font-size13 text-light-gray">{data[index2][index1]?.teacherName}</div>
+//                                             <BtnPop/>
+//                                             </td>
+//                                         )
+//                                     })
+//                                 }
+//                                     </tr>
+//                                 )
+//                             })
+//                         }
+//                         </tbody>
+//                     </table>
+//                 </div>
+//             </div>
+//   )
 }
 
 export default TimeTable
