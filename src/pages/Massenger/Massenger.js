@@ -2,8 +2,13 @@ import './massenger.css';
 import Conversation from '../../components/Conversations/Conversation'
 import Message from '../../components/Message/Message'
 import {BiSend} from 'react-icons/bi'
+import { useEffect } from 'react';
 
 export default function Massenger() {
+    useEffect(()=>{
+        window.scrollTo(0,45)
+
+    },[])
     return(
     <div className="massenger">
         <div className="chatMenu">

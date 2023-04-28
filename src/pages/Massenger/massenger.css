@@ -7,6 +7,7 @@
 .chatMenu{
     flex:2.5;
     border-right: 1px solid #80808047;
+    overflow-y: scroll;
 }
 
 .chatBox{
@@ -46,7 +47,7 @@
 
 .chatMessageInput{
     width: 90%;
-    height: 40px;
+    height: fit-content;
     padding: 10px;
     border-radius: 20px;
     text-align: right;
@@ -55,7 +56,7 @@
 .chatMenuWrapper , .chatBoxWrapper{
     padding:10px;
     height:100%;
-    overflow-y: scroll;
+    /* overflow-y: scroll; */
 }
 
 .chatMenuInput{
