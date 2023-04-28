@@ -24,7 +24,7 @@ function Subjects() {
     return <Loading/>
     return (
         <>
-        <div className="row sub-cont">
+        <div className="row sub-cont mb-5">
             <AddSubject/>
         </div>
         <Table className='sub-table'>

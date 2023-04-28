@@ -14,6 +14,7 @@ const useAxios = () => {
             console.log("res",res)
             if(method==='get'){
                 setData(res.data)
+                console.log(res);
                 return res.data
             }
         setError(null);

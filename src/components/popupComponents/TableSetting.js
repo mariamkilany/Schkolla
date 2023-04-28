@@ -2,10 +2,12 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
 import Table from 'react-bootstrap/Table';
+import useAxios from '../../hooks/useAxios'
 import './popup.css';
 import {AiOutlineSetting} from 'react-icons/ai'
-
-import React ,{useState} from 'react'
+import React ,{useState,useContext} from 'react'
+import { useParams } from 'react-router-dom';
+import AuthContext from '../shared/AuthContext';
 
 
 function TableSetting() {
@@ -18,6 +20,9 @@ function TableSetting() {
     const [endTime , setEndTime ] = useState(0)
     const [firstDay , setFirstDay] = useState("")
     const [lastDay , setLastDay] = useState("")
+    const {fetchData,data,loading}=useAxios()
+    const{refresh,setref}=useContext(AuthContext)
+    const params=useParams()
     const handleClose = (e) => {
         if(e && e.stopPropagation) e.stopPropagation();
         setShow(false)};
@@ -31,9 +36,11 @@ function TableSetting() {
         event.stopPropagation();
     }
     setValidated(true);
-    // await axios.patch(`grade/updateGrade/${level._id}`,{name,subjects:subjectsIds},
-    // { params: { userId: id } , headers: {authorization: `Bearer ${accessToken}`} }
-    // ).then(handleClose)
+    fetchData('post','tableCellRouter/createWeekTable',
+    {classId:params.classId,duration,numOfDays:daysNum,startTime,endTime,firstDay,lastDay,lessonNum},handleClose)
+    .then(()=>{
+            setref(!refresh)
+        })
     };
 
   return (
@@ -48,10 +55,10 @@ function TableSetting() {
             <Modal.Body>
             <Form noValidate validated={validated} onSubmit={handleSubmit}>
                 <Form.Group className="mb-3" controlId="validationCustom01" >
-                <Form.Label> مدة الحصة</Form.Label>
+                <Form.Label>  مدة الحصة بالدقيقة</Form.Label>
                 <Form.Control
                     required
-                    type="time"
+                    type="number"
                     placeholder=""
                     onChange={(e)=>{
                         setDuration(e.target.value)

@@ -6,8 +6,11 @@ import Form from 'react-bootstrap/Form';
 
 
 export default function Login() {
-  const email = useRef("");
-  const password = useRef("");
+  // const email = useRef("");
+  // const password = useRef("");
+  const[email ,setEmail] =useState('');
+  const[password ,setPassword] =useState('');
+  
   const [validated, setValidated] = useState(false);
   const[emailEror,setEmailError]=useState('');
   const[passEror,setPassError]=useState('');
@@ -15,30 +18,31 @@ export default function Login() {
   const { login } = useContext(AuthContext);
 
   const handleSubmit = async () => {
-    try{
+    setEmailError('');
+    setPassError('');
       let payload = {
-            email: email.current.value,
-            password: password.current.value
+            email,
+            password
           };
-      await login(payload);
-    }catch(err){
-      if (!err?.response) {
-        setEmailError('السرفر لا يستجيب اسفيين يسطا');
-    } else if (err.response?.data.msg.includes(`this email dosen't exist!`)) {
+      await login(payload).then((res)=>{
+        if (!res?.response && res?.status===400) {
+        setEmailError('السرفر لا يستجيب ');
+    } else if (res.response?.data.msg.includes(`this email dosen't exist!`)) {
         setEmailError('البريد الالكترونى غير صالح');
-    } else if (err.response?.data.msg.includes(`this is a wrong password`)) {
+    } else if (res.response?.data.msg.includes(`this is a wrong password`)) {
         setPassError('كلمة المرور غير صحيحه');
     } else {
         setValidated(true);
     }
-}
+        
+      });
     }
   return <>
-  <Form noValidate className='col-md-6 col-sm-8' validated={validated} onSubmit={handleSubmit}>
+  <Form onValidate className='col-md-6 col-sm-8'  validated={validated} onSubmit={handleSubmit}>
             <div className="log-container  py-3">
             <h2 className='mb-3 welcome-back'>أهلا بعودتك</h2>
       <div className="input-cont py-4">
-      <Form.Group className="mb-5" controlId="validationCustom01" >
+      <Form.Group className="mb-5" controlId="validationCustom01">
                 <Form.Control
                     className="loginInpt"
                     required
@@ -46,7 +50,8 @@ export default function Login() {
                     placeholder="البريد الالكترونى"
                     name='email'
                     autoFocus
-                    ref={email}
+                    value={email}
+                    onChange={(e)=>setEmail(e.target.value)}
                 />
                   <Form.Control.Feedback type="invalid">
                         الرجاء ادخال البريد الالكترونى
@@ -56,7 +61,7 @@ export default function Login() {
             </div>
                         
                 </Form.Group>
-                <Form.Group className="mb-1" controlId="validationCustom01" >
+                <Form.Group className="mb-1" controlId="validationCustom01">
                 <Form.Control
                     className="loginInpt"
                     required
@@ -64,7 +69,8 @@ export default function Login() {
                     placeholder="كلمة المرور"
                     name='password'
                     autoFocus
-                    ref={password}
+                    value={password}
+                    onChange={(e)=>setPassword(e.target.value)}
                 />
                   <Form.Control.Feedback type="invalid">
                     الرجاء ادخال كلمة المرور

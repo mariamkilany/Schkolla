@@ -49,9 +49,11 @@ export const AuthContextProvider = ({ children }) => {
         localStorage.setItem('firstLogin', 'true');
         // navigate("/dashboard");
         window.location.href='/dashboard'
+        return apiResponse;
     }
     catch(err){
         console.log(err)
+        return err;
     }
     };
     const logout = async () => {
