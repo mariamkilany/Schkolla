@@ -6,189 +6,145 @@ import AuthContext from '../shared/AuthContext';
 import useAxios from '../../hooks/useAxios';
 import { useParams } from 'react-router-dom';
 import Loading from '../../pages/Loading/Loading'
-function TimeTable() {
-    // const config = {
-    //     duration : "00:45",
-    //     lessonNum:5,
-    //     daysNum:5,
-    //     startTime : "07:00",
-    //     endTime : "12:00",
-    //     firstDay:1,
-    //     lastDay:5
-    // }
-    const{refresh}=useContext(AuthContext)
-    const {fetchData,data:config,loading}=useAxios()
-    const params=useParams()
-    useEffect(()=>{
-        fetchData('get',`tableCellRouter/getAllWeekTables`)
-    .then((res)=>{
-        console.log(res)
-    })}
-        ,[refresh])
-    const timeConverter = (time) =>{
-        return parseInt(time.split(':')[0]*60)+parseInt(time.split(':')[1])
+import { useRef } from 'react';
+import AddTableCell from '../popupComponents/AddTableCell';
+import UpdateTableCell from '../popupComponents/UpdateTableCell';
+import { Button } from 'react-bootstrap';
+function tConvert (time) {
+// Check correct time format and split into components
+time = time.toString ().match (/^([01]\d|2[0-3])(:)([0-5]\d)(:[0-5]\d)?$/) || [time];
+
+    if (time.length > 1) { // If time format correct
+        time = time.slice (1);  // Remove full string match value
+        time[5] = +time[0] < 12 ? 'AM' : 'PM'; // Set AM/PM
+        time[0] = +time[0] % 12 || 12; // Adjust hours
     }
-    const timeReconverter = (time)=>{
-        // setTime(time+duration)
-        const hours = parseInt(time/60);
-        const min = time - (hours*60);
-        return `${hours}:${min}`
-    } 
-    // var time=timeConverter(config?.startTime)
-    const [duration , setDuration ] = useState(0)
-    var timeArr = []
-    // for(let i = 0 ; i<config?.lessonNum;i++){
-    //     if(i===0)
-    //     timeArr[i]=time
-    //     else{
-    //     timeArr[i]=time+duration;
-    //     time+=duration
-    //     }
-    // }
+  return time.join (''); // return adjusted time or original string
+}
 
-    const data = [
-        [
-            {
-                teacherName:"عبد الفتاح",
-                subject:"لغة عربية"
-            },{
-                teacherName:"عبد الفتاح",
-                subject:"لغة عربية"
-            },{
-                teacherName:"عبد الفتاح",
-                subject:"لغة عربية"
-            }
-        ],
-        [
-            {
-                teacherName:"عبد الفتاح",
-                subject:"لغة عربية"
-            },{
-                teacherName:"عبد الفتاح",
-                subject:"لغة عربية"
-            },{
-                teacherName:"عبد الفتاح",
-                subject:"لغة عربية"
-            }
-        ],
-        [
-            {
-                teacherName:"عبد الفتاح",
-                subject:"لغة عربية"
-            },{
-                teacherName:"عبد الفتاح",
-                subject:"لغة عربية"
-            },{
-                teacherName:"عبد الفتاح",
-                subject:"لغة عربية"
-            }
-        ]
-        ,
-    [
-            {
-                teacherName:"عبد الفتاح",
-                subject:"لغة عربية"
-            },{
-                teacherName:"عبد الفتاح",
-                subject:"لغة عربية"
-            },{
-                teacherName:"عبد الفتاح",
-                subject:"لغة عربية"
-            }
-        ]
-        ,[
-            {
-                teacherName:"عبد الفتاح",
-                subject:"لغة عربية"
-            },{
-                teacherName:"عبد الفتاح",
-                subject:"لغة عربية"
-            },{
-                teacherName:"عبد الفتاح",
-                subject:"لغة عربية"
-            }
-        ],
-        [
-            {
-                teacherName:"عبد الفتاح",
-                subject:"لغة عربية"
-            },{
-                teacherName:"عبد الفتاح",
-                subject:"لغة عربية"
-            },{
-                teacherName:"عبد الفتاح",
-                subject:"لغة عربية"
-            }
-        ],
-        [
-            {
-                teacherName:"عبد الفتاح",
-                subject:"لغة عربية"
-            },{
-                teacherName:"عبد الفتاح",
-                subject:"لغة عربية"
-            },{
-                teacherName:"عبد الفتاح",
-                subject:"لغة عربية"
-            }
-        ]
-    ]
+function addMinutes(time, minsToAdd) {
+    function D(J){ return (J<10? '0':'') + J;};
+    var piece = time.split(':');
+    var mins = piece[0]*60 + +piece[1] + +minsToAdd;
 
-    // console.log(duration)
-    // console.log( timeReconverter(time))
-    // console.log(parseInt(config.startTime.split(':')[0]*60)+parseInt(config.startTime.split(':')[1]))
+    return D(mins%(24*60)/60 | 0) + ':' + D(mins%60);  
+} 
+
+function TimeTable({subjectToTeacher}) {
+    const{refresh ,setref}=useContext(AuthContext)
+    const [cells,setCells]=useState([])
+    const {fetchData,data:conf,loading}=useAxios()
+    const [config,setConfig] = useState({})
+    const params=useParams()
+    let color =localStorage.getItem('stagecolor');
+    if(color==='green'){
+        color='#63D0B4';
+    }else if(color==='pink'){
+        color='#FDBAB1';
+    }else if(color==='blue'){
+        color='#254C71';
+    }
+    const time = useRef([])
+    const finalTime = useRef(null)
+    
+    useEffect(()=>{
+        fetchData('get',`tableCellRouter/getWeekTableById/${params.classId}`)
+    .then((res)=>{
+        setConfig(res)
+        for(let i=0;i<res.lessonNum;i++){
+            if(i===0){
+                time.current[i]=`${tConvert(res.startTime)} - ${tConvert(addMinutes(res.startTime,res.duration))}`
+                finalTime.current=addMinutes(res.startTime,res.duration)
+            }
+            else{
+                time.current[i]=`${tConvert(finalTime.current)} - ${tConvert(addMinutes(finalTime.current,res.duration))}`
+                finalTime.current=addMinutes(finalTime.current,res.duration)
+            }
+        }
+        }
+    )
+    fetchData('get',`tableCellRouter/getCellsInTableByClassId/${params.classId}`).then((res)=>{
+        setCells(res)
+    })
+    fetchData('get',`tableCellRouter/getCellInTheTableById/${params.classId}`).then(res=>{
+        console.log(res , 'hereeee')
+    })
+}
+    ,[refresh])
+
+    const handleDelete=async(id,link)=>{
+        fetchData('delete',`tableCellRouter/${link}/${id}`).then(
+        ()=> {
+            setref(!refresh)
+        })};
+
     const days = ['السبت','الأحد' ,'الإثنين' ,'الثلاثاء','الأربعاء','الخميس','الجمعة']
-    if(loading)
-    return <Loading/>
-// return (
-// <div className="container">
-//         <TableSetting/>
-//                 <div className="timetable-img text-center">
-//                     <img src="img/content/timetable.png" alt="" />
-//                 </div>
-//                 <div className="table-responsive">
-//                     <table className="table table-bordered text-center">
-//                         <thead>
-//                             <tr className="bg-light-gray">
-//                                 <th className="text-uppercase">الوقت
-//                                 </th>
-//                                 {
-//                                     days.map((day,index)=>{
-//                                         if(index>=config.firstDay && index<=config.lastDay)
-//                                         return  <th className="text-uppercase">{day}</th>
-//                                     })
-//                                 }
-//                             </tr>
-//                         </thead>
-//                         <tbody>
-//                         {
-//                             Array.from({length:config.lessonNum},(_,index1)=>{
-//                                 return(
-//                                     <tr>
-//                                     <td className="align-middle">{timeReconverter(timeArr[index1])}</td>
-//                                 {
-//                                     Array.from({length:(config.lastDay - config.firstDay +1)},(_,index2)=>{
-                                        
-//                                         return (
-//                                             <td >
-//                                             <span className="bg-green table-sub padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">{data[index2][index1]?.subject}</span>
-//                                             <div className="margin-10px-top font-size14"> 
-//                                             {timeReconverter(timeArr[index1]) }-{timeReconverter(timeArr[index1]+duration)} </div>
-//                                             <div className="font-size13 text-light-gray">{data[index2][index1]?.teacherName}</div>
-//                                             <BtnPop/>
-//                                             </td>
-//                                         )
-//                                     })
-//                                 }
-//                                     </tr>
-//                                 )
-//                             })
-//                         }
-//                         </tbody>
-//                     </table>
-//                 </div>
-//             </div>
-//   )
+    // if(loading)
+    // return <Loading/>
+return (
+<div className="container">
+        {
+            config?
+            <>
+            <div className="timetable-img text-center">
+                    <img src="img/content/timetable.png" alt="" />
+                </div>
+                <div className="table-responsive">
+                    <table className="table table-bordered timetable text-center">
+                    {                        
+                        <thead>
+                            <tr className="bg-light-gray">
+                                <th className="text-uppercase">الوقت
+                                </th>
+                                {
+                                    time.current.map(curr=><th className="text-uppercase">{curr}</th>)
+                                }
+                            </tr>
+                        </thead>
+                    }
+                        <tbody>
+                        {
+                            Array.from({length:config?.lastDay - config?.firstDay +1},(_,index1)=>{
+                                return(
+                                    <tr>
+                                    <th className="align-middle bg-light-gray" >
+                                    {
+                                        // time.current[index1]
+                                        days[index1+config?.firstDay]
+                                    }
+                                    </th>
+                                {
+                                    cells.map(cell=>{
+                                        if(cell.day===index1+config?.firstDay)
+                                        return(
+                                            <td className='w3-center w3-animate-left'>
+                                            <span style={{backgroundColor:color}} className=" table-sub padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">
+                                            {cell.subject}
+                                            </span>
+                                            <div className="font-size13 text-light-gray">{cell.teacher}</div>
+                                            <UpdateTableCell subjectToTeacher={subjectToTeacher} cellData={cell} />
+                                            <Button variant="danger" className='table-pop' onClick={()=>{handleDelete(cell._id,'deleteCellById')}}>حذف</Button>
+                                            </td>
+                                        )
+                                    })
+                                }
+                                    </tr>
+                                )
+                            })
+                        }
+                        </tbody>
+                    </table>
+                    <Button variant="danger" style={{marginRight: "10px"}} onClick={()=>{handleDelete(config._id ,'deleteWeekTableById')}}>حذف الجدول بالكامل</Button>
+                    <AddTableCell subjectToTeacher={subjectToTeacher} />
+                </div>
+                </>
+            :
+            <>
+            <TableSetting/>
+            </>
+        }
+            </div>
+  )
 }
 
 export default TimeTable

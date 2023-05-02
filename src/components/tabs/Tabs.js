@@ -84,7 +84,7 @@ return <Loading/>
         <div
           className={toggleState === 2 ? "content  active-content" : "content"}
         >
-          <TimeTable/>
+          <TimeTable subjectToTeacher={data?.subjectToTeacher} />
         </div>
 
         <div

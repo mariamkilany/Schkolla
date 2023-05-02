@@ -11,12 +11,12 @@ return <>
 <div class="tab-content" id="v-pills-tabContent">
     <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab" tabindex="0">
         <div className="personal-info">
-            <h3>تاريخ الميلاد : <span>{stuffData.dateOfBirth}</span></h3>
+            <h3>تاريخ الميلاد : <span>20-03-1995</span></h3>
             <h3>السن: {stuffData.age}</h3>
             <h3>الجنس : {stuffData.gender}</h3>
             <h3> {stuffData.email} :<span>الإيميل</span></h3>
             <h3>رقم هاتف :{stuffData.phoneNumber}</h3>
-            <h3>العنوان :{stuffData.address}</h3>
+            <h3>العنوان :طنطا الغربية</h3>
             <h3>التخصص: {stuffData.job} </h3>
             <h3>المرتب: {stuffData.salary} ج</h3>
         </div>

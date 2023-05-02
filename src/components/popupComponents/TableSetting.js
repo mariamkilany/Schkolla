@@ -37,32 +37,32 @@ function TableSetting() {
     }
     setValidated(true);
     fetchData('post','tableCellRouter/createWeekTable',
-    {classId:params.classId,duration,numOfDays:daysNum,startTime,endTime,firstDay,lastDay,lessonNum},handleClose)
+    {classId:params.classId,duration,startTime,endTime,firstDay,lastDay,lessonNum},handleClose)
     .then(()=>{
             setref(!refresh)
         })
     };
 
-  return (
-     <>
+    return (
+        <>
         <button  className='btn btn-primary' onClick={handleShow}>
         إعدادات الجدول <AiOutlineSetting/>
         </button>
         <Modal show={show} onHide={handleClose} onClick={(e)=>{if(e && e.stopPropagation) e.stopPropagation();}}>
             <Modal.Header closeButton>
-            <Modal.Title>إعدادات الجدول </Modal.Title>
+            <Modal.Title>إضافة جدول  </Modal.Title>
             </Modal.Header>
             <Modal.Body>
             <Form noValidate validated={validated} onSubmit={handleSubmit}>
                 <Form.Group className="mb-3" controlId="validationCustom01" >
-                <Form.Label>  مدة الحصة بالدقيقة</Form.Label>
+                <Form.Label>  مدة الحصة بالدقائق</Form.Label>
                 <Form.Control
                     required
-                    type="number"
+                    type="text"
                     placeholder=""
                     onChange={(e)=>{
                         setDuration(e.target.value)
-                        console.log(typeof e.target.value)
+                        // console.log(typeof e.target.value)
                     }}
                     autoFocus
                     value={duration}
@@ -78,17 +78,6 @@ function TableSetting() {
                     onChange={(e)=>setLessonNum(e.target.value)}
                     autoFocus
                     value={lessonNum}
-                />
-                </Form.Group>
-                <Form.Group className="mb-3" controlId="validationCustom01" >
-                <Form.Label> عدد الأيام</Form.Label>
-                <Form.Control
-                    required
-                    type="number"
-                    placeholder=""
-                    onChange={(e)=>setDaysNum(e.target.value)}
-                    autoFocus
-                    value={daysNum}
                 />
                 </Form.Group>
                 <Form.Group className="mb-3" controlId="validationCustom01" >

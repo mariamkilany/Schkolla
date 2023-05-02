@@ -52,7 +52,10 @@ export default function Employee() {
                             return(
                         <tr className={`image w3-center w3-animate-left`} 
                         onClick={()=>handleClick(data._id)}>
-                            <td>{data.nationalId}</td>
+                            <td>{
+                                // data.nationalId
+                            3265765867867
+                            }</td>
                             <td><img src={data.imgUrl}alt={"name"} /></td>
                             <td>{data.name}</td>
                             <td>{data.gender}</td>
@@ -66,7 +69,10 @@ export default function Employee() {
                         return(
                         <tr className={`image ${!regex1.test(data.nationalId)?'disapear':''} w3-center w3-animate-left`} 
                         onClick={()=>handleClick(data._id)}>
-                            <td>{data.nationalId}</td>
+                            <td>{
+                                // data.nationalId
+                                3265765867867
+                            }</td>
                             <td><img src={data.imgUrl}alt={"name"} /></td>
                             <td>{data.name}</td>
                             <td>{data.gender}</td>
@@ -83,7 +89,10 @@ export default function Employee() {
                         return(
                         <tr className={`image ${!regex2.test(data.name)?'disapear':''} w3-center w3-animate-left`} 
                         onClick={()=>handleClick(data._id)}>
-                            <td>{data.nationalId}</td>
+                            <td>{
+                                // data.nationalId
+                                3265765867867
+                            }</td>
                             <td><img src={data.imgUrl}alt={"name"} /></td>
                             <td>{data.name}</td>
                             <td>{data.gender}</td>
