@@ -1,187 +1,113 @@
-// import * as React from 'react';
-// import {Paper} from '@mui/material/Paper';
-// import {FormGroup} from '@mui/material/FormGroup';
-// import {Checkbox} from '@mui/material/Checkbox';
-// import {FormControlLabel} from '@mui/material/FormControlLabel';
-// import {Typography} from '@mui/material/FormControl';
-// import { styled } from '@mui/material/styles';
-// import { ViewState, EditingState, IntegratedEditing } from '@devexpress/dx-react-scheduler';
-// import {
-//   Scheduler,
-//   WeekView,
-//   Appointments,
-//   AppointmentForm,
-//   AppointmentTooltip,
-//   DragDropProvider,
-// } from '@devexpress/dx-react-scheduler-material-ui';
+import * as React from 'react';
+import dayjs from 'dayjs';
+import Badge from '@mui/material/Badge';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { PickersDay } from '@mui/x-date-pickers/PickersDay';
+import { DateCalendar } from '@mui/x-date-pickers/DateCalendar';
+import { DayCalendarSkeleton } from '@mui/x-date-pickers/DayCalendarSkeleton';
 
-// import { appointments } from './demo-data/appointments';
+function getRandomNumber(min, max) {
+  return Math.round(Math.random() * (max - min) + min);
+}
 
-// const PREFIX = 'Demo';
-// // #FOLD_BLOCK
-// export const classes = {
-//   container: `${PREFIX}-container`,
-//   text: `${PREFIX}-text`,
-//   formControlLabel: `${PREFIX}-formControlLabel`,
-// };
-// // #FOLD_BLOCK
-// const StyledDiv = styled('div')(({ theme }) => ({
-//   [`&.${classes.container}`]: {
-//     margin: theme.spacing(2),
-//     padding: theme.spacing(2),
-//   },
-//   [`& .${classes.text}`]: theme.typography.h6,
-//   [`& .${classes.formControlLabel}`]: {
-//     ...theme.typography.caption,
-//     fontSize: '1rem',
-//   },
-// }));
-// const date =new Date().toJSON().slice(0,10);
-// const currentDate =date;
-// const editingOptionsList = [
-//   { id: 'allowAdding', text: 'Adding' },
-//   { id: 'allowDeleting', text: 'Deleting' },
-//   { id: 'allowUpdating', text: 'Updating' },
-//   { id: 'allowResizing', text: 'Resizing' },
-//   { id: 'allowDragging', text: 'Dragging' },
-// ];
+/**
+ * Mimic fetch with abort controller https://developer.mozilla.org/en-US/docs/Web/API/AbortController/abort
+ * ⚠️ No IE11 support
+ */
+function fakeFetch(date, { signal }) {
+  return new Promise((resolve, reject) => {
+    const timeout = setTimeout(() => {
+      const daysInMonth = date.daysInMonth();
+      const daysToHighlight = [1, 2, 3].map(() => getRandomNumber(1, daysInMonth));
 
-// // const EditingOptionsSelector = ({
-// //   options, onOptionsChange,
-// // }) => (
-// //   <StyledDiv className={classes.container}>
-// //     <Typography className={classes.text}>
-// //       Enabled Options
-// //     </Typography>
-// //     <FormGroup row>
-// //       {editingOptionsList.map(({ id, text }) => (
-// //         <FormControlLabel
-// //           control={(
-// //             <Checkbox
-// //               checked={options[id]}
-// //               onChange={onOptionsChange}
-// //               value={id}
-// //               color="primary"
-// //             />
-// //           )}
-// //           classes={{ label: classes.formControlLabel }}
-// //           label={text}
-// //           key={id}
-// //           disabled={(id === 'allowDragging' || id === 'allowResizing') && !options.allowUpdating}
-// //         />
-// //       ))}
-// //     </FormGroup>
-// //   </StyledDiv>
-// // );
+      resolve({ daysToHighlight });
+    }, 500);
 
-// export default () => {
-//   const [data, setData] = React.useState([]);
-//   const [editingOptions, setEditingOptions] = React.useState({
-//     allowAdding: true,
-//     allowDeleting: true,
-//     allowUpdating: true,
-//     allowDragging: true,
-//     allowResizing: true,
-//   });
-//   const [addedAppointment, setAddedAppointment] = React.useState({});
-//   const [isAppointmentBeingCreated, setIsAppointmentBeingCreated] = React.useState(false);
+    signal.onabort = () => {
+      clearTimeout(timeout);
+      reject(new DOMException('aborted', 'AbortError'));
+    };
+  });
+}
 
-//   const {
-//     allowAdding, allowDeleting, allowUpdating, allowResizing, allowDragging,
-//   } = editingOptions;
+const initialValue = dayjs('2022-04-17');
 
-//   const onCommitChanges = React.useCallback(({ added, changed, deleted }) => {
-//     if (added) {
-//       const startingAddedId = data.length > 0 ? data[data.length - 1].id + 1 : 0;
-//       setData([...data, { id: startingAddedId, ...added }]);
-//     }
-//     if (changed) {
-//       setData(data.map(appointment => (
-//         changed[appointment.id] ? { ...appointment, ...changed[appointment.id] } : appointment)));
-//     }
-//     if (deleted !== undefined) {
-//       setData(data.filter(appointment => appointment.id !== deleted));
-//     }
-//     setIsAppointmentBeingCreated(false);
-//   }, [setData, setIsAppointmentBeingCreated, data]);
-//   const onAddedAppointmentChange = React.useCallback((appointment) => {
-//     setAddedAppointment(appointment);
-//     setIsAppointmentBeingCreated(true);
-//   });
-//   const handleEditingOptionsChange = React.useCallback(({ target }) => {
-//     const { value } = target;
-//     const { [value]: checked } = editingOptions;
-//     setEditingOptions({
-//       ...editingOptions,
-//       [value]: !checked,
-//     });
-//   });
+function ServerDay(props) {
+  const { highlightedDays = [], day, outsideCurrentMonth, ...other } = props;
 
-//   const TimeTableCell = React.useCallback(React.memo(({ onDoubleClick, ...restProps }) => (
-//     <WeekView.TimeTableCell
-//       {...restProps}
-//       onDoubleClick={allowAdding ? onDoubleClick : undefined}
-//     />
-//   )), [allowAdding]);
+  const isSelected =
+    !props.outsideCurrentMonth && highlightedDays.indexOf(props.day.date()) >= 0;
 
-//   const CommandButton = React.useCallback(({ id, ...restProps }) => {
-//     if (id === 'deleteButton') {
-//       return <AppointmentForm.CommandButton id={id} {...restProps} disabled={!allowDeleting} />;
-//     }
-//     return <AppointmentForm.CommandButton id={id} {...restProps} />;
-//   }, [allowDeleting]);
+  return (
+    <Badge
+      key={props.day.toString()}
+      overlap="circular"
+      badgeContent={isSelected ? '🌚' : undefined}
+    >
+      <PickersDay {...other} outsideCurrentMonth={outsideCurrentMonth} day={day} />
+    </Badge>
+  );
+}
 
-//   const allowDrag = React.useCallback(
-//     () => allowDragging && allowUpdating,
-//     [allowDragging, allowUpdating],
-//   );
-//   const allowResize = React.useCallback(
-//     () => allowResizing && allowUpdating,
-//     [allowResizing, allowUpdating],
-//   );
+export default function Calender() {
+  const requestAbortController = React.useRef(null);
+  const [isLoading, setIsLoading] = React.useState(false);
+  const [highlightedDays, setHighlightedDays] = React.useState([1, 2, 15]);
 
-//   return (
-//     <React.Fragment>
-//       {/* <EditingOptionsSelector
-//         options={editingOptions}
-//         onOptionsChange={handleEditingOptionsChange}
-//       /> */}
-//       <Paper>
-//         <Scheduler
-//           data={data}
-//           height={900}
-//         >
-//           <ViewState
-//             currentDate={currentDate}
-//           />
-//           <EditingState
-//             onCommitChanges={onCommitChanges}
-//             addedAppointment={addedAppointment}
-//             onAddedAppointmentChange={onAddedAppointmentChange}
-//           />
+  const fetchHighlightedDays = (date) => {
+    const controller = new AbortController();
+    fakeFetch(date, {
+      signal: controller.signal,
+    })
+      .then(({ daysToHighlight }) => {
+        setHighlightedDays(daysToHighlight);
+        setIsLoading(false);
+      })
+      .catch((error) => {
+        // ignore the error if it's caused by `controller.abort`
+        if (error.name !== 'AbortError') {
+          throw error;
+        }
+      });
 
-//           <IntegratedEditing />
-//           <WeekView
-//             startDayHour={7}
-//             endDayHour={15}
-//             timeTableCellComponent={TimeTableCell}
-//           />
-//           <Appointments />
+    requestAbortController.current = controller;
+  };
 
-//           <AppointmentTooltip
-//             showOpenButton
-//             showDeleteButton={allowDeleting}
-//           />
-//           <AppointmentForm
-//             commandButtonComponent={CommandButton}
-//             readOnly={isAppointmentBeingCreated ? false : !allowUpdating}
-//           />
-//           <DragDropProvider
-//             allowDrag={allowDrag}
-//             allowResize={allowResize}
-//           />
-//         </Scheduler>
-//       </Paper>
-//     </React.Fragment>
-//   );
-// };
+  React.useEffect(() => {
+    fetchHighlightedDays(initialValue);
+    // abort request on unmount
+    return () => requestAbortController.current?.abort();
+  }, []);
+
+  const handleMonthChange = (date) => {
+    if (requestAbortController.current) {
+      // make sure that you are aborting useless requests
+      // because it is possible to switch between months pretty quickly
+      requestAbortController.current.abort();
+    }
+
+    setIsLoading(true);
+    setHighlightedDays([]);
+    fetchHighlightedDays(date);
+  };
+
+  return (
+    <LocalizationProvider dateAdapter={AdapterDayjs}>
+      <DateCalendar
+        defaultValue={initialValue}
+        loading={isLoading}
+        onMonthChange={handleMonthChange}
+        renderLoading={() => <DayCalendarSkeleton />}
+        slots={{
+          day: ServerDay,
+        }}
+        slotProps={{
+          day: {
+            highlightedDays,
+          },
+        }}
+      />
+    </LocalizationProvider>
+  );
+}
