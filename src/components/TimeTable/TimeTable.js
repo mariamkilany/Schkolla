@@ -1,15 +1,14 @@
 import React, { useEffect, useState,useContext } from 'react'
 import './table.css'
 import TableSetting from '../popupComponents/TableSetting'
-import BtnPop from '../popupComponents/BtnPop'
 import AuthContext from '../shared/AuthContext';
 import useAxios from '../../hooks/useAxios';
 import { useParams } from 'react-router-dom';
-import Loading from '../../pages/Loading/Loading'
 import { useRef } from 'react';
 import AddTableCell from '../popupComponents/AddTableCell';
 import UpdateTableCell from '../popupComponents/UpdateTableCell';
 import { Button } from 'react-bootstrap';
+
 function tConvert (time) {
 // Check correct time format and split into components
 time = time.toString ().match (/^([01]\d|2[0-3])(:)([0-5]\d)(:[0-5]\d)?$/) || [time];
@@ -33,8 +32,9 @@ function addMinutes(time, minsToAdd) {
 function TimeTable({subjectToTeacher}) {
     const{refresh ,setref}=useContext(AuthContext)
     const [cells,setCells]=useState([])
-    const {fetchData,data:conf,loading}=useAxios()
+    const {fetchData}=useAxios()
     const [config,setConfig] = useState({})
+    const [lessonNum , setLessonNum]=useState(0);
     const params=useParams()
     let color =localStorage.getItem('stagecolor');
     if(color==='green'){
@@ -61,13 +61,11 @@ function TimeTable({subjectToTeacher}) {
                 finalTime.current=addMinutes(finalTime.current,res.duration)
             }
         }
+        setLessonNum(res.lessonNum);
         }
     )
     fetchData('get',`tableCellRouter/getCellsInTableByClassId/${params.classId}`).then((res)=>{
         setCells(res)
-    })
-    fetchData('get',`tableCellRouter/getCellInTheTableById/${params.classId}`).then(res=>{
-        console.log(res , 'hereeee')
     })
 }
     ,[refresh])
@@ -76,11 +74,12 @@ function TimeTable({subjectToTeacher}) {
         fetchData('delete',`tableCellRouter/${link}/${id}`).then(
         ()=> {
             setref(!refresh)
-        })};
+        })
+    };
+        
 
     const days = ['السبت','الأحد' ,'الإثنين' ,'الثلاثاء','الأربعاء','الخميس','الجمعة']
-    // if(loading)
-    // return <Loading/>
+    const lessons = ['الأولى','الثانية','الثالثة','الرابعة','الخامسة','السادسة','السابعة','الثامنة','التاسعة','العاشرة']
 return (
 <div className="container">
         {
@@ -97,7 +96,7 @@ return (
                                 <th className="text-uppercase">الوقت
                                 </th>
                                 {
-                                    time.current.map(curr=><th className="text-uppercase">{curr}</th>)
+                                    lessons.map((lesson,indx)=>indx<=lessonNum?<th>{lesson}</th>:<></>)
                                 }
                             </tr>
                         </thead>
@@ -109,21 +108,23 @@ return (
                                     <tr>
                                     <th className="align-middle bg-light-gray" >
                                     {
-                                        // time.current[index1]
-                                        days[index1+config?.firstDay]
+                                        days[parseInt(index1+parseInt(config?.firstDay))]
                                     }
                                     </th>
                                 {
                                     cells.map(cell=>{
-                                        if(cell.day===index1+config?.firstDay)
+                                        if(cell.day===index1+parseInt(config?.firstDay))
                                         return(
-                                            <td className='w3-center w3-animate-left'>
+                                            <td className='w3-center w3-animate-left '>
                                             <span style={{backgroundColor:color}} className=" table-sub padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">
                                             {cell.subject}
                                             </span>
                                             <div className="font-size13 text-light-gray">{cell.teacher}</div>
+                                            <div className="font-size13 text-secondary">{cell.time}</div>
+                                            <div className="d-flex justify-content-around">
                                             <UpdateTableCell subjectToTeacher={subjectToTeacher} cellData={cell} />
                                             <Button variant="danger" className='table-pop' onClick={()=>{handleDelete(cell._id,'deleteCellById')}}>حذف</Button>
+                                            </div>
                                             </td>
                                         )
                                     })
@@ -134,8 +135,11 @@ return (
                         }
                         </tbody>
                     </table>
-                    <Button variant="danger" style={{marginRight: "10px"}} onClick={()=>{handleDelete(config._id ,'deleteWeekTableById')}}>حذف الجدول بالكامل</Button>
-                    <AddTableCell subjectToTeacher={subjectToTeacher} />
+                    <Button variant="danger" style={{marginRight: "10px"}} onClick={()=>{
+                        handleDelete(config._id ,'deleteWeekTableById')
+                        handleDelete(params.classId,'deleteWeekTableCellsByClassId')
+                    }}>حذف الجدول بالكامل</Button>
+                    <AddTableCell subjectToTeacher={subjectToTeacher} currTime={time.current} />
                 </div>
                 </>
             :
@@ -144,38 +148,7 @@ return (
             </>
         }
             </div>
-  )
+    )
 }
 
 export default TimeTable
-// <td>
-//                                     <span className="bg-sky padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16 xs-font-size13">Dance</span>
-//                                     <div className="margin-10px-top font-size14">9:00-10:00</div>
-//                                     <div className="font-size13 text-light-gray">Ivana Wong</div>
-//                                 </td>
-//                                 <td>
-//                                     <span className="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">Yoga</span>
-//                                     <div className="margin-10px-top font-size14">9:00-10:00</div>
-//                                     <div className="font-size13 text-light-gray">Marta Healy</div>
-//                                 </td>
-
-//                                 <td>
-//                                     <span className="bg-yellow padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">Music</span>
-//                                     <div className="margin-10px-top font-size14">9:00-10:00</div>
-//                                     <div className="font-size13 text-light-gray">Ivana Wong</div>
-//                                 </td>
-//                                 <td>
-//                                     <span className="bg-sky padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">Dance</span>
-//                                     <div className="margin-10px-top font-size14">9:00-10:00</div>
-//                                     <div className="font-size13 text-light-gray">Ivana Wong</div>
-//                                 </td>
-//                                 <td>
-//                                     <span className="bg-purple padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">Art</span>
-//                                     <div className="margin-10px-top font-size14">9:00-10:00</div>
-//                                     <div className="font-size13 text-light-gray">Kate Alley</div>
-//                                 </td>
-//                                 <td>
-//                                     <span className="bg-pink padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">English</span>
-//                                     <div className="margin-10px-top font-size14">9:00-10:00</div>
-//                                     <div className="font-size13 text-light-gray">James Smith</div>
-//                                 </td>

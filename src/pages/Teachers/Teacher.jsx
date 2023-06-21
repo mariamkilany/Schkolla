@@ -3,18 +3,25 @@ import DeletePopup from '../../components/popupComponents/DeletePopup'
 import UpdateTeacher from '../../components/popupComponents/UpdateTeacher';
 import './teacher.css'
 import useAxios from '../../hooks/useAxios';
-import {useContext, useEffect} from 'react';
+import {useContext, useEffect, useState} from 'react';
 import { useParams } from 'react-router-dom';
 import Loading from '../Loading/Loading';
 import AuthContext from '../../components/shared/AuthContext';
 
 export default function Teacher() {
     const { refresh }=useContext(AuthContext)
-    const { fetchData,data:teacherData , loading} = useAxios()
+    const { fetchData,data, loading} = useAxios()
+    const [teacherData,setTeacherData]=useState({})
+    const [classInfo,setClassInfo]=useState({});
     const param=useParams()
 
     useEffect(() => {
-    fetchData('get',`teacher/getTeacher/${param.teacherId}`)
+    fetchData('get',`teacher/getTeacher/${param.teacherId}`).then((res)=>setTeacherData(res))
+    fetchData('get',`teacher/getClassByTeacherId/${param.teacherId}`).then(
+        (res)=>{
+            setClassInfo(res)
+        }
+    )
     },[refresh])
 
     if(loading)
@@ -35,7 +42,7 @@ export default function Teacher() {
                 </div>
             </div>
             <div class="d-flex row teacher-row-2 align-items-start gy-4">
-                <MoreinfoTeacher props={teacherData}/>
+                <MoreinfoTeacher props={teacherData} classInfo={classInfo} />
             </div>
         </div>
     </>; 

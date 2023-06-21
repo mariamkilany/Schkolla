@@ -1,10 +1,10 @@
 import React, {useState } from 'react';
-// import Select from 'react-select'
-// import Calender from '../Calender/Calender'
+import Table from 'react-bootstrap/Table';
 import './moreinfo.css'
 
-export default function MoreinfoTeacher(props) {
-    const teacherData=props.props
+export default function MoreinfoTeacher({props , classInfo}) {
+    const teacherData=props
+    console.log(classInfo)
 return <>
     <div class="nav nav-teacher flex-column nav-pills me-3 w-25 h-100" id="v-pills-tab" role="tablist" aria-orientation="vertical">
     <button class="nav-link active" id="v-pills-home-tab" data-bs-toggle="pill" data-bs-target="#v-pills-home" type="button" role="tab" aria-controls="v-pills-home" aria-selected="true">معلومات شخصية</button>
@@ -26,7 +26,17 @@ return <>
         </div>
         </div>
     <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab" tabindex="0">
-                                jnkkj
+        <Table striped  hover>
+        <thead>
+        <th>الفصول</th>
+        <th>المرحلة</th>
+        </thead>
+        <tbody>
+        {
+            
+        }
+        </tbody>
+        </Table>
     </div>
     <div class="tab-pane fade" id="v-pills-disabled" role="tabpanel" aria-labelledby="v-pills-disabled-tab" tabindex="0">
         <div className="report">

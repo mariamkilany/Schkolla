@@ -52,18 +52,18 @@
 #root{
   height: 100%;
 }
-.size{
+/* .size{
   width:calc(100% - 240px) !important;
   margin-left: 240px !important;
-}
+} */
 
 @media screen and (min-width:768px) {
   .appCont{
     margin-left: 64px !important;
   }
-  .size {
+  /* .size {
       width: 100% !important;
       margin-left: 0px !important;
-    }
+    } */
   
 }

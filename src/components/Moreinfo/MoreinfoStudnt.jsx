@@ -3,6 +3,7 @@ import Select from 'react-select'
 import QRCode from 'react-qr-code';
 import { QRCodeCanvas } from "qrcode.react";
 import html2canvas from 'html2canvas';
+import AreaChart from '../AreaChart/AreaChart'
 // import FullCalendar from '@fullcalendar/react' 
 // import dayGridPlugin from '@fullcalendar/daygrid'
 // import * as bootstrap from "bootstrap";
@@ -103,6 +104,7 @@ return <>
         </div>
     <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab" tabindex="0">
         <div className="upsent m-3">
+        <AreaChart/>
         </div>
     </div>
     <div class="tab-pane fade" id="v-pills-disabled" role="tabpanel" aria-labelledby="v-pills-disabled-tab" tabindex="0">

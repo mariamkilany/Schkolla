@@ -8,7 +8,6 @@ import { useEffect } from 'react';
 export default function Massenger() {
     useEffect(()=>{
         window.scrollTo(0,45)
-
     },[])
     return(
     <div className="massenger">

@@ -8,9 +8,10 @@ import useAxios from '../../hooks/useAxios';
 import { useParams } from 'react-router-dom';
 import AuthContext from '../shared/AuthContext';
 
-function AddTableCell({subjectToTeacher}) {
+function AddTableCell({subjectToTeacher,currTime}) {
     const [selected,setSelected]=useState({})
     const [selectedDay , setSelectedDay] = useState('')
+    const [selectedTime , setSelectedTime]=useState('');
     const {fetchData,data,loading}=useAxios()
     const classId=useParams().classId
     const [show, setShow] = useState(false);
@@ -26,7 +27,7 @@ function AddTableCell({subjectToTeacher}) {
     }
     setValidated(true);
     fetchData('post','tableCellRouter/addNewCellInTable',{classId,subject:JSON.parse(selected).subject._id,
-    teacher:JSON.parse(selected).teacher._id ,day:selectedDay},handleClose).then(()=>{
+    teacher:JSON.parse(selected).teacher._id ,day:selectedDay,time:selectedTime},handleClose).then(()=>{
         setref(!refresh)
     })
     };
@@ -64,6 +65,21 @@ function AddTableCell({subjectToTeacher}) {
                     <option value=''>اختر </option>
                     {
                         days.map((day,index)=><option value={index}>{day}</option>)
+                    }
+                </Form.Select>
+                </Form.Group>
+                <Form.Group className="mb-3" controlId="validationCustom01"  >
+                <Form.Label> التوقيت</Form.Label>
+                <Form.Select required onChange={(e)=>setSelectedTime(e.target.value)} >
+                    <option value=''>اختر </option>
+                    {
+                        currTime?.map((curr)=>{
+                            return(
+                                <option value={curr}>
+                                {curr}
+                                </option>
+                            )
+                        })
                     }
                 </Form.Select>
                 </Form.Group>
