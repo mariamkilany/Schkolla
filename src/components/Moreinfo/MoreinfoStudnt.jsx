@@ -1,19 +1,43 @@
-import React, {useState } from 'react';
+import React, {useState ,useEffect} from 'react';
 import Select from 'react-select'
 import QRCode from 'react-qr-code';
 import { QRCodeCanvas } from "qrcode.react";
 import html2canvas from 'html2canvas';
-import AreaChart from '../AreaChart/AreaChart'
 // import FullCalendar from '@fullcalendar/react' 
 // import dayGridPlugin from '@fullcalendar/daygrid'
 // import * as bootstrap from "bootstrap";
 // import "bootstrap/dist/css/bootstrap.min.css";
 // import interactionPlugin from "@fullcalendar/interaction"
 import './moreinfo.css'
-// import { height } from '@mui/system';
+import Calendar from 'react-calendar';
+import 'react-calendar/dist/Calendar.css';
+import useAxios from '../../hooks/useAxios';
+import { useParams } from 'react-router-dom';
 export default function More({props}) {
-    // console.log(props)
-    const [value, setValue] = useState(props._id);
+
+
+    const [datesState, setDatesState] = useState([
+  "Thu, May 11, 2023, 12:03:27 PM PDT"
+])
+ const {fetchData,data,loading}=useAxios();
+  const formattedDates = datesState.map(dateString => {
+    const date = new Date(dateString);
+    return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
+  });
+    const tileDisabled = ({ activeStartDate, date, view }) => {
+    const result = formattedDates.some(d => {
+      const currentDate = new Date(d);
+      return date.getTime() === currentDate.getTime();
+    });
+    return result;
+ }
+ const params = useParams();
+    useEffect(()=>{
+        fetchData('get',`student/getAttendanceDays/${params.stuId}`).then((res)=>{
+            setDatesState(res);
+            console.log("respose",res);
+        })
+    },[])
     const printRef = React.useRef();
       const handleDownloadImage = async () => {
     const element = printRef.current;
@@ -103,8 +127,17 @@ return <>
         </div>
         </div>
     <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab" tabindex="0">
-        <div className="upsent m-3">
-        <AreaChart/>
+    <div>
+    <div className="upsent m-3 d-flex  align-items-center justify-content-around">
+            <div className="showcalender ">
+                <Calendar tileDisabled={tileDisabled}   />
+            </div>
+            <div className="attnedanceData d-flex  align-items-center justify-content-around">
+                <div className="AttColor me-3"></div>
+                <span>أيام الحضور</span>
+    </div>
+    </div>
+    <AreaChart/>
         </div>
     </div>
     <div class="tab-pane fade" id="v-pills-disabled" role="tabpanel" aria-labelledby="v-pills-disabled-tab" tabindex="0">
