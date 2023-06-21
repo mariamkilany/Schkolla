@@ -1,6 +1,7 @@
 import React, {useState ,useEffect} from 'react';
 import Select from 'react-select'
 import QRCode from 'react-qr-code';
+import AreaChart from '../AreaChart/AreaChart'
 import { QRCodeCanvas } from "qrcode.react";
 import html2canvas from 'html2canvas';
 // import FullCalendar from '@fullcalendar/react' 
