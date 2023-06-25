@@ -1,14 +1,18 @@
-import React , {useState} from 'react'
+import React , {useState , useEffect} from 'react'
 import Chart from 'react-apexcharts'
 import './area.css'
+import useAxios from '../../hooks/useAxios';
+import { useParams } from 'react-router-dom';
 function AreaChart() {
+    const {fetchData,data,loading} = useAxios();
+    const params =useParams().stuId;
     const [properties,setProp]=useState({
             series: [{
               name: 'معدل الحضور',
-              data: [31, 40, 28, 51, 42, 109, 100,28, 51, 42, 109, 100]
+              data: []
             }, {
               name: 'معدل الغياب',
-              data: [11, 32, 45, 32, 34, 52, 41 , 45, 32, 34, 52, 41]
+              data: []
             }],
             options: {
               chart: {
@@ -32,7 +36,13 @@ function AreaChart() {
               },
             },
           })
-
+          useEffect(()=>{
+            fetchData('get',`student/getAttendance/${params}`).then((res)=>{
+              setProp({...properties , series:[{name: 'معدل الحضور',data: res.studentAtendance},
+            {name: 'معدل الغياب',data: res.studentAbsence}
+            ]})
+        })
+          },[])
   return (
     <div>
       <Chart options={properties.options} series={properties.series} type="area" height={350} />

@@ -1,9 +1,10 @@
-import React, { useState ,useEffect} from 'react';
+import React, { useState ,useEffect , useContext } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
 import Table from 'react-bootstrap/Table';
-import axios from 'axios';
+import AuthContext from '../shared/AuthContext';
+import useAxios from '../../hooks/useAxios';
 import './popup.css';
 
 function AddClass(props) {
@@ -16,13 +17,11 @@ function AddClass(props) {
     const gradeId=props.gradeId;
     const [teachers,setTeachers]=useState([]);
     const [pair,setPairs]=useState([])
-    const accessToken =localStorage.getItem('accessToken');
-    const id=localStorage.getItem('id');
+    const {fetchData,data,loading} = useAxios();
+    const{refresh,setref}=useContext(AuthContext)
 
     const handleAddPair=(e,sub)=>{
         const cleanPairs = pair.filter((p)=>p.subject!==sub._id)
-        console.log(e)
-        console.log(sub)
         setPairs([...cleanPairs,{subject:sub._id,teacher:e.target.value}])
     } 
     const handleSubmit = async (event) => {
@@ -32,33 +31,24 @@ function AddClass(props) {
         event.stopPropagation();
     }
     setValidated(true);
-    await axios.post(`/class/addNewClassToGrade`,{gradeId,name:className,subjectToTeacher:pair}, 
-        {params: { userId: id } ,headers: {'Authorization': `Bearer ${accessToken}`, withCradintials : true}}).then( (res)=>{
-            handleClose();
+    fetchData('post','/class/addNewClassToGrade',{gradeId,name:className,subjectToTeacher:pair}).then((res)=>{
+        if(res.createdClass){
+        setref(!refresh)
+        handleClose();
         }
-        )
+    });
     };
     useEffect(
-        ()=>{axios.get('teacher/getAllTeacherNamesWithIds', 
-        {params: { userId: id } ,headers: {'Authorization': `Bearer ${accessToken}`, withCradintials : true}})
-        .then((res)=>{
-            setTeachers(res.data)
-        }
-        )
-            axios.get(`grade/getGradeSubjects/${gradeId}`, 
-        {params: { userId: id } ,headers: {'Authorization': `Bearer ${accessToken}`, withCradintials : true}})
-        .then((res)=>{
-            setSubjects(res.data.subjects)
-        }
-        )
+        ()=>{
+        fetchData('get','teacher/getAllTeacherNamesWithIds').then(res=>setTeachers(res));
+        fetchData('get',`grade/getGradeSubjects/${gradeId}`).then(res=>setSubjects(res.subjects));
     }
-        ,[])
+        ,[refresh])
     return (
         <>
         <Button variant="primary" className='levelbtn' onClick={handleShow}>
         إضافة فصل جديد
         </Button>
-
         <Modal show={show} onHide={handleClose}>
             <Modal.Header closeButton>
             <Modal.Title>إضافة فصل جديد</Modal.Title>

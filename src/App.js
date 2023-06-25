@@ -48,14 +48,8 @@ function App() {
         }
       };
       refreshToken();
-      // intervalId = setInterval(() => {
-      //   if (new Date().getTime() - currentTime >= 9 * 60 * 1000) {
-      //     currentTime = new Date().getTime();
-      //     refreshToken();
-      //   }
-      // }, 1000);
     }
-    // return () => clearInterval(intervalId);
+
   }, []);
   return (
     <div className="App">
@@ -93,6 +87,7 @@ function App() {
                     <Route path='Employee' element={<Employee/>} />
                     <Route path='Employee/:empolyeeId' element={<StuffProfile/>}/>
                     <Route path='Massenger' element={<Massenger/>} />
+                    <Route path=':stuId' element={<ShowStudent/>}/>
                   </Route>
                   <Route path='*' element={<Notfound/>} />
               </Routes>

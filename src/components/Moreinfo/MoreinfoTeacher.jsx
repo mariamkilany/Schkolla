@@ -1,10 +1,20 @@
-import React, {useState } from 'react';
+import React, {useState , useEffect } from 'react';
 import Table from 'react-bootstrap/Table';
-import './moreinfo.css'
+import './moreinfo.css';
+import useAxios from '../../hooks/useAxios';
+import TeacherTable from '../TimeTable/TeacherTable';
 
 export default function MoreinfoTeacher({props , classInfo}) {
-    const teacherData=props
-    console.log(classInfo)
+    const teacherData=props;
+    console.log('teacher data',teacherData)
+    const {fetchData,data,loading} = useAxios();
+    const [classToGrades,setClassToGrades]=useState([]);
+
+    useEffect(()=>{
+        fetchData('get',`teacher/getClassByTeacherId/${teacherData._id}`).then((res)=>{
+            setClassToGrades(res);
+        })
+    },[])
 return <>
     <div class="nav nav-teacher flex-column nav-pills me-3 w-25 h-100" id="v-pills-tab" role="tablist" aria-orientation="vertical">
     <button class="nav-link active" id="v-pills-home-tab" data-bs-toggle="pill" data-bs-target="#v-pills-home" type="button" role="tab" aria-controls="v-pills-home" aria-selected="true">معلومات شخصية</button>
@@ -28,19 +38,34 @@ return <>
     <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab" tabindex="0">
         <Table striped  hover>
         <thead>
-        <th>الفصول</th>
+        <th>الفصل</th>
         <th>المرحلة</th>
+        <th>المادة</th>
         </thead>
         <tbody>
         {
-            
+            classToGrades.map((rowEle)=>{
+                return (
+                    <tr>
+                    <td>
+                    {rowEle.className}
+                    </td>
+                    <td>
+                    {rowEle.gradeName}
+                    </td>
+                    <td>
+                    {rowEle.subjectName}
+                    </td>
+                    </tr>
+                )
+            })
         }
         </tbody>
         </Table>
     </div>
     <div class="tab-pane fade" id="v-pills-disabled" role="tabpanel" aria-labelledby="v-pills-disabled-tab" tabindex="0">
         <div className="report">
-            
+            <TeacherTable/>
             </div>
         </div>
     </div>

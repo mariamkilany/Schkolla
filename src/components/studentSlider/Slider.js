@@ -2,9 +2,11 @@ import './slider.css';
 
 import {Button,Card} from 'react-bootstrap';
 
-import React, { useRef, useState } from "react";
+import React, { useEffect , useState } from "react";
 // Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react";
+import useAxios from "../../hooks/useAxios";
+import { useNavigate } from 'react-router-dom';
 
 // Import Swiper styles
 import "swiper/css";
@@ -13,10 +15,22 @@ import "swiper/css/pagination";
 
 // import required modules
 import { EffectCoverflow, Pagination } from "swiper";
-import students from './data';
+// import students from './data';
 
 
 function Slider() {
+    const {fetchData} =useAxios();
+    const [students , setStudents] = useState()
+    const navigate = useNavigate()
+
+    useEffect(()=>{
+        fetchData('get','student/getTopTen').then(res=>setStudents(res))
+    },[])
+
+    const handleClick=(id)=>{
+        navigate(`Students/${id}`)
+    }
+
     return (
     <>
         <Swiper
@@ -36,17 +50,17 @@ function Slider() {
         className="mySwiper"
         >
         {
-            students.map((student,index)=>{
+            students?.map((student,index)=>{
                 return <SwiperSlide >
                         <Card className={`${index%3===0?'green-card':index%3===1?'blue-card':'pink-card'}`}>
                     <Card.Img variant="top" src="./images/student1.png" />
                     <Card.Body>
                     <Card.Text>
-                        <span>الإسم: {student.name}</span>
-                        <span>المرحلة: {student.level}</span>
-                        <span> الفصل: {student.class}</span>
+                        <span>الإسم: {student?.studentName}</span>
+                        <span>المرحلة: {student?.gradeName}</span>
+                        <span> الفصل: {student?.className}</span>
                     </Card.Text>
-                    <Button className='btn btn-secondary'>عرض الطالب</Button>
+                    <Button className='btn btn-secondary' onClick={()=>handleClick(student?.studentId)}>عرض الطالب</Button>
                     </Card.Body>
                 </Card>
                 </SwiperSlide>

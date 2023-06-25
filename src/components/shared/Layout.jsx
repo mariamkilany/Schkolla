@@ -1,12 +1,10 @@
-import { useContext } from "react";
 import { Container, Navbar, Nav } from "react-bootstrap";
 import { Link ,useLocation } from "react-router-dom";
-import AuthContext from "./AuthContext";
 import logo from '../../pages/login/images/logo.png'
     
 const Layout = ({ children }) => {
     //Read the 'user' information from the 'AuthContext'.
-    const {accessToken} = useContext(AuthContext);
+    const accessToken = localStorage.getItem('accessToken');
     const location=useLocation()
     return (
         <>

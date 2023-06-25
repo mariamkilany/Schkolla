@@ -4,11 +4,6 @@ import QRCode from 'react-qr-code';
 import AreaChart from '../AreaChart/AreaChart'
 import { QRCodeCanvas } from "qrcode.react";
 import html2canvas from 'html2canvas';
-// import FullCalendar from '@fullcalendar/react' 
-// import dayGridPlugin from '@fullcalendar/daygrid'
-// import * as bootstrap from "bootstrap";
-// import "bootstrap/dist/css/bootstrap.min.css";
-// import interactionPlugin from "@fullcalendar/interaction"
 import './moreinfo.css'
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';

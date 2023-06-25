@@ -1,13 +1,11 @@
-import React, { useState ,useRef ,useEffect } from 'react';
+import React, { useState ,useRef ,useEffect ,useContext  } from 'react';
 import Button from 'react-bootstrap/Button';
 import {SlCloudUpload} from 'react-icons/sl'
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
 import './popup.css';
-import axios from 'axios';
 import { Table } from 'react-bootstrap';
 import useAxios from '../../hooks/useAxios';
-import { useContext } from 'react';
 import AuthContext from '../shared/AuthContext';
 
 const AddStudent = () => {

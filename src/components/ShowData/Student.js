@@ -1,22 +1,18 @@
 import Table from 'react-bootstrap/Table';
 import"./style.css"
-import { useContext, useEffect, useRef, useState } from "react";
-import axios from "axios";
+import { useContext, useEffect,useState } from "react";
 import useAxios from '../../hooks/useAxios';
-import { useNavigate ,useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import Loading from '../../pages/Loading/Loading';
 import AuthContext from '../shared/AuthContext';
 export default function StudentShow(props)
 {
-    const accessToken = localStorage.getItem('accessToken');
-    const id=localStorage.getItem('id');
     const link = props.link;
     const [studentId,setStudentId]=useState('')
     const [studentName,setStudentName]=useState('')
     const regex1=new RegExp(`^${studentId}`)
     const regex2=new RegExp(`^${studentName}`)
     const navigate = useNavigate()
-    const params =useParams();
 
     const {fetchData,data:studentsDate,loading} = useAxios()
     const {refresh} = useContext(AuthContext)
