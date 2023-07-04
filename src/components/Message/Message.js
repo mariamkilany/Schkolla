@@ -1,18 +1,20 @@
-import './message.css'
-import admin from '../../imge/admin.jpg'
-
-function Message({own}) {
+import "./message.css";
+import admin from "../../imge/admin.jpg";
+import { useContext } from "react";
+import AuthContext from "../../components/shared/AuthContext";
+function Message({ data }) {
+  const { selectedChat } = useContext(AuthContext);
   return (
-    <div className={own?"message own":"message"}>
+    <div className={data.isAdmin ? "message own" : "message"}>
       <div className="messageTop">
-      <img className="messageImg" src={admin}/>
-      <p className="messageTxt">
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas sollicitudin diam ac eros sollicitudin ultricies.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas sollicitudin diam ac eros sollicitudin ultricies. 
-      </p>
+        <img
+          className="messageImg"
+          src={data.isAdmin ? admin : selectedChat.imgUrl}
+        />
+        <p className="messageTxt">{data.msg}</p>
       </div>
-      <div className="messageBottom">منذ ساعة</div>
     </div>
-  )
+  );
 }
 
-export default Message
+export default Message;

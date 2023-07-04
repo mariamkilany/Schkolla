@@ -1,83 +1,73 @@
 import axios from "axios";
-import { createContext, useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import jwt_decode from "jwt-decode";
+import { createContext, useState, useRef } from "react";
 
-// The 'createContext' assigned to the 'AuthContex' variable. 
-//The 'createContex' loads from the 'react' library
 const AuthContext = createContext();
 
-//Create our component for API context like 'AuthContextProvider'.
 export const AuthContextProvider = ({ children }) => {
-//The 'user' state variable holds the authenticated user information. 
-//For the initial value here we check for browser local storage, 
-//this case helps when the user reloads the page.
-    // const [user, setUser] = useState(() => {
-    //     let id = localStorage.getItem("id");
-    //     let accessToken =localStorage.getItem("accessToken")
-    //     if (id&&accessToken) {
-    //     return {id,accessToken};
-    //     }
-    //     return null;
-    // });
-    const [id,setId]=useState(null);
-    const [accessToken,setAccessToken]=useState(null)
-    const [isVisible,setIsVisible]=useState(false);
-    const [stageId,setStageId]=useState('');
-    const [refresh,setref] = useState(true)
-    //Initialized the navigation variable.
-    const navigate = useNavigate();
-    // const handleStageId=(id)=>{
-    //     setStageId(id);
-    // }
-    //In 'logn' method we invoke API calls like 'user login API call', 
-    //The 'login' API call for user authentication on the success of the login API sends us an HTTPonly cookie. 
-    //Here for every API call, we have to pass configuration to API call like 'withCredentials' with 'true' because our client application and 
-    //API application runs under different ports or domains so to store the login cookie into the browser or attach the cookie for every secured API endpoint request we need those configurations.
-    const login = async (payload) => {
-        try{
-        let apiResponse =await axios.post("admin/login", payload);
-        // localStorage.setItem("id", apiResponse.data.id);
-        // localStorage.setItem("accessToken", apiResponse.data.accessToken);
-        // setUser({accessToken:apiResponse.data.accessToken, id:apiResponse.data.id});
-        // navigate("/dashboard");
-        // console.log(apiResponse.data)
-        // setId(apiResponse.data.id)
-        localStorage.setItem('id',apiResponse.data.id)
-        setAccessToken(apiResponse.data.accessToken)
-        localStorage.setItem('accessToken',apiResponse.data.accessToken)
-        localStorage.setItem('firstLogin', 'true');
-        // navigate("/dashboard");
-        window.location.href='/dashboard'
-        return apiResponse;
+  const [id, setId] = useState(null);
+  const [accessToken, setAccessToken] = useState(null);
+  const [isVisible, setIsVisible] = useState(false);
+  const [stageId, setStageId] = useState("");
+  const [refresh, setref] = useState(true);
+  const [Messages, setMessages] = useState([]);
+  const [selectedChat, setSelectedChat] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, SetTotalPages] = useState(0);
+  const [end, setEnd] = useState(false);
+  const [clicked, setClicked] = useState(false);
+  const login = async (payload) => {
+    try {
+      let apiResponse = await axios.post("admin/login", payload);
+      localStorage.setItem("id", apiResponse.data.id);
+      setAccessToken(apiResponse.data.accessToken);
+      localStorage.setItem("accessToken", apiResponse.data.accessToken);
+      localStorage.setItem("firstLogin", "true");
+      window.location.href = "/dashboard";
+      return apiResponse;
+    } catch (err) {
+      return err;
     }
-    catch(err){
-        console.log(err)
-        return err;
-    }
-    };
-    const logout = async () => {
-        //Invoking the 'Logout' API call
+  };
+  const logout = async () => {
     await axios.get("admin/logout");
-    //Then remove the user profile information from the browser's local storage.
-    // localStorage.removeItem("id");
-    // localStorage.removeItem("accessToken")
-    //Then empty the 'user' state variable and then navigate to 'login' page
-    // setUser(null);
-    // setId(null);
-    setAccessToken(null)
+    setAccessToken(null);
     localStorage.clear();
-    // navigate("/login");
-    window.location.href='/login'
+
+    window.location.href = "/login";
+  };
+  return (
+    <>
+      <AuthContext.Provider
+        value={{
+          id,
+          accessToken,
+          setAccessToken,
+          login,
+          logout,
+          isVisible,
+          setIsVisible,
+          stageId,
+          setStageId,
+          refresh,
+          setref,
+          Messages,
+          setMessages,
+          selectedChat,
+          setSelectedChat,
+          currentPage,
+          setCurrentPage,
+          totalPages,
+          SetTotalPages,
+          end,
+          setEnd,
+          clicked,
+          setClicked,
+        }}
+      >
+        {children}
+      </AuthContext.Provider>
+    </>
+  );
 };
-    return (
-        //In the 'AuthContext.Provider' element, we configure the 'value' attribute to which we pass our 'login'(method), 'user'(variable) because these properties have to be accessed by any component in our application.
-        <> 
-        <AuthContext.Provider value={{ id,accessToken,setAccessToken, login , logout ,isVisible,setIsVisible,stageId,setStageId , refresh , setref}}>
-            {children}
-        </AuthContext.Provider>
-        </>
-    );
-    };
-    
+
 export default AuthContext;

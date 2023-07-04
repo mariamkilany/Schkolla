@@ -53,7 +53,7 @@ function Slider() {
             students?.map((student,index)=>{
                 return <SwiperSlide >
                         <Card className={`${index%3===0?'green-card':index%3===1?'blue-card':'pink-card'}`}>
-                    <Card.Img variant="top" src="./images/student1.png" />
+                    <Card.Img variant="top" src={student?.image} />
                     <Card.Body>
                     <Card.Text>
                         <span>الإسم: {student?.studentName}</span>
